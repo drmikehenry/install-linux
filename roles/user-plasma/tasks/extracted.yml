@@ -1,0 +1,395 @@
+---
+- name: Disable "Present windows on top-left screen corner"
+  kconfig:
+    file: kwinrc
+    group: "Effect-PresentWindows"
+    key: "BorderActivateAll"
+    value: "9"
+- name: Disable "Maximize windows dragged to top edge"
+  kconfig:
+    file: kwinrc
+    group: "Windows"
+    key: "ElectricBorderMaximize"
+    value: "false"
+- name: Disable "Tile Windows dragged to left or right edge"
+  kconfig:
+    file: kwinrc
+    group: "Windows"
+    key: "ElectricBorderTiling"
+    value: "false"
+- name: Lock screen automatically after (minutes)
+  kconfig:
+    file: kscreenlockerrc
+    group: "Daemon"
+    key: "Timeout"
+    value: "60"
+- name: Allow unlocking without password for (seconds)
+  kconfig:
+    file: kscreenlockerrc
+    group: "Daemon"
+    key: "LockGrace"
+    value: "60"
+- name: Disable "Show Media controls" on lock screen.
+  kconfig:
+    file: kscreenlockerrc
+    groups:
+    - "Greeter"
+    - "LnF"
+    - "General"
+    key: "showMediaControls"
+    value: "false"
+- name: Choose "Darkest Hour" for lock screen image.
+  kconfig:
+    file: kscreenlockerrc
+    groups:
+    - "Greeter"
+    - "Wallpaper"
+    - "org.kde.image"
+    - "General"
+    key: "Image"
+    value: "/usr/share/wallpapers/DarkestHour/"
+- name: Configure additional Virtual Desktops
+  kconfig:
+    file: kwinrc
+    group: "Desktops"
+    key: "Number"
+    value: "6"
+- name: Set number of Virtual Desktop rows
+  kconfig:
+    file: kwinrc
+    group: "Desktops"
+    key: "Rows"
+    value: "2"
+- name: Set Focus Follows Mouse
+  kconfig:
+    file: kwinrc
+    group: "Windows"
+    key: "FocusPolicy"
+    value: "FocusFollowsMouse"
+- name: Disable focus delay
+  kconfig:
+    file: kwinrc
+    group: "Windows"
+    key: "DelayFocusInterval"
+    value: "0"
+- name: Disable "Click raises active window"
+  kconfig:
+    file: kwinrc
+    group: "Windows"
+    key: "ClickRaise"
+    value: "false"
+- name: Set "Left click" to only "Activate" window
+  kconfig:
+    file: kwinrc
+    group: "MouseBindings"
+    key: "CommandWindow1"
+    value: "Activate"
+- name: Set "Middle click" to only "Activate" window
+  kconfig:
+    file: kwinrc
+    group: "MouseBindings"
+    key: "CommandWindow2"
+    value: "Activate"
+- name: Set "Right click" to only "Activate" window
+  kconfig:
+    file: kwinrc
+    group: "MouseBindings"
+    key: "CommandWindow3"
+    value: "Activate"
+- name: Set "Modifier key" to "Alt"
+  kconfig:
+    file: kwinrc
+    group: "MouseBindings"
+    key: "CommandAllKey"
+    value: "Alt"
+- name: Keep KRunner RunClipboard shortcut
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "org.kde.krunner.desktop"
+    key: "RunClipboard"
+    value: "Alt+Shift+F2,Alt+Shift+F2,Run command on clipboard contents"
+
+- name: Keep KRunner friendly name
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "org.kde.krunner.desktop"
+    key: "_k_friendly_name=KRunner"
+    value: "KRunner"
+
+- name: Remove Alt+Space shorcut from KRunner
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "org.kde.krunner.desktop"
+    key: "_launch"
+    value: "Alt+F2\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner"
+
+- name: Shortcut for "Lower Window"
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "kwin"
+    key: "Window Lower"
+    value: "Alt+2,,Lower Window"
+- name: Shortcut for "Maximize Window Horizontally"
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "kwin"
+    key: "Window Maximize Horizontal"
+    value: "Alt+4,,Maximize Window Horizontally"
+- name: Shortcut for "Maximize Window Vertically"
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "kwin"
+    key: "Window Maximize Vertical"
+    value: "Alt+3,,Maximize Window Vertically"
+- name: Shortcut for "Move Window Down"
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "kwin"
+    key: "Window Pack Down"
+    value: "Meta+Ctrl+Down,,Move Window Down"
+- name: Shortcut for "Move Window Left"
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "kwin"
+    key: "Window Pack Left"
+    value: "Meta+Ctrl+Left,,Move Window Left"
+- name: Shortcut for "Move Window Right"
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "kwin"
+    key: "Window Pack Right"
+    value: "Meta+Ctrl+Right,,Move Window Right"
+- name: Shortcut for "Move Window Up"
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "kwin"
+    key: "Window Pack Up"
+    value: "Meta+Ctrl+Up,,Move Window Up"
+- name: Shortcut for "Raise Window"
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "kwin"
+    key: "Window Raise"
+    value: "Alt+1,,Raise Window"
+- name: Shortcut for "Window Operations Menu"
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "kwin"
+    key: "Window Operations Menu"
+    value: "Alt+Space,Alt+F3,Window Operations Menu"
+- name: Create `~/.local/share/applications/`
+  file:
+    dest: .local/share/applications
+    state: directory
+- name: Create 'copysel.desktop'
+  copy:
+    dest: .local/share/applications/copysel.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=copysel
+      Exec=copysel
+- name: Shortcut for 'copysel.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "copysel.desktop"
+    key: "_launch"
+    value: "Meta+Ctrl+C,none,Copy Primary X Selection to Clipboard"
+- name: Create 'activate-firefox.desktop'
+  copy:
+    dest: .local/share/applications/activate-firefox.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Firefox
+      Exec=activate firefox navigator.firefox
+- name: Shortcut for 'activate-firefox.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-firefox.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+F,none,Activate or Launch Firefox"
+- name: Create 'activate-gvim0.desktop'
+  copy:
+    dest: .local/share/applications/activate-gvim0.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Gvim0
+      Exec=activate "gvim --servername GVIM0 --name GVIM0" "GVIM0.Gvim"
+- name: Shortcut for 'activate-gvim0.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-gvim0.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+0,none,Activate or Launch Gvim0"
+- name: Create 'activate-gvim).desktop'
+  copy:
+    dest: .local/share/applications/activate-gvim).desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Gvim)
+      Exec=activate "gvim --servername GVIM) --name GVIM)" "GVIM).Gvim"
+- name: Shortcut for 'activate-gvim).desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-gvim).desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+),none,Activate or Launch Gvim)"
+- name: Shortcut for Launch Konsole
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "org.kde.konsole.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+4,none,Launch Konsole"
+- name: Create 'activate-konsole1.desktop'
+  copy:
+    dest: .local/share/applications/activate-konsole1.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Konsole1
+      Exec=activate "konsole --name konsole-1" "konsole-1.Konsole"
+- name: Shortcut for 'activate-konsole1.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-konsole1.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+1,none,Activate or Launch Konsole1"
+- name: Create 'activate-konsole2.desktop'
+  copy:
+    dest: .local/share/applications/activate-konsole2.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Konsole2
+      Exec=activate "konsole --name konsole-2" "konsole-2.Konsole"
+- name: Shortcut for 'activate-konsole2.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-konsole2.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+2,none,Activate or Launch Konsole2"
+- name: Create 'activate-konsole3.desktop'
+  copy:
+    dest: .local/share/applications/activate-konsole3.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Konsole3
+      Exec=activate "konsole --name konsole-3" "konsole-3.Konsole"
+- name: Shortcut for 'activate-konsole3.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-konsole3.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+3,none,Activate or Launch Konsole3"
+- name: Create 'activate-konsole8.desktop'
+  copy:
+    dest: .local/share/applications/activate-konsole8.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Konsole8
+      Exec=activate "konsole --name konsole-8" "konsole-8.Konsole"
+- name: Shortcut for 'activate-konsole8.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-konsole8.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+8,none,Activate or Launch Konsole8"
+- name: Create 'activate-konsole9.desktop'
+  copy:
+    dest: .local/share/applications/activate-konsole9.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Konsole9
+      Exec=activate "konsole --name konsole-9" "konsole-9.Konsole"
+- name: Shortcut for 'activate-konsole9.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-konsole9.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+9,none,Activate or Launch Konsole9"
+- name: Create 'activate-speedcrunch.desktop'
+  copy:
+    dest: .local/share/applications/activate-speedcrunch.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Speedcrunch
+      Exec=activate speedcrunch speedcrunch
+- name: Shortcut for 'activate-speedcrunch.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-speedcrunch.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+=,none,Activate or Launch Speedcrunch"
+- name: Disable "Save clipboard contents on exit"
+  kconfig:
+    file: klipperrc
+    group: "General"
+    key: "KeepClipboardContents"
+    value: "false"
+- name: Disable "Prevent empty clipboard"
+  kconfig:
+    file: klipperrc
+    group: "General"
+    key: "PreventEmptyClipboard"
+    value: "false"
+- name: Enable "Ignore selection"
+  kconfig:
+    file: klipperrc
+    group: "General"
+    key: "IgnoreSelection"
+    value: "true"
+- name: Set "Clipboard history size"
+  kconfig:
+    file: klipperrc
+    group: "General"
+    key: "MaxClipItems"
+    value: "1"
+- name: Create `Custom` Konsole Profile
+  kconfig:
+    file: ../.local/share/konsole/Custom.profile
+    group: "General"
+    key: "Name"
+    value: "Custom"
+- name: Set `Custom` Konsole Profile Parent
+  kconfig:
+    file: ../.local/share/konsole/Custom.profile
+    group: "General"
+    key: "Parent"
+    value: "FALLBACK/"
+- name: Use `Custom` Konsole Profile
+  kconfig:
+    file: konsolerc
+    group: "Desktop Entry"
+    key: "DefaultProfile"
+    value: "Custom.profile"
+- name: Create `Custom` Konsole Profile
+  kconfig:
+    file: ../.local/share/konsole/Custom.profile
+    group: "Scrolling"
+    key: "HistorySize"
+    value: "100000"
+- name: Always show Konsole Tab Bar
+  kconfig:
+    file: konsolerc
+    group: "TabBar"
+    key: "TabBarVisibility"
+    value: "AlwaysShowTabBar"
+- name: Konsole Use Style Sheet
+  kconfig:
+    file: konsolerc
+    group: "TabBar"
+    key: "TabBarUseUserStyleSheet"
+    value: "true"
+- name: Konsole Set Style Sheet File
+  kconfig:
+    file: konsolerc
+    group: "TabBar"
+    key: "TabBarUserStyleSheetFile"
+    value: "file:.config/konsole.css"

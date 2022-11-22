@@ -1,0 +1,27 @@
+---
+- hosts: all
+  tasks:
+  - import_role:
+      name: force-limit-switch
+
+  - import_role:
+      name: user-git-repos
+    vars:
+      - become_root: "no"
+      - user: "{{ ansible_user_registered.name }}"
+      - home: "{{ ansible_user_registered.home }}"
+      - git_url_home: "file:///m/srv/git/home.git"
+      - git_url_home2: "file:///m/srv/git/home2.git"
+      - git_url_vimfiles: "file:///m/srv/git/vimfiles.git"
+      - git_url_vimfiles_local: "file:///m/srv/git/vimfiles-local.git"
+
+  - import_role:
+      name: user-git-repos
+    vars:
+      - become_root: "yes"
+      - user: "root"
+      - home: "/root"
+      - git_url_home: "{{ ansible_user_registered.home }}/.home.git"
+      - git_url_home2: "{{ ansible_user_registered.home }}/.home2.git"
+      - git_url_vimfiles: "{{ ansible_user_registered.home }}/.vim"
+      - git_url_vimfiles_local: "{{ ansible_user_registered.home }}/.vimlocal"

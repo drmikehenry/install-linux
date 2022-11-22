@@ -1,0 +1,5 @@
+---
+- name: Verify use of --limit switch
+  fail:
+    msg: "use --limit to select hosts; use ``--limit all`` for all hosts"
+  when: ansible_limit is not defined

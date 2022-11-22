@@ -1,0 +1,56 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - import_role:
+      name: force-limit-switch
+
+  - name: Add unix group
+    group:
+      name: "{{ item.name }}"
+      gid: "{{ item.gid }}"
+
+    loop:
+      - name: some_group
+        gid: "1001"
+
+  - name: Add user
+    user:
+      name: "{{ item.name }}"
+      uid: "{{ item.uid }}"
+      shell: /bin/bash
+      comment: "{{ item.comment }}"
+    loop:
+      - name: some_user
+        uid: "1001"
+        comment: "Some User"
+
+  - name: Add some_user's groups (Debian family)
+    user:
+      name: some_user
+      groups:
+        - adm
+        - cdrom
+        - sudo
+        - dip
+        - plugdev
+        - lpadmin
+        - lxd
+        - sambashare
+        - video
+        - some_group
+      append: yes
+    when: ansible_os_family == 'Debian'
+
+  - name: Add some_user's groups (RedHat family)
+    user:
+      name: some_user
+      groups:
+        - wheel
+      append: yes
+    when: ansible_os_family == 'RedHat'
+
+  - import_role:
+      name: ssh-authorized_key
+    vars:
+      username: some_user

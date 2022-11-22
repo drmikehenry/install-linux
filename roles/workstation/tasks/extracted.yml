@@ -1,0 +1,72 @@
+---
+- name: pipxg Install ansible
+  command: pipxg install --include-deps ansible
+  args:
+    creates: /usr/local/bin/ansible
+- name: Disable execution for motd files
+  file:
+    path: "/etc/update-motd.d/{{ item }}"
+    mode: -x
+  loop:
+    - "10-help-text"
+    - "50-motd-news"
+    - "90-updates-available"
+  when: ansible_distribution == 'Ubuntu'
+- name: pipxg Install findx
+  command: pipxg install findx
+  args:
+    creates: /usr/local/bin/findx
+- name: pipxg Install ptee
+  command: pipxg install ptee
+  args:
+    creates: /usr/local/bin/ptee
+- name: Make symlinks for `unix2dos`/`dos2unix`
+  file:
+    src: "/usr/bin/{{ item.src_name }}"
+    dest: "/usr/local/bin/{{ item.dest_name }}"
+    state: link
+  loop:
+    - src_name: todos
+      dest_name: unix2dos
+    - src_name: fromdos
+      dest_name: dos2unix
+- name: pipxg Install cookiecutter
+  command: pipxg install cookiecutter
+  args:
+    creates: /usr/local/bin/cookiecutter
+- name: pipxg Install svnwrap
+  command: pipxg install svnwrap
+  args:
+    creates: /usr/local/bin/svnwrap
+- name: pipxg Install compiledb
+  command: pipxg install compiledb
+  args:
+    creates: /usr/local/bin/compiledb
+- name: pipxg Install ipython
+  command: pipxg install ipython
+  args:
+    creates: /usr/local/bin/ipython
+- name: pipxg Install tox
+  command: pipxg install tox
+  args:
+    creates: /usr/local/bin/tox
+- name: pipxg Install pytest
+  command: pipxg install pytest
+  args:
+    creates: /usr/local/bin/pytest
+- name: pipxg Install mypy
+  command: pipxg install mypy
+  args:
+    creates: /usr/local/bin/mypy
+- name: pipxg Install black
+  command: pipxg install black
+  args:
+    creates: /usr/local/bin/black
+- name: pipxg Install sphinx
+  command: pipxg install sphinx
+  args:
+    creates: /usr/local/bin/sphinx
+- name: pipxg Install rstcheck
+  command: pipxg install rstcheck
+  args:
+    creates: /usr/local/bin/rstcheck

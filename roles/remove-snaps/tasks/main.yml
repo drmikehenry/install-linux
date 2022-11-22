@@ -1,0 +1,13 @@
+---
+- name: Purge snapd
+  apt:
+    name: snapd
+    state: absent
+    purge: yes
+- name: Prevent snapd reinstallation
+  copy:
+    dest: /etc/apt/preferences.d/nosnap.pref
+    content: |
+      Package: snapd
+      Pin: release a=*
+      Pin-Priority: -10

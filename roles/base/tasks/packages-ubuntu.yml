@@ -1,0 +1,15 @@
+---
+- name: Install ubuntu `:role:base` packages
+  package:
+    name:
+    - wget
+    - curl
+    - vim
+    - gdisk
+    - gparted
+    - nfs-common
+    - cifs-utils
+    - autofs
+    - git
+    - myrepos
+    - subversion

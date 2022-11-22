@@ -1,0 +1,22 @@
+---
+- name: Create Keepass mount points
+  file:
+    path: "/mnt/{{ item }}"
+    state: directory
+    mode: 0755
+  loop:
+    - keepass
+    - keemirror
+    - keebackup
+- name: Setup Keepass fstab entries
+  mount:
+    path: "/mnt/{{ item }}"
+    src: "LABEL={{ item | upper }}"
+    fstype: vfat
+    boot: false
+    opts: "shortname=lower,user"
+    state: present
+  loop:
+    - keepass
+    - keemirror
+    - keebackup

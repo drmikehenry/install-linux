@@ -1,0 +1,64 @@
+---
+- name: Install libuser (for luseradd et al.)
+  package:
+    name:
+      - libuser
+
+- name: Install cron daemon
+  package:
+    name:
+      - cronie
+      - cronie-anacron
+        # For ``semanage``:
+      - policycoreutils-python-utils
+  when: ansible_distribution == 'Fedora'
+
+- name: Setup SELinux context for /localhome
+  command: semanage fcontext -a -e /home /localhome
+  when: ansible_distribution == 'Fedora'
+
+- name: Create /localhome
+  file:
+    path: /localhome
+    state: directory
+    mode: 0755
+
+- name: Use /localhome for new users' home directory for adduser command
+  lineinfile:
+    dest: /etc/adduser.conf
+    regexp: '^DHOME='
+    line: 'DHOME=/localhome'
+  when: ansible_os_family == 'Debian'
+
+- name: Use /localhome for new users' home directory for useradd command
+  lineinfile:
+    dest: /etc/default/useradd
+    regexp: '^(#\s*)?HOME='
+    line: 'HOME=/localhome'
+
+- name: Configure Apparmor for /localhome
+  copy:
+    dest: /etc/apparmor.d/tunables/home.d/my_local.net
+    content: "@{HOMEDIRS}+=/localhome/\n"
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Create localhome-migrate.sh
+  copy:
+    dest: /root/localhome-migrate.sh
+    src: localhome-migrate.sh
+    mode: 0755
+
+- name: Create /etc/cron.d/localhome-migrate
+  copy:
+    dest: /etc/cron.d/localhome-migrate
+    src: etc-cron.d-localhome-migrate
+
+- name: Reboot to perform /localhome migration
+  reboot:
+
+- name: Acquire `/root/localhome-migrate.log`
+  shell: cat /root/localhome-migrate.log
+  register: localhome_migrate_log
+
+- name: Display `/root/localhome-migrate.log`
+  debug: msg="{{ localhome_migrate_log.stdout_lines }}"

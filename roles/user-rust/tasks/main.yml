@@ -1,0 +1,19 @@
+---
+# Variables (see defaults in defaults/main.yml):
+#   - "RUSTUP_DIST_SERVER": URL of Rust dist server for toolchains.
+#   - "RUSTUP_UPDATE_ROOT": URL of Rust rustup server.
+- import_role:
+    name: ansible-user-register
+
+- name: Setup rustup
+  shell: |
+    rm -rf "{{ ansible_user_registered.home }}/.cargo"
+    export RUSTUP_DIST_SERVER="{{ RUSTUP_DIST_SERVER }}"
+    export RUSTUP_UPDATE_ROOT="{{ RUSTUP_UPDATE_ROOT }}"
+    curl -o /tmp/rustup-init \
+      ${RUSTUP_DIST_SERVER}/rustup/dist/x86_64-unknown-linux-gnu/rustup-init &&
+      chmod +x /tmp/rustup-init &&
+      /tmp/rustup-init -q -y --no-modify-path
+  args:
+    creates: "{{ ansible_user_registered.home }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo"
+    warn: false

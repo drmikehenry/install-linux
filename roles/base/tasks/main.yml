@@ -1,0 +1,41 @@
+---
+- name: Install echod
+  copy:
+    src: echod
+    dest: /usr/local/bin/echod
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Base Ubuntu packages
+  import_tasks: tasks/packages-ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Base Fedora packages
+  import_tasks: tasks/packages-fedora.yml
+  when: ansible_distribution == 'Fedora'
+
+- name: Setup autofs /net
+  lineinfile:
+    dest: /etc/auto.master
+    regexp: '^#?\s*/net\b'
+    line: '/net -hosts'
+
+- name: Enable and restart autofs
+  service:
+    name: autofs
+    enabled: yes
+    state: restarted
+
+- name: Setup persistent journal storage
+  lineinfile:
+    dest: /etc/systemd/journald.conf
+    regexp: '^#?\s*Storage=.*'
+    line: 'Storage=persistent'
+  register: journald_conf
+
+- name: Restart journal daemon
+  service:
+    name: systemd-journald
+    state: restarted
+  when: journald_conf is changed

@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+  - import_role:
+      name: force-limit-switch
+
+  - import_role:
+      name: user-rust
+    vars:
+      # - RUSTUP_DIST_SERVER: https://static.rust-lang.org
+      # - RUSTUP_UPDATE_ROOT: https://static.rust-lang.org/rustup

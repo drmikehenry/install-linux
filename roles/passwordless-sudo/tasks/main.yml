@@ -1,0 +1,13 @@
+---
+# Variables:
+#   - "username": the name of the user to setup for passwordless sudo
+#
+# Invocation example for user `some_user`:
+#   - import_role:
+#       name: passwordless-sudo
+#     vars:
+#       username: some_user
+- name: "Setup passwordless sudo for {{ username }}"
+  copy:
+    content: "{{ username }} ALL=(ALL:ALL) NOPASSWD: ALL\n"
+    dest: "/etc/sudoers.d/{{ username }}"

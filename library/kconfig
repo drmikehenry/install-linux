@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+
+from ansible.module_utils.basic import AnsibleModule
+
+
+class Kconfig(object):
+    def __init__(self, module, check_mode=False):
+        self.module = module
+        self.check_mode = check_mode
+
+    def _run(self, command):
+        rc, out, err = self.module.run_command(command)
+        if rc != 0:
+            self.module.fail_json(
+                msg="%s failed with error: %s" % (command[0], err)
+            )
+        return out.rstrip("\n")
+
+    def _base_args(self, cmd, file, groups, key):
+        args = [cmd, "--file", file]
+        for g in groups:
+            args.append("--group")
+            args.append(g)
+        args.append("--key")
+        args.append(key)
+        return args
+
+    def read(self, file, groups, key):
+        """Return value of file/groups/key."""
+        return self._run(self._base_args("kreadconfig5", file, groups, key))
+
+    def write(self, file, groups, key, value):
+        """Write value to file/groups/key.
+
+        Return True if changed.
+        """
+        if value == self.read(file, groups, key):
+            return False
+        elif self.check_mode:
+            return True
+
+        self._run(
+            self._base_args("kwriteconfig5", file, groups, key) + [value]
+        )
+
+        return True
+
+    def remove(self, file, groups, key):
+        """Remove value for file/groups/key.
+        Return True if changed.
+        """
+        current_value = self.read(file, groups, key)
+
+        if current_value == "":
+            return False
+        elif self.check_mode:
+            return True
+
+        self._run(
+            self._base_args("kwriteconfig5", file, groups, key) + ["--delete"]
+        )
+
+        return True
+
+
+def main():
+    module = AnsibleModule(
+        argument_spec=dict(
+            state=dict(
+                default="present", choices=["present", "absent", "read"]
+            ),
+            file=dict(required=True, type="str"),
+            group=dict(required=False, type="str"),
+            groups=dict(required=False, type="list", elements="str"),
+            key=dict(required=True, type="str"),
+            value=dict(required=False, default=None, type="str"),
+            bool=dict(required=False, default=False, type="bool"),
+        ),
+        supports_check_mode=True,
+    )
+
+    if module.params["state"] == "present" and module.params["value"] is None:
+        module.fail_json(msg='State "present" requires "value" to be set.')
+
+    group = module.params["group"]
+    groups = module.params["groups"]
+    if group is None and groups is None:
+        module.fail_json(msg='Must provide "group" or "groups".')
+
+    elif group is not None and groups is not None:
+        module.fail_json(
+            msg='Cannot provide "group" and "groups" simultaneously.'
+        )
+
+    if groups is None:
+        groups = [group]
+
+    kconf = Kconfig(module, module.check_mode)
+
+    if module.params["state"] == "read":
+        value = kconf.read(
+            module.params["file"], groups, module.params["key"],
+        )
+        module.exit_json(changed=False, value=value)
+    elif module.params["state"] == "present":
+        changed = kconf.write(
+            module.params["file"],
+            groups,
+            module.params["key"],
+            module.params["value"],
+        )
+        module.exit_json(changed=changed)
+    elif module.params["state"] == "absent":
+        changed = kconf.remove(
+            module.params["file"], groups, module.params["key"],
+        )
+        module.exit_json(changed=changed)
+
+
+if __name__ == "__main__":
+    main()

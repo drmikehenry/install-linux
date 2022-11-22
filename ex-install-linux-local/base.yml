@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - import_role:
+        name: force-limit-switch
+
+    - name: Setup search domains
+      lineinfile:
+        dest: /etc/systemd/resolved.conf
+        regexp: '^#?\s*Domains\s*='
+        line: 'Domains=drmikehenry.com'
+      register: systemd_resolved_conf
+
+    - name: Restart systemd-resolved
+      service:
+        name: systemd-resolved
+        state: restarted
+      when: systemd_resolved_conf is changed
+
+    - import_role:
+        name: base

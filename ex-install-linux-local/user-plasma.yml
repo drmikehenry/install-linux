@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+  - import_role:
+      name: force-limit-switch
+
+  - import_role:
+      name: user-plasma
+
+  - import_role:
+      name: home-user-plasma

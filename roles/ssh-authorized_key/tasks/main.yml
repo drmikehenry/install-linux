@@ -1,0 +1,7 @@
+---
+# Variables:
+#   - "username": the name of the user to receive SSH authorized_key
+- name: "Add SSH authorized_key for {{ username }}"
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_rsa.pub') }}"

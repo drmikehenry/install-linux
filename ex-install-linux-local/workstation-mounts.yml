@@ -1,0 +1,30 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - import_role:
+      name: force-limit-switch
+
+  - name: Setup hosts
+    lineinfile:
+      dest: /etc/hosts
+      regexp: "^\\s*{{ item.ip }}\\s"
+      line: "{{ item.ip }}  {{ item.hosts }}"
+    loop:
+      - ip: 1.2.3.4
+        hosts: bolt bolt.drmikehenry.com
+
+  - name: Create /mnt/tmp directory
+    file:
+      dest: /mnt/tmp
+      state: directory
+
+  - name: Make /m symlink
+    file:
+      src: /net/bolt.drmikehenry.com/m
+      dest: /m
+      state: link
+        # Don't complain if "src" appears to be missing:
+      force: yes
+      # Don't attempt to set fs attributes:
+      follow: false

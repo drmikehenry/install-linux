@@ -1,0 +1,6 @@
+---
+# Default dist server:
+RUSTUP_DIST_SERVER: https://static.rust-lang.org
+
+# Default rustup server:
+RUSTUP_UPDATE_ROOT: https://static.rust-lang.org/rustup

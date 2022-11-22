@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - import_role:
+        name: force-limit-switch
+
+    - import_role:
+        name: ssh-authorized_key
+      vars:
+        username: root

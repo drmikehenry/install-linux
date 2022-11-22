@@ -1,0 +1,50 @@
+---
+# Variables:
+#   - "become_root": become root ("yes" or "no").
+#   - "user": user to setup.
+#   - "home": home directory.
+#   - "git_url_home": URL of "home" repository.
+#   - "git_url_home2": URL of "home2" repository.
+#   - "git_url_vimfiles": URL of "vimfiles" repository.
+#   - "git_url_vimfiles_local": URL of "vimfiles-local" repository.
+
+- import_role:
+    name: ansible-user-register
+
+- name: "Setup home.git for {{ user }}"
+  become: "{{ become_root }}"
+  shell: |
+    rm -rf "{{ home }}/.home.git"
+    git clone --bare "{{ git_url_home }}" "{{ home }}/.home.git"
+    GIT_DIR="{{ home }}/.home.git" GIT_WORK_TREE="{{ home }}" git reset --hard
+  args:
+    creates: "{{ home }}/.common.sh"
+    warn: false
+
+- name: "Setup home2.git for {{ user }}"
+  become: "{{ become_root }}"
+  shell: |
+    rm -rf "{{ home }}/.home2.git"
+    git clone --bare "{{ git_url_home2 }}" "{{ home }}/.home2.git"
+    GIT_DIR="{{ home }}/.home2.git" GIT_WORK_TREE="{{ home }}" git reset --hard
+  args:
+    creates: "{{ home }}/.bashrc2"
+    warn: false
+
+- name: "Setup vimfiles for {{ user }}"
+  become: "{{ become_root }}"
+  shell: |
+    rm -rf "{{ home }}/.vim"
+    git clone "{{ git_url_vimfiles }}" "{{ home }}/.vim"
+  args:
+    creates: "{{ home }}/.vim/vimrc"
+    warn: false
+
+- name: "Setup vimfiles-local for {{ user }}"
+  become: "{{ become_root }}"
+  shell: |
+    rm -rf "{{ home }}/.vimlocal"
+    git clone "{{ git_url_vimfiles_local }}" "{{ home }}/.vimlocal"
+  args:
+    creates: "{{ home }}/.vimlocal/CHANGES.txt"
+    warn: false

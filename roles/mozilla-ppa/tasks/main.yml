@@ -1,0 +1,15 @@
+---
+- name: Enable Mozilla PPA
+  apt_repository:
+    repo: ppa:mozillateam/ppa
+
+- name: Use Firefox from Mozilla PPA
+  copy:
+    dest: /etc/apt/preferences.d/mozillateamppa
+    content: |
+      Package: firefox*
+      Pin: release o=LP-PPA-mozillateam
+      Pin-Priority: 501
+- name: Install Firefox from Mozilla PPA
+  apt:
+    name: firefox

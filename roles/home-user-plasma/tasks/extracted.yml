@@ -1,0 +1,43 @@
+---
+- name: Create 'activate-thunderbird.desktop'
+  copy:
+    dest: .local/share/applications/activate-thunderbird.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Thunderbird
+      Exec=activate thunderbird Mail.Thunderbird
+- name: Shortcut for 'activate-thunderbird.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-thunderbird.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+T,none,Activate or Launch Thunderbird"
+- name: Create 'activate-chrome.desktop'
+  copy:
+    dest: .local/share/applications/activate-chrome.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Chrome
+      Exec=activate chrome chrome
+- name: Shortcut for 'activate-chrome.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-chrome.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+C,none,Activate or Launch Chrome"
+- name: Create 'activate-gvim-email.desktop'
+  copy:
+    dest: .local/share/applications/activate-gvim-email.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch Gvim-Email
+      Exec=activate "gvim --servername GVIMo --name GVIMo tmp/email.eml" "GVIMo.Gvim"
+- name: Shortcut for 'activate-gvim-email.desktop'
+  kconfig:
+    file: kglobalshortcutsrc
+    group: "activate-gvim-email.desktop"
+    key: "_launch"
+    value: "Ctrl+Alt+o,none,Activate or Launch Gvim-Email"

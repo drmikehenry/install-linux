@@ -1,0 +1,17 @@
+
+---
+- hosts: all
+  become: yes
+  vars:
+    disks:
+      - '/dev/disk/by-id/ata-VBOX_HARDDISK_VB5bde8c14-de8c4709'
+      - '/dev/disk/by-id/ata-VBOX_HARDDISK_VB81562bc4-019c8c1c'
+      - '/dev/disk/by-id/ata-VBOX_HARDDISK_VBb2e9004f-5f781231'
+      - '/dev/disk/by-id/ata-VBOX_HARDDISK_VBe57f2aef-17cda556'
+
+  tasks:
+    - import_role:
+        name: force-limit-switch
+
+    - import_role:
+        name: ubuntu-zfs-format

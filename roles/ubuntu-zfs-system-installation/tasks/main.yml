@@ -1,0 +1,121 @@
+---
+- name: "Create filesystem datasets to act as containers"
+  command:
+    zfs create -o canmount=off -o mountpoint=none "{{ item }}"
+  loop:
+    - 'rpool/ROOT'
+    - 'bpool/BOOT'
+
+- name: "Create filesystem dataset for the root filesystem"
+  shell: |
+    zfs create \
+      -o mountpoint=/ \
+      -o com.ubuntu.zsys:bootfs=yes \
+      -o com.ubuntu.zsys:last-used=$(date +%s) \
+      rpool/ROOT/ubuntu
+
+- name: "Create filesystem dataset for the boot filesystem"
+  command: >
+    zfs create
+      -o mountpoint=/boot
+      bpool/BOOT/ubuntu
+
+- name: "Create dataset for /usr"
+  command: >
+    zfs create
+      -o com.ubuntu.zsys:bootfs=no
+      -o canmount=off
+      rpool/ROOT/ubuntu/usr
+
+- name: "Create dataset /var"
+  command: >
+    zfs create
+      -o com.ubuntu.zsys:bootfs=no
+      -o canmount=off
+      rpool/ROOT/ubuntu/var
+
+- name: "Create additional datasets"
+  command:
+    zfs create "rpool/ROOT/ubuntu{{ item }}"
+  loop:
+    - '/usr/local'
+    - '/var/lib'
+    - '/var/log'
+    - '/var/spool'
+    - '/var/cache'
+    - '/var/lib/nfs'
+    - '/var/tmp'
+    - '/var/lib/apt'
+    - '/var/lib/dpkg'
+    - '/var/games'
+    - '/var/lib/AccountsService'
+    - '/var/lib/NetworkManager'
+    - '/var/lib/docker'
+    - '/var/mail'
+    - '/var/www'
+
+- name: "Set permissions for /var/tmp"
+  file:
+    path: '/mnt/var/tmp'
+    mode: 'ugo=rwxt'
+
+- name: "Create dataset USERDATA"
+  command: >
+    zfs create
+      -o canmount=off
+      -o mountpoint=/
+      rpool/USERDATA
+
+- name: "Create dataset USERDATA/root"
+  command: >
+    zfs create
+      -o com.ubuntu.zsys:bootfs-datasets=rpool/ROOT/ubuntu
+      -o canmount=on
+      -o mountpoint=/root
+      rpool/USERDATA/root
+
+- name: "Set permissions for /root"
+  file:
+    path: '/mnt/root'
+    mode: 'u=rwx,go='
+
+- name: "Create dataset /srv"
+  command: >
+    zfs create
+      -o com.ubuntu.zsys:bootfs=no
+      rpool/ROOT/ubuntu/srv
+
+- name: "Create dataset /boot/grub"
+  command: >
+    zfs create
+      -o com.ubuntu.zsys:bootfs=no
+      bpool/grub
+
+- name: 'Mount a tmpfs at /run'
+  shell: |
+    mkdir /mnt/run
+    mount -t tmpfs tmpfs /mnt/run
+    mkdir /mnt/run/lock
+  args:
+    warn: false
+
+- name: 'Install the minimal system'
+  command:
+    debootstrap jammy /mnt
+
+- name: 'Create /etc/zfs'
+  file:
+    path: /mnt/etc/zfs
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,go=rx
+
+- name: 'Copy in zpool.cache'
+  copy:
+    remote_src: yes
+    src: /etc/zfs/zpool.cache
+    dest: /mnt/etc/zfs/zpool.cache
+    owner: root
+    group: root
+    mode: u=rw,go=r

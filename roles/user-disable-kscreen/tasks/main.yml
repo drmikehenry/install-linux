@@ -1,0 +1,21 @@
+---
+# Ubuntu 20.04 KDE/Plasma has a display resize issue for VMs:
+# - Change screen resolution using any method, immediately snaps back.
+# - Reference: https://old.reddit.com/r/kde/comments/g8bfeg/fyi_how_to_make_kde_plasma_work_at_resolutions/
+# This role implements a work-around by disabling KScreen.
+# After the work-around, use ``xrandr`` to setup resolution on each login,
+# e.g.::
+#   xrandr --output Virtual1 --mode 1680x1050
+
+- import_role:
+    name: ansible-user-register
+
+- name: Disable KScreen
+  # systemsettings5 | Workspace | Startup and Shutdown |
+  #   Background Services::
+  #   - For "KScreen 2", uncheck "Use" and choose "Stop".
+  kconfig:
+    file: kded5rc
+    group: Module-kscreen
+    key: autoload
+    value: "false"

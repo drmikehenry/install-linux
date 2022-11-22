@@ -1,0 +1,92 @@
+---
+- name: "Zap drives"
+  command:
+    sgdisk --zap-all "{{ item }}"
+
+  loop: "{{ disks }}"
+
+- name: "Create Partition 1 (bootloader) for all drives"
+  command:
+    sgdisk -n1:1M:+512M -t1:EF00 "{{ item }}"
+
+  loop: "{{ disks }}"
+
+- name: "Create Partition 5 (legacy BIOS booting) for all drives"
+  command:
+    sgdisk -a1 -n5:24K:+1000K -t5:EF02 "{{ item }}"
+
+  loop: "{{ disks }}"
+
+- name: "Create Partition 2 (swap) for all drives"
+  command:
+    sgdisk -n2:0:+500M -t2:8200 "{{ item }}"
+
+  loop: "{{ disks }}"
+
+- name: "Create Partition 3 (boot pool) for all drives"
+  command:
+    sgdisk -n3:0:+2G -t3:BE00 "{{ item }}"
+
+  loop: "{{ disks }}"
+
+- name: "Create Partition 4 (root pool) for all drives"
+  command:
+    sgdisk -n4:0:0 -t4:BF00 "{{ item }}"
+
+  loop: "{{ disks }}"
+
+- name: "Re-read partition tables"
+  command:
+    partprobe
+
+- name: "Create boot pool"
+  command: >
+    zpool create
+      -o ashift=12
+      -o autotrim=on
+      -o cachefile=/etc/zfs/zpool.cache
+      -o compatibility=grub2
+      -o feature@livelist=enabled
+      -o feature@zpool_checkpoint=enabled
+      -O devices=off
+      -O acltype=posixacl
+      -O xattr=sa
+      -O compression=lz4
+      -O normalization=formD
+      -O relatime=on
+      -O canmount=off
+      -O mountpoint=/boot
+      -R /mnt
+      bpool mirror
+      {{ disks
+          | map(
+            'regex_replace',
+            '(.*)',
+            '\1-part3')
+          | map('quote')
+          | join(' ')
+      }}
+
+- name: "Create root pool"
+  command: >
+    zpool create
+        -o ashift=12
+        -o autotrim=on
+        -O acltype=posixacl
+        -O xattr=sa
+        -O dnodesize=auto
+        -O compression=lz4
+        -O normalization=formD
+        -O relatime=on
+        -O canmount=off
+        -O mountpoint=/
+        -R /mnt
+      rpool
+      {{ disks
+          | map(
+            'regex_replace',
+            '(.*)',
+            '\1-part4')
+          | map('quote')
+          | join(' ')
+      }}
