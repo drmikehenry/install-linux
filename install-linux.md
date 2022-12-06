@@ -4970,19 +4970,21 @@ References:
 
 ## Android File Transfer for Linux
 
+(manual)
+
 - <https://github.com/whoozle/android-file-transfer-linux/releases>
 
 - Grab the .AppImage, e.g.:
-  <https://github.com/whoozle/android-file-transfer-linux/releases/download/v3.8/Android_File_Transfer-84866e7-x86_64.AppImage>
+  <https://github.com/whoozle/android-file-transfer-linux/releases/download/v4.2/Android_File_Transfer-cce42ee-x86_64.AppImage>
 
 - Save directly into `/usr/local/bin` under the original name, then symlink to a
   convenient version-independent name:
 
-      sudo cp ~/tmp/Android_File_Transfer-84866e7-x86_64.AppImage /usr/local/bin
+      sudo cp ~/tmp/Android_File_Transfer-cce42ee-x86_64.AppImage /usr/local/bin
 
-      sudo chmod +x /usr/local/bin/Android_File_Transfer-84866e7-x86_64.AppImage
+      sudo chmod +x /usr/local/bin/Android_File_Transfer-cce42ee-x86_64.AppImage
 
-      sudo ln -s /usr/local/bin/Android_File_Transfer{-84866e7-x86_64.AppImage,}
+      sudo ln -s /usr/local/bin/Android_File_Transfer{-cce42ee-x86_64.AppImage,}
 
 # Utilities
 
