@@ -4335,6 +4335,8 @@ More configuration via `systemsettings5` | Printers:
 
 # Snapshot
 
+- (manual) Install and setup `rsnapshot`.
+
 - Install rsnapshot:
 
       agi rsnapshot
