@@ -32,8 +32,9 @@ To remove maps:
 
 - Connecting via ssh to an unconfigured box might enable "bracketed
   paste" mode, wherein a paste into the terminal requires a manual
-  press of "Enter" to complete the paste operation. To disable
-  "bracketed paste" mode, run the following at the prompt:
+  press of "Enter" to complete the paste operation.
+
+  To manually disable "bracketed paste" mode, run the following at the prompt:
 
       bind 'set enable-bracketed-paste off'
 

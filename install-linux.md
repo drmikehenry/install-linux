@@ -2,34 +2,6 @@
 title: Linux Installation
 ---
 
-# Vim Shortcut For Pasting
-
-For convenient pasting from Vim, use `~/bin/pastewin` against a convenient
-Plasma Konsole (e.g., `konsole-3`):
-
-    nmap <f8> VY:silent !pastewin konsole-3<CR>
-    xmap <f8>  Y:silent !pastewin konsole-3<CR>
-
-Then press `<F8>` on a line to paste it, or visually select to paste the entire
-selection.
-
-Test on this line:
-
-    echo Hello
-
-Or this multi-line:
-
-    echo Hello \
-      there
-
-To remove maps:
-
-    nunmap <f8>|xunmap <f8>
-
-To manually disable bracketed-paste at a shell prompt:
-
-      bind 'set enable-bracketed-paste off'
-
 # System-Specific Setup
 
 See `install-linux-local.md` for any machine-specific setup.
