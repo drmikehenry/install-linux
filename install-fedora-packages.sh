@@ -1,4 +1,9 @@
 dnf install -y \
+  keepassxc \
+  hplip \
+  audacity \
+  gimp \
+  Maelstrom \
   wget \
   curl \
   vim \
@@ -65,9 +70,4 @@ dnf install -y \
   okular \
   geeqie \
   speedcrunch \
-  keepassxc \
-  hplip \
-  audacity \
-  gimp \
-  Maelstrom \
 

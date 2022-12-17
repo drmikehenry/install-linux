@@ -1,4 +1,33 @@
 DEBIAN_FRONTEND=noninteractive apt-get install -y \
+  keepassxc \
+  hplip \
+  gnucash \
+  gnucash-common \
+  gnucash-docs \
+  python3-gnucash \
+  pithos \
+  pavucontrol \
+  paprefs \
+  pavumeter \
+  audacity \
+  mpg321 \
+  gwenview \
+  gthumb \
+  gimp \
+  ffmpeg \
+  devede \
+  mplayer \
+  mplayer-gui \
+  vlc \
+  k3b \
+  brasero \
+  libsane \
+  libsane-common \
+  libsane-dev \
+  libsane1 \
+  sane-utils \
+  gscan2pdf \
+  maelstrom \
   wget \
   curl \
   vim \
@@ -92,33 +121,4 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   okular \
   geeqie \
   speedcrunch \
-  keepassxc \
-  hplip \
-  gnucash \
-  gnucash-common \
-  gnucash-docs \
-  python3-gnucash \
-  pithos \
-  pavucontrol \
-  paprefs \
-  pavumeter \
-  audacity \
-  mpg321 \
-  gwenview \
-  gthumb \
-  gimp \
-  ffmpeg \
-  devede \
-  mplayer \
-  mplayer-gui \
-  vlc \
-  k3b \
-  brasero \
-  libsane \
-  libsane-common \
-  libsane-dev \
-  libsane1 \
-  sane-utils \
-  gscan2pdf \
-  maelstrom \
 
