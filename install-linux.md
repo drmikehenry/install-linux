@@ -6449,62 +6449,10 @@ needed.
 ### (ubuntu) Java
 
 - <https://help.ubuntu.com/community/Java>
-- Trying out OpenJDK for now (it's already installed).
-- openjdk-8-jre is installed. See other packages such as openjdk-8-jdk for more
-  options.
+- openjdk-11-jre is installed. See other packages such as openjdk-11-jdk for
+  more options.
 
 ### (fedora) Java
-
-#### Oracle Java
-
-- Oracle Java instructions from:
-  <http://www.if-not-true-then-false.com/2014/install-oracle-java-8-on-fedora-centos-rhel/>
-
-- Download from:
-  <http://www.oracle.com/technetwork/java/javase/downloads/index.html>
-
-  Direct link (may not work unless accept license):
-  <http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.rpm>
-
-- Install:
-
-      rpm -Uvh ~mike/download/programming/java/jdk-8u40-linux-x64.rpm
-
-- Install alternatives:
-
-      ## java ##
-      alternatives --install /usr/bin/java java /usr/java/latest/bin/java 20000
-
-      ## javaws ##
-      alternatives --install /usr/bin/javaws javaws /usr/java/latest/bin/javaws 20000
-
-      ## Java Browser (Mozilla) Plugin 64-bit ##
-      alternatives --install /usr/lib64/mozilla/plugins/libjavaplugin.so libjavaplugin.so.x86_64 /usr/java/latest/jre/lib/amd64/libnpjp2.so 20000
-
-      ## Install javac only if you installed JDK (Java Development Kit) package ##
-      alternatives --install /usr/bin/javac javac /usr/java/latest/bin/javac 20000
-      alternatives --install /usr/bin/jar jar /usr/java/latest/bin/jar 20000
-
-- Choose alternative java implementation (one at a time):
-
-      alternatives --config java
-      alternatives --config javaws
-      alternatives --config libjavaplugin.so.x86_64
-      alternatives --config javac
-      alternatives --config jar
-
-- A fix for `failed to read link /usr/bin/javaws`:
-  <http://johnglotzer.blogspot.com/2012/09/alternatives-install-gets-stuck-failed.html>
-
-  Essentially, remove the contents of `/var/lib/alternatives/SOMETHING` if the
-  invocation of `alternatives --install /usr/bin/SOMETHING` fails, then try
-  again (do the `--install` over again).
-
-#### OpenJDK
-
-- Doesn't work for chess.com.
-
-- Can leave it installed anyway if needed to fulfill dependencies.
 
 - Fedora FAQ recommends OpenJDK version:
   <https://fedoraproject.org/wiki/Java/FAQ>
