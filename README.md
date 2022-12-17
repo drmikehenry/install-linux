@@ -28,6 +28,8 @@ To remove maps:
 
     nunmap <f8>|xunmap <f8>
 
+Note: the `pastewin` script requires `xdotool`.
+
 ## Fixing "bracketed paste"
 
 - Connecting via ssh to an unconfigured box might enable "bracketed
