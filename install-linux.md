@@ -6659,7 +6659,9 @@ References:
 
 ### markdown lint
 
-- Install:
+(manual)
+
+- Install (as root):
 
       gem install mdl
 
