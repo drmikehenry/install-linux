@@ -3970,6 +3970,34 @@ In Konsole, choose Settings | Configure Keyboard Shortcuts:
        </ActionProperties>
       </gui>
 
+- (manual) Set "Move tab to the left" shortcut to Ctrl+Shift+Left.
+  Note: default is Ctrl+Alt+Left; this reassigns the key from "Focus Left
+  Terminal".
+
+  TODO Ansible perform above configuration by adding these lines in
+  `~/.local/share/kxmlgui5/konsole/konsoleui.rc`:
+
+      <gui name="konsole" version="19">
+       <ActionProperties scheme="Default">
+        <Action name="focus-view-left" shortcut=""/>
+        <Action name="move-tab-to-left" shortcut="Ctrl+Shift+Left"/>
+       </ActionProperties>
+      </gui>
+
+- (manual) Set "Move tab to the right" shortcut to Ctrl+Shift+Right.
+  Note: default is Ctrl+Alt+Right; this reassigns the key from "Focus Right
+  Terminal".
+
+  TODO Ansible perform above configuration by adding these lines in
+  `~/.local/share/kxmlgui5/konsole/konsoleui.rc`:
+
+      <gui name="konsole" version="19">
+       <ActionProperties scheme="Default">
+        <Action name="focus-view-right" shortcut=""/>
+        <Action name="move-tab-to-right" shortcut="Ctrl+Shift+Right"/>
+       </ActionProperties>
+      </gui>
+
 ### Konsole Configuration
 
 In Konsole, choose Settings | Configure Konsole, then continue.
