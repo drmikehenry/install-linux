@@ -2767,6 +2767,40 @@ Leave mail on server until manual deletion.
 
        03  04    *   *    *      ~/bin2/abook pull
 
+# Desktop Configuration
+
+## Tracker
+
+From <https://wiki.ubuntu.com/Tracker>:
+
+> Tracker provides the following:
+>
+> - Indexer for desktop search (for more details see this spec :
+>   <https://wiki.ubuntu.com/IntegratedDesktopSearch>)
+>
+> - Tag database for doing keyword tagging of any object
+>
+> - Extensible metadata database for apps like gedit and rhythmbox which need to
+>   add custom metadata to files
+>
+> - Database for first class objects allows using tracker's database for storage
+>   and implementation of First Class Objects and the Gnome 3.0 Model.
+
+Tracker can sap performance.  To disable on a per-user basis:
+
+- (manual) Create a local `trackerd.desktop` to disable Tracker:
+
+      echod -o ~/.config/autostart '
+        [Desktop Entry]
+        Encoding=UTF-8
+        Name=Tracker
+        Hidden=true
+      '
+
+- (manual) After disabling, remove cached Tracker files:
+
+      rm -rf ~/.cache/tracker3/
+
 # Desktop Automation
 
 ## wmctrl
