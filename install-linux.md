@@ -3703,6 +3703,14 @@ To bind a shortcut key to an arbitrary command:
 - Web Browser: Firefox Web Browser
 - Email client: Thunderbird Mail
 
+### System Settings | Hardware | Audio
+
+- (manual) If `Playback Streams` is shown, check the `mute` icon.  This
+  disables the sounds accompanying warning dialogs (such as when trying to
+  close a Konsole with multiple tabs open).  Note that having the slider set to
+  zero is insufficient to disable the sounds.  May also visit this dialog
+  directly via `kcmshell5 kcm_pulseaudio`.
+
 ### System Settings | Hardware | Input Devices
 
 #### ... Keyboard
