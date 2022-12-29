@@ -3183,6 +3183,36 @@ or via `systemsettings5`.
 
 ### System Settings | Workspace | Shortcuts
 
+#### ... Shortcuts | Applications | Accessibility
+
+- Uncheck "Meta+Alt+S" for "Toggle Screen Reader On and Off".
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
+  - name: Remove Screen Reader shortcut
+    kconfig:
+      file: kglobalshortcutsrc
+      group: "kaccess"
+      key: "Toggle Screen Reader On and Off"
+      value: "none,Meta+Alt+S,Toggle Screen Reader On and Off"
+
+  - name: Keep Accessibility friendly name
+    kconfig:
+      file: kglobalshortcutsrc
+      group: "kaccess"
+      key: "_k_friendly_name"
+      value: "Accessibility"
+
+  - name: Disable Screen Reader at startup
+    kconfig:
+      file: kaccessrc
+      group: "ScreenReader"
+      key: "Enabled"
+      value: "false"
+
+  ```
+
 #### ... Shortcuts | Applications | KRunner | Default shortcuts
 
 - Uncheck "Alt+Space"
@@ -3201,7 +3231,7 @@ or via `systemsettings5`.
     kconfig:
       file: kglobalshortcutsrc
       group: "org.kde.krunner.desktop"
-      key: "_k_friendly_name=KRunner"
+      key: "_k_friendly_name"
       value: "KRunner"
 
   - name: Remove Alt+Space shorcut from KRunner
