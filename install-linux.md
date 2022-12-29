@@ -6143,17 +6143,15 @@ needed.
       # 5.8.0 is the newest version that works with Python2.
       pipsig2 install ipython==5.8.0
 
-- Create default configuration (shared for Python 2, Python 3):
+- (manual) Create default configuration (shared for Python 2, Python 3):
 
       ipython profile create
-
-  (manual)
 
 - Backup configuration:
 
       cp ~/.ipython/profile_default/ipython_config.py{,.dist}
 
-- Edit configuration:
+- (manual) Edit configuration:
 
       vim ~/.ipython/profile_default/ipython_config.py
 
