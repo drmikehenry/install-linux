@@ -7455,8 +7455,9 @@ Record five seconds to a file, then play it back:
 
       yi geeqie
 
-- Run `geeqie` and configure via Edit | Preferences | Preferences (though at
-  present, nothing to configure).
+- (manual) Run `geeqie` and configure via Edit | Preferences | Preferences:
+
+  - Behavior | Delete | check "Use no trash at all".
 
 ### Gwenview Image Viewer
 
