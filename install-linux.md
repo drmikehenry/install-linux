@@ -7258,7 +7258,7 @@ References:
 
 - Install:
 
-      agi wine-stable
+      agi wine
 
       yi wine
 
@@ -7409,33 +7409,45 @@ Record five seconds to a file, then play it back:
 
 ### timidity MIDI Playback
 
+(manual)
+
 - Reference:
-  <https://wiki.winehq.org/MIDI#Selecting_the_Output_-_the_MIDI_mapper>
+  - <https://help.ubuntu.com/community/Midi/SoftwareSynthesisHowTo>
+  - <https://wiki.winehq.org/MIDI#Selecting_the_Output_-_the_MIDI_mapper>
+  - <https://askubuntu.com/questions/1237960/how-to-use-timidity-in-ubuntu-18-04#1238036>
+
+- Note: The Ubuntu package `timidity-daemon` is broken.  It's supposed to run
+  `timidity` as a daemon via `timidity -iA` (with other switches), and to do so
+  as the user/group `timidity/timidity`; but with the default configuration, the
+  package won't install correctly (leaving the APT package status corrupt; fix
+  this via `rm /etc/init.d/timidity` and `apt-get purge timidity-daemon`).
+
+  However, manually running as each individual user works:
+
+      timidity -iA
+
+  Therefore, instructions below avoid using `timidity-daemon`.
 
 - Install:
 
       agi timidity
 
-- Verify MIDI ports are not yet available (run as normal user):
+- (optional) Adjust `/etc/timidity/timidity.cfg` as shown in `man timidity.cfg`.
 
-      $ aconnect -o
+- Play sample MIDI file:
+
+      timidity ~/x/sound/beetfure.mid
+
+- Verify MIDI ports for client 128 are not yet available (run as normal user):
+
+      aconnect -o
+
       client 14: 'Midi Through' [type=kernel]
           0 'Midi Through Port-0'
 
-- Original permissions on /etc/timidity:
+- For one-off support, run as an ALSA sequencer client (run as normal user):
 
-      ll -d /etc/timidity/
-
-      drwxr-xr-x 2 root root 4096 Sep 18 09:43 /etc/timidity/
-
-- Need write access to create /etc/timidity/.config/ when running as timidity
-  user:
-
-      sudo chown -h timidity /etc/timidity
-
-- Restart the daemon:
-
-      sudo systemctl restart timidity
+      timidity -iA
 
 - Verify timidity ports are available (run as normal user):
 
@@ -7449,9 +7461,37 @@ Record five seconds to a file, then play it back:
           2 'TiMidity port 2 '
           3 'TiMidity port 3 '
 
-- Play sample MIDI file:
+- Play sample MIDI file on port 128:
 
       aplaymidi -p 128:0 ~/x/sound/beetfure.mid
+
+- For automated launching of `timidity -iA` at each login:
+
+      mkdir -p ~/.config/systemd/user
+      echod -o ~/.config/systemd/user/timidity.service '
+        [Unit]
+        Description=TiMidity++ Daemon
+        After=sound.target
+
+        [Service]
+        ExecStart=bash -c 'sleep 10; /usr/bin/timidity -iA'
+
+        [Install]
+        WantedBy=default.target
+      '
+
+  The `sleep` is to allow time for the ACLs on `/dev/snd/*` to be updated;
+  without this, `timidity` is unable to open `/dev/snd/seq`.  It would also be
+  possible to add a user to the `audio` group, but this is deprecated practice
+  now; see: <https://wiki.ubuntu.com/Audio/TheAudioGroup>
+
+- Enable service to start at each login:
+
+      systemctl --user enable timidity.service
+
+- Start service now:
+
+      systemctl --user start timidity.service
 
 ### Sound Converter
 
