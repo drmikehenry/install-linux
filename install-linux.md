@@ -520,9 +520,11 @@ while args:
 
 ### Ubuntu
 
-(automated)
-
 - Uncomplicated Firewall (`ufw`) is installed by default, but disabled.
+
+### Base Firewall Setup for SSH and enable
+
+(automated)
 
 - Setup to allow ssh, "deny" by default, then enable firewall:
 
@@ -531,6 +533,15 @@ while args:
       ufw enable
 
       # Press 'y' to allow firewall to enable.
+
+### Block multicast DNS of UDP 5355
+
+(manual)
+
+UDP port 5355 is for multicast DNS for Windows.  Windows machines leave lots of
+noise in the logs.  To fix this, block the port explicitly:
+
+    ufw deny 5355/udp
 
 ## Static Hosts
 
@@ -745,6 +756,23 @@ in `/home`.
       echod -o /etc/sudoers.d/mike '
         mike ALL=(ALL)  NOPASSWD: ALL
       '
+
+### coreutils
+
+- Always installed (mentioned for reference).
+
+#### stdbuf
+
+- Use `stdbuf` for changing the default FILE stream buffering modes of programs.
+  For example, when writing to a pipe, `grep` uses line-buffering for `stdout`,
+  preventing realtime display of output.  `stdbuf` preloads a library to
+  reconfigure buffering modes; e.g.:
+
+      # This buffers up lines out of grep:
+      generate_lines | grep regex | further_processing
+
+      # Now, lines are produced in realtime:
+      generate_lines | stdbuf -o0 grep regex | further_processing
 
 ## Repository Tools
 
@@ -1095,23 +1123,21 @@ Needed for Windows network shares.
 
 ### SSH Client Setup
 
-- Bring over old `~/.ssh/` contents as desired.
+- (manual) Bring over old `~/.ssh/` contents as desired.
 
-- To create `~/.ssh/` on the new machine with proper permissions, initiate a
-  login then abandon it via Ctrl-C:
+  - To create `~/.ssh/` on the new machine with proper permissions, initiate a
+    login then abandon it via Ctrl-C:
 
-      ssh localhost     # Then CTRL-C without typing password
+        ssh localhost     # Then CTRL-C without typing password
 
-- May also copy an id to `newmachine` via:
+  - May also copy an id to `newmachine` via:
 
-      ssh-copy-id -i ~/.ssh/id_rsa newmachine
+        ssh-copy-id -i ~/.ssh/id_rsa newmachine
 
-- Configure SSH clients. Note that host-specific settings should come first,
-  since the first-found setting that matches wins:
+- (manual) Configure SSH clients. Note that host-specific settings should come
+  first, since the first-found setting that matches wins:
 
       vim /etc/ssh/ssh_config
-
-  (manual) TODO: Ansible
 
   Contents:
 
@@ -1124,6 +1150,18 @@ Needed for Windows network shares.
               ForwardX11 yes
               ServerAliveInterval 300
               SendEnv COLORFGBG
+              SendEnv COLORTERM
+
+  The variable `COLORFGBG` is set by KDE Konsole to indicate console foreground
+  and background colors.  Tools such as Vim use this variable to determine what
+  colorscheme to use.  For example, `COLORFGBG=15;0` sets a white-on-black
+  scheme (such that Vim sets `background=dark`).  Similarly, when the
+  `COLORTERM` environment variable contains the value `truecolor`, vimfiles will
+  set `termguicolors` which will cause Vim to assume 24-bit color support in the
+  terminal and to use the GUI colors for the current colorscheme (which are
+  typically nicer).  Using appropriate `SendEnv` directives on the SSH client
+  and corresponding `AcceptEnv` directives on the SSH server allows these
+  environment variables to be propagated over the SSH connection.
 
 - (manual) Create `~/.ssh/config.d` directory concept:
 
@@ -1145,7 +1183,7 @@ Needed for Windows network shares.
 
 ### SSH Server Setup
 
-(manual) TODO Ansible
+(manual)
 
 - References:
   - SSH PasswordAuthentication vs ChallengeResponseAuthentication:
@@ -1153,9 +1191,17 @@ Needed for Windows network shares.
   - OpenSSH: requiring keys, but allow passwords from some locations:
     <https://mwl.io/archives/818>
 
-- Perform system-specific and/or network-specific configuration:
+- Perform SSH server configuration:
 
-    vim /etc/ssh/sshd_config
+      vim /etc/ssh/sshd_config
+
+  Include lines to accept propagation of some useful environment variables (see
+  SSH client configuration steps for details):
+
+      AcceptEnv COLORFGBG
+      AcceptEnv COLORTERM
+
+  Also include any system-specific and/or network-specific configuration.
 
 - (ubuntu) Configure ssh firewall:
 
@@ -1736,6 +1782,13 @@ get the latest version:
 
 # Graphical Environment
 
+## Remapping keys
+
+- (manual) Make Capslock be both Control and Escape (experimental):
+
+      setxkbmap -option 'caps:ctrl_modifier'
+      xcape -e 'Caps_Lock=Escape' -t 100
+
 ## Plasma Installation
 
 - Optional for systems that will run X11.
@@ -2192,6 +2245,16 @@ entire profile.
 
       sudo update-alternatives --config x-www-browser
 
+- To configure Firefox to be the default browser using the command line (which
+  shouldn't be necessary if it was already done via the GUI, but it seems to be
+  needed anyway in some cases):
+
+      xdg-settings set default-web-browser firefox.desktop
+
+  Verify via:
+
+      xdg-settings get default-web-browser
+
 #### Firefox re-enabling copy/paste, right-click
 
 - References:
@@ -2450,17 +2513,6 @@ not running and repeat the previous steps for profile creation, but:
   breakage for some sites.  See
   <http://www.ghacks.net/2014/01/08/block-websites-reading-modifying-clipboard-contents-firefox/>
 
-- Disable auto-updates; this can no longer be done via a configuration setting.
-  See <https://support.mozilla.org/en-US/questions/1277486>.  It requires a
-  `policies.json` file:
-  <https://support.mozilla.org/en-US/kb/customizing-firefox-using-policiesjson>
-
-  Policies are defined in
-  <https://github.com/mozilla/policy-templates/blob/master/README.md>.
-
-  Article for setting up policies to avoid automatic updates:
-  <https://linuxreviews.org/HOWTO_Make_Mozilla_Firefox_Stop_Nagging_You_About_Updates_And_Other_Annoying_Idiocy>
-
 - Change `pdfjs.enableScripting` to `false` to stop running JavaScript within
   PDFs.
 
@@ -2473,6 +2525,43 @@ not running and repeat the previous steps for profile creation, but:
 
   > "If `browser.startup.homepage_override.mstone` is set to "ignore", the
   > browser's homepage will not be overridden after updates."
+
+- Change `security.default_personal_cert` from `Ask Every Time` to `Select
+  Automatically` (this avoids the prompt to pick a certificate every time
+  Firefox starts).
+
+  *NOTE* If a certificate was manually selected in the past and marked with
+  "Remember this decision", it's possible the certificate will expire and the
+  remembered decision will cause a hard-to-diagnose failure.  Remembered
+  certificate choices are found in preferences under `View Certificates |
+  Authentication Decisions`; delete any old choices once automatic certificate
+  selection is configured.
+
+- Search for `browser.disableResetPrompt` (which doesn't exist); create as a new
+  `Boolean` by clicking `+`, set to `true`.  This should eliminate the stupid
+  "It looks like you haven't started Firefox in a while" message.
+
+##### Disable Firefox auto-updates
+
+This can no longer be done via a configuration setting.  See
+<https://support.mozilla.org/en-US/questions/1277486>.  It requires a
+`policies.json` file:
+<https://support.mozilla.org/en-US/kb/customizing-firefox-using-policiesjson>
+
+Policies are defined in
+<https://github.com/mozilla/policy-templates/blob/master/README.md>.
+
+Article for setting up policies to avoid automatic updates:
+<https://linuxreviews.org/HOWTO_Make_Mozilla_Firefox_Stop_Nagging_You_About_Updates_And_Other_Annoying_Idiocy>
+
+- Create `/etc/firefox/policies/policies.json` with the below contents to avoid
+  automatic Firefox updates:
+
+      {
+          "policies": {
+              "ManualAppUpdateOnly": true
+          }
+      }
 
 ### Firefox Add-ons
 
@@ -4012,7 +4101,7 @@ Ansible `:role:user-plasma`:
 
 #### Konsole Custom Profile Settings
 
-In Konsole, choose Settings | Edit Current Profile:
+In Konsole, choose Settings | Manage Profiles | choose "Custom" profile | Edit:
 
 - Scrolling | Scrollback | Set "Fixed size" to "100000 lines".
 
@@ -4213,6 +4302,12 @@ In Konsole, choose Settings | Configure Konsole, then continue.
 - Launch `dolphin`, then use menu Control | Configure Dolphin | General, check
   "Use common view properties for all folders". This eliminates littering
   `.directory` files everywhere.
+
+## Nautilus (GNOME file browser)
+
+- Install `:role:workstation`:
+
+      agi nautilus
 
 ## Konqueror
 
@@ -4538,6 +4633,10 @@ More configuration via `systemsettings5` | Printers:
 
 ## postfix for Satellite Nodes
 
+(manual)
+
+Use Postfix for "satellite" nodes that communicate **with a local SMTP server**.
+
 - Install postfix:
 
       agi postfix
@@ -4545,8 +4644,7 @@ More configuration via `systemsettings5` | Printers:
 - (ubuntu):
 
   - When installing, answer the configuration questions as:
-    - Choose `satellite` email system if not installing for
-      bolt.drmikehenry.com.
+    - Choose `satellite` email system.
     - Choose FQDN for System mail name (e.g., `mobi.drmikehenry.com`).
     - Choose `mailman.drmikehenry.com` for SMTP relay host.
     - Leave remaining questions (if any) at their defaults.
@@ -4562,16 +4660,49 @@ More configuration via `systemsettings5` | Printers:
 
       systemctl restart postfix
 
+## exim4 for local-only mail delivery
+
+(manual)
+
+Use exim4 for nodes **without a local SMTP server**.
+
+- Install exim4:
+
+      agi exim4-daemon-light
+
+- Configure:
+
+      sudo dpkg-reconfigure exim4-config
+
+  Choose these options:
+
+  - local delivery only; not on a network
+  - System mail name: `<host-FQDN>`
+  - IP addresses on which to listen: `127.0.0.1 ; ::1`
+  - Other destinations for which mail is accepted: `<host-FQDN>`
+  - Keep number of DNS-queries minimal (Dial-on-Demand)? `No`
+  - Delivery method for local mail: `mbox format in /var/mail/`
+  - Split configuration into small files: `No`
+  - Mail for the 'postmaster', 'root', ...: `<user-to-receive-mail>`
+
 ## Mail Aliases
 
-- Ensure `root` and `mike` aliases exists on all boxes:
+(manual)
 
-      echod -a /etc/aliases '
-        root:   drmikehenry@drmikehenry.com
-        mike:   drmikehenry@drmikehenry.com
-        '
+- Choose user for delivery of `root` email; edit `/etc/aliases`, change this
+  line:
 
-- Enable new aliases:
+      root: <whatever>
+
+  to point to the desired user; for example:
+
+      root: drmikehenry@drmikehenry.com
+
+- Add any other desired aliases, e.g.:
+
+      mike:   drmikehenry@drmikehenry.com
+
+- Activate the aliases:
 
       newaliases
 
@@ -4579,7 +4710,7 @@ More configuration via `systemsettings5` | Printers:
 
 Note: Ubuntu 16.04 uses mailutils now for the `mail` command.
 
-- Install tools:
+- Install tools `:role:workstation`:
 
       agi mutt mailutils
 
@@ -4630,18 +4761,17 @@ Note: Ubuntu 16.04 uses mailutils now for the `mail` command.
 
 (manual)
 
-- Install from PPA:
+- (optional) Use latest version from PPA:
 
   - Reference: <https://launchpad.net/~libreoffice/+archive/ubuntu/ppa>
 
-  - Add PPA repository and install:
+  - Add PPA repository:
 
         add-apt-repository -y --update ppa:libreoffice/ppa
-        agi libreoffice
 
 - Install:
 
-      agi libreoffice
+      agi libreoffice libreoffice-math libreoffice-pdfimport
 
       yi libreoffice
 
@@ -4948,7 +5078,11 @@ References:
 
 ## wdfs
 
+Wdfs provides WebDAV-based filesystem mounts (based on `libfuse`).
+
 ### (ubuntu) wdfs
+
+(manual)
 
 **NOTE** Need to install libneon27-gnutls-dev to avoid this bug:
 <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622140>
@@ -4966,6 +5100,9 @@ References:
       cd wdfs-1.4.2
       ./configure
       make
+
+- Option 1: Use `checkinstall` to create a `.deb`, then install it:
+
       sudo checkinstall
 
   Answers to checkinstall questions:
@@ -4976,10 +5113,22 @@ References:
 
     > WebDAV-based fuse filesystem.
 
-  Using `checkinstall` instead of `make install` builds a .deb package
+  Note: Using `checkinstall` instead of `make install` builds a `.deb` package
   (`wdfs_1.4.2-1_amd64.deb` in this case) and then installs the package.
 
+- Option 2: Create binary tarball and install:
+
+      make install DESTDIR=$PWD/DESTDIR &&
+        find DESTDIR -type d -print0 | xargs -0 chmod go-w &&
+        echo "  Creating tar from DESTDIR" &&
+        tar -C DESTDIR --numeric-owner --owner=0 --group=0 \
+          -zcf wdfs_1.4.2-1_amd64.tar.gz .
+
+      sudo tar -C / -zxf wdfs_1.4.2-1_amd64.tar.gz
+
 ### (fedora) wdfs
+
+(manual)
 
 - Install:
 
@@ -4987,16 +5136,25 @@ References:
 
 ### (all) wdfs
 
+(manual)
+
 - Optional test server: <https://webdavserver.com/>
 
-  Visit above link, get URL of test data.
+  **NOTE** First, visit above link; this will redirect to a custom URL
+  like this:
+
+    # ***Get a new URL; don't use this one!
+    https://webdavserver.com/Userbfc856d
+
+  Do this each time, since the custom URL above is valid only temporarily.
 
 - Test the mount:
 
       mkdir -p ~/tmp/dav/
 
       # Use URL of some DAV server:
-      wdfs https://webdavserver.com/User66f27c7 ~/tmp/dav/
+      # *** Use a new URL (see above) when testing with `webdavserver.com`:
+      wdfs https://webdavserver.com/Userbfc856d ~/tmp/dav/
 
       ls ~/tmp/dav/
 
@@ -5020,7 +5178,34 @@ References:
 
       yi davfs2
 
-  (ubuntu) Allow unprivileged users to mount.
+  (ubuntu) At the dialog prompt, may allow unprivileged users to mount if
+  desired (otherwise, only root may mount).
+
+- Man pages:
+
+      man davfs2.conf
+      man mount.davfs2
+      man umount.davfs2
+
+- As root, can mount from the command line, e.g.:
+
+      mkdir -p /webdav/SomeUser/webdav_share
+      mount -t davfs -o uid=SomeUser,gid=SomeGroup \
+        https://some.host/path/to/webdav_share \
+        /webdav/SomeUser/webdav_share
+
+  See `wdfs` instructions for using `https://webdavserver/` for testing.
+
+- If allowing normal users to mount:
+
+  - Add each user to the `davfs2` group, e.g:
+
+        gpasswd -a SomeUser davfs2
+
+  - Add a line in `/etc/fstab` for each mount, e.g.:
+
+      # For user SomeUser who's a member of SomeGroup:
+      https://some.host/path/to/webdav_share  /webdav/SomeUser/webdav_share davfs noauto,user,uid=SomeUser,gid=SomeGroup 0 0
 
 ## jmtpfs
 
@@ -5277,22 +5462,21 @@ References:
 
 ### SMB Mounts
 
-- Setup `/etc/fstab` for a CIFS mount:
+- Use `domain=DOMAIN`, `username=USER` for a user `USER` on a remote server with
+  an NT domain of `DOMAIN`.
 
-      //host/share  /mnt/share   cifs    noauto,user,owner,uid=mike,gid=mike,username=mike,workgroup=toyland 0 0
+- Do not put quotes into `/etc/fstab`.
 
-- (bolt) Setup mounts of Windows machines:
+- Example `/etc/fstab` for a CIFS mount of `\\host\share` for remote user `mike`
+  with NT domain `toyland`, granting permissions to user `localuser` with group
+  `localgroup`:
 
-      echod -a -o /etc/fstab '
-        //descartes/c_drive  /mnt/descartes_c   cifs    noauto,user,owner,uid=beth,gid=beth,username=beth,workgroup=toyland 0 0
-        //socksbox/c_drive  /mnt/socksbox_c   cifs    noauto,user,owner,uid=andrew,gid=andrew,username=andrew,workgroup=toyland 0 0
-        //ella/c_drive  /mnt/ella_c   cifs    noauto,user,owner,uid=sarah,gid=sarah,username=sarah,workgroup=toyland 0 0
+      //host/share  /mount/point   cifs    noauto,user,owner,uid=localuser,gid=localgroup,username=mike,workgroup=toyland 0 0
 
-      '
+- May additionally want `iocharset=utf8` and `sec=ntlm` options (for Windows 7
+  mounts, for example):
 
-  Create mount points:
-
-      mkdir /mnt/{socksbox_c,descart_c,ella_c}
+      //host/share  /mount/point   cifs    noauto,user,owner,uid=localuser,gid=localgroup,username=mike,workgroup=toyland,iocharset=utf8,sec=ntlm 0 0
 
 ### USB Flash Drives
 
@@ -5337,6 +5521,25 @@ References:
       sudo mkdir /mnt/archive
       archivemount archive.tar.gz /mnt/archive
       sudo umount /mnt/archive
+
+### inotify-related utilities
+
+- Install `:role:workstation`:
+
+      agi inotify-tools
+
+- Provides:
+
+      inotifywait
+      inotifywatch
+
+- Example: watching a file in a loop:
+
+      while true; do
+          inotifywait filename.md
+          sleep .2
+          pandoc filename.md -o filename.rst
+      done
 
 ## Hardware/Disk Utilities
 
@@ -5398,6 +5601,51 @@ Display computer block diagram graphically.
 
       xsensors
 
+## Compression/archiving utilities
+
+### pigz (Parallel Implementation of GZip)
+
+- During compression, uses all cores for substantial speedups while being gzip
+  compatible.
+
+- Can handle zlib-compressed data as well.
+
+- Install `:role:workstation`:
+
+      agi pigz
+
+- Switch-compatible with gzip/gunzip:
+
+      tar -cf . | pigz > file.tar.gz
+
+      unpigz < file.gz > file
+
+### lz4 compression
+
+- Install `:role:workstation`:
+
+      agi liblz4-tool
+
+- Compress:
+
+      cat stuff | lz4 > compressed.lz4
+
+- To force compression:
+
+      cat stuff | lz4 -z > compressed.lz4
+
+- Decompress:
+
+      cat compressed.lz4 | lz4 -d
+
+### zstd compression
+
+This is needed to decompress `vmlinuz` on Ubuntu.
+
+- Install `:role:workstation`:
+
+      agi zstd
+
 ## Misc Utilities
 
 ### ptee
@@ -5405,6 +5653,27 @@ Display computer block diagram graphically.
 - Install `:role:workstation`:
 
       pipxg install ptee
+
+### pv
+
+Progress monitoring for files.
+
+- Install `:role:workstation`:
+
+      agi pv
+
+- Usage examples in `man pv`:
+
+      pv file | nc -w 1 somewhere.com 3000
+
+
+- Also can watch fds for an existing process:
+
+      # In one termina; don't let this run too long!
+      cat /dev/urandom > junk
+
+      # In another terminal:
+      pv -d $(pgrep cat)
 
 ### dos2unix, unix2dos
 
@@ -5498,23 +5767,6 @@ Display computer block diagram graphically.
 
       rlwrap some_program
 
-### pigz (Parallel Implementation of GZip)
-
-- During compression, uses all cores for substantial speedups while being gzip
-  compatible.
-
-- Can handle zlib-compressed data as well.
-
-- Install:
-
-      agi pigz
-
-- Switch-compatible with gzip/gunzip:
-
-      tar -cf . | pigz > file.tar.gz
-
-      unpigz < file.gz > file
-
 ### snmp
 
 - Helps to avoid errors like this in the logs:
@@ -5546,10 +5798,19 @@ Display computer block diagram graphically.
 
       pipxg install cookiecutter
 
-- Configure `~/.cookiecutterrc` with:
+- (home2.git) Configure:
 
-      abbreviations:
-          cc: https://github.com/drmikehenry/cookiecutter-{0}.git
+      # For direct Github access:
+      echod -o ~/.cookiecutterrc '
+        abbreviations:
+            cc: https://github.com/drmikehenry/cookiecutter-{0}.git
+      '
+
+      # For use with ~/x:
+      echod -o ~/.cookiecutterrc '
+        abbreviations:
+            x: git+ssh://localhost/~/x/cookiecutter-{0}
+      '
 
   This allows invocations such as:
 
@@ -5558,6 +5819,14 @@ Display computer block diagram graphically.
   Resulting in:
 
       cookiecutter https://github.com/drmikehenry/cookiecutter-pythonapp.git
+
+  and:
+
+      cookiecutter x:sphinx
+
+  Resulting in:
+
+      cookiecutter git+ssh://localhost/~/x/cookiecutter-pythonapp.git
 
 - Test:
 
@@ -5601,6 +5870,14 @@ Provides `errno` and other utilities.
 - After building a package, use `sudo checkinstall` instead of
   `sudo make install` to build a .deb file.
 
+### makeself
+
+Creates self-installing shar-like archives.
+
+- Install:
+
+      agi makeself
+
 # Web Browsers
 
 ## Google Chrome
@@ -5608,6 +5885,8 @@ Provides `errno` and other utilities.
 - Google Chrome home: <http://www.google.com/chrome/>
 
 ### (ubuntu) Google Chrome
+
+(manual)
 
 - Instructions: <https://itslinuxfoss.com/install-google-chrome-ubuntu-22-04/>
 
@@ -5966,7 +6245,8 @@ socks proxy, so if DNS isn't working properly, this won't work either.
 - Install `:role:workstation`:
 
       agi build-essential linux-headers-generic cmake ddd automake autopoint \
-          make-doc manpages-dev perl-doc texinfo texi2html
+          make-doc manpages-dev texinfo texi2html \
+          scons scons-doc glibc-doc
 
       yi @'Development Tools' \
         @'Development Libraries' \
@@ -6035,7 +6315,7 @@ socks proxy, so if DNS isn't working properly, this won't work either.
 
 ## compiledb
 
-Creates `compile-commands.json` (for Clangd):
+Creates `compile_commands.json` (for Clangd):
 
 - Install `:role:workstation`:
 
@@ -6044,6 +6324,15 @@ Creates `compile-commands.json` (for Clangd):
 - Usage:
 
       compiledb --help
+
+  As a normal user, create `compile_commands.json` by parsing the output of
+  `make`, e.g.:
+
+      mkdir -p build
+      compiledb -n -o build/compile_commands.json make
+
+  With the output in `build/`, Vim's ALE plugin will automatically find
+  the `compile_commands.json` file.
 
 ## Universal Ctags
 
@@ -6082,18 +6371,6 @@ Prefer Universal Ctags (above) to the unmaintained Exuberant Ctags.
 
       agi gcc-multilib g++-multilib
 
-## PowerPC cross compiler
-
-- Install:
-
-      agi gcc-powerpc-linux-gnu
-
-## Arm cross compiler
-
-- Install:
-
-      agi gcc-arm-linux-gnueabihf
-
 ## bmake
 
 NetBSD make for POSIX compatibility testing.
@@ -6101,6 +6378,69 @@ NetBSD make for POSIX compatibility testing.
 - Install `:role:workstation`:
 
       agi bmake
+
+## Support for RPM packages in Ubuntu
+
+- Install `:role:workstation`:
+
+      agi rpm2cpio alien
+
+## Additional tools
+
+- Install `:role:workstation`:
+
+      agi cdecl sqlite3 sqlite3-doc sqlitebrowser \
+        html2text linux-tools-generic manpages-posix-dev
+
+## Dieharder random number generator statistical tester
+
+- Install:
+
+      agi dieharder
+
+- Test `random-glibc2` using all tests:
+
+      dieharder -g random-glibc2 -a
+
+# Cross-development tools
+
+## Development tools for crosstool-ng
+
+- Install `:role:workstation`:
+
+      agi gperf help2man
+
+## PowerPC cross compiler
+
+- Install `:role:workstation`:
+
+      agi gcc-powerpc-linux-gnu
+
+## Arm cross compiler
+
+Provides `gcc` for 32-bit ARM with "hf" (hardware floating point).
+
+- Install `:role:workstation`:
+
+      agi gcc-arm-linux-gnueabihf
+
+## AARCH64 cross compiler
+
+Provides `gcc` for 64-bit ARM.
+
+- Install `:role:workstation`:
+
+      agi gcc-aarch64-linux-gnu
+
+## MIPS little-Endian cross compiler
+
+Provides `gcc` for 32-bit MIPS little-Endian.
+
+- Install `:role:workstation`:
+
+      agi binutils-mipsel-linux-gnu
+
+- Provides `mipsel-linux-xxx` utilities.
 
 # Programming
 
@@ -6112,7 +6452,7 @@ NetBSD make for POSIX compatibility testing.
 
 - Install `:role:workstation`:
 
-      agi vim vim-gtk exuberant-ctags ruby ruby-dev
+      agi vim vim-gtk universal-ctags ruby ruby-dev
 
       yi vim vim-X11 ctags ruby ruby-devel perl-ExtUtils-Embed
 
@@ -6147,6 +6487,32 @@ NetBSD make for POSIX compatibility testing.
 - Install:
 
       agi bless
+
+### Radare2 Hex Editor
+
+- From `man radare2`:
+
+      radare2 - Advanced command-line editor, dissassembler and debugger
+
+- Install:
+
+      agi radare2
+
+- Assemble/disassemble x86:
+
+  - Assemble opcode:
+
+        rasm2 -a x86 -b 32 'mov eax, 33'
+
+  - Disassemble opcode:
+
+        rasm2 -d 90
+
+### Kate editor
+
+- Install `:role:workstation`:
+
+      agi kate
 
 ## Python
 
@@ -6321,6 +6687,19 @@ needed.
 
       pipxg install pydeps
 
+### Python source-code upgrading
+
+Upgrade Python source code to match a newer Python version via the `pyupgrade`
+tool.
+
+- Install `:role:workstation`:
+
+      pipxg install pyupgrade
+
+- Example invocation:
+
+      pyupgrade --py36-plus *.py
+
 ### Multiple Python Interpreters via pyenv
 
 (manual)
@@ -6418,6 +6797,46 @@ needed.
 
       agi python3-wxgtk4.0
 
+### matplotlib
+
+Plotting routines for Python.
+
+- Install on a per-project basis (into a virtual environment):
+
+      pip install matplotlib
+
+- Usage:
+
+  ```python
+  import matplotlib.pyplot as plt
+  x_values = list(range(10))
+  y_values = [x * x for x in x_values]
+  plt.plot(x_values, y_values)
+  plt.show()
+  ```
+
+### faker
+
+Fake data for testing Python scripts.
+
+- Reference: <https://github.com/joke2k/faker>
+
+- Install on a per-project basis (into a virtual environment):
+
+      pip install faker
+
+- Usage:
+
+  ```python
+  import faker
+
+  fake = faker.Faker()
+  fake.name()
+  fake.ssn()
+  fake.address()
+  ...
+  ```
+
 ## C/C++
 
 ### boost
@@ -6471,6 +6890,12 @@ needed.
 - Install as normal user:
 
       go install mvdan.cc/sh/cmd/shfmt@latest
+
+## Perl
+
+- Install `:role:workstation`:
+
+      agi perl-doc perl-doc-html
 
 ## Zig
 
@@ -6930,6 +7355,18 @@ References:
 
   **NOTE** This actually requires Python 3.7+, so not tried yet.
 
+## XML
+
+### XML Twig Tools
+
+- Install:
+
+      agi xml-twig-tools
+
+- Usage: to extract the contents of a particular tag like `<data>`:
+
+      xml_grep 'data' file.xml --text_only
+
 # Emulation
 
 ## VirtualBox
@@ -7328,6 +7765,18 @@ References:
 
   Afterward, `Export As` PDF to "save".
 
+### exiftool
+
+Useful for editing PDF titles.
+
+- Install `:role:workstation`:
+
+      agi exiftool
+
+- Example: edit a title:
+
+      exiftool -Title='POSIX 2017' posix.1-2017.pdf
+
 ## PDF Viewers
 
 ### okular
@@ -7337,6 +7786,18 @@ References:
       agi okular
 
       yi okular
+
+### evince
+
+- Install `:role:workstation`:
+
+      agi evince
+
+### qpdfview
+
+- Install:
+
+      agi qpdfview
 
 ### zathura
 
@@ -7604,6 +8065,28 @@ Record five seconds to a file, then play it back:
 - Install:
 
       agi xpaint
+
+### ImageMagick
+
+A suite for the creation, modification and display of bitmap images.
+
+- Install `:role:workstation`:
+
+      agi imagemagick
+
+- Example: overlay some text onto `alot.png` (reference:
+  <http://hyperboleandahalf.blogspot.com/2010/04/alot-is-better-than-you-at-everything.html>):
+
+      convert \
+        -weight 700 \
+        -gravity Center \
+        -fill Black \
+        -background White \
+        labeL:SOME_TEXT \
+        alot.png \
+        label:SOME_TEXT \
+        -append \
+        alot-with-text.png
 
 ### exiftran
 

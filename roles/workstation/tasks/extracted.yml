@@ -62,6 +62,10 @@
   command: pipxg install black
   args:
     creates: /usr/local/bin/black
+- name: pipxg Install pyupgrade
+  command: pipxg install pyupgrade
+  args:
+    creates: /usr/local/bin/pyupgrade
 - name: pipxg Install sphinx
   command: pipxg install sphinx
   args:

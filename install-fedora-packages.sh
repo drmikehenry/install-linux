@@ -26,6 +26,8 @@ dnf install -y \
   bitstream-vera-sans-mono-fonts \
   tmux \
   konqueror \
+  mutt \
+  mailx \
   ack \
   the_silver_searcher \
   meld \

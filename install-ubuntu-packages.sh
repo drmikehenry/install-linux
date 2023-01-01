@@ -59,17 +59,25 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   fonts-hack-ttf \
   ttf-mscorefonts-installer \
   tmux \
+  nautilus \
   konqueror \
+  mutt \
+  mailutils \
   ripgrep \
   ack \
   silversearcher-ag \
   meld \
   kdiff3 \
   colordiff \
+  inotify-tools \
   lshw \
   lshw-gtk \
   smartmontools \
   hdparm \
+  pigz \
+  liblz4-tool \
+  zstd \
+  pv \
   tofrodos \
   tree \
   stress \
@@ -90,9 +98,11 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   autopoint \
   make-doc \
   manpages-dev \
-  perl-doc \
   texinfo \
   texi2html \
+  scons \
+  scons-doc \
+  glibc-doc \
   clang \
   clang-format \
   clang-tidy \
@@ -103,12 +113,30 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   gcc-multilib \
   g++-multilib \
   bmake \
+  rpm2cpio \
+  alien \
+  cdecl \
+  sqlite3 \
+  sqlite3-doc \
+  sqlitebrowser \
+  html2text \
+  linux-tools-generic \
+  manpages-posix-dev \
+  gperf \
+  help2man \
+  gcc-powerpc-linux-gnu \
+  gcc-arm-linux-gnueabihf \
+  gcc-aarch64-linux-gnu \
+  binutils-mipsel-linux-gnu \
   vim \
   vim-gtk \
-  exuberant-ctags \
+  universal-ctags \
   ruby \
   ruby-dev \
+  kate \
   shellcheck \
+  perl-doc \
+  perl-doc-html \
   doxygen \
   doxygen-doc \
   graphviz \
@@ -118,7 +146,10 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   pandoc \
   tidy \
   html2text \
+  exiftool \
   okular \
+  evince \
   geeqie \
+  imagemagick \
   speedcrunch \
 

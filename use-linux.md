@@ -359,17 +359,6 @@ This runs `/var/lib/dpkg/info/PACKAGE.postinst configure` (so-called
 
 - See helpful Wiki page for examples: <https://help.ubuntu.com/community/UFW>
 
-- Allow or deny a port:
-
-      ufw allow 5355/udp
-      ufw deny 5355/udp
-
-- Setup to "deny" by default, allow ssh, then enable firewall:
-
-      ufw default deny
-      ufw allow ssh
-      ufw enable
-
 - To enable logging:
 
       ufw logging on
@@ -381,6 +370,42 @@ This runs `/var/lib/dpkg/info/PACKAGE.postinst configure` (so-called
   Disable logging via:
 
       ufw logging off
+
+- General syntax to allow or deny access:
+
+  - Use `udp` and `tcp` for `PROTO`.
+  - Use `any` to wildcard `IP` or `PORT`.
+
+  - Simplified syntax:
+
+        ufw allow PORT[/PROTO]
+
+  - Full syntax:
+
+        ufw deny [proto PROTO] [from IP [port PORT]] [to IP [port PORT]]
+
+- Example: Display current rules:
+
+      ufw status
+
+- Example: Deny all to port 53 (TCP and UDP):
+
+      ufw deny 53
+
+- Example: Deny TCP port 80:
+
+      ufw deny 80/tcp
+
+- Example: Allow access from IP address 1.2.4.5 to UDP port 80:
+
+      ufw allow proto udp from 1.2.3.4 to any port 80
+
+- Example: Setup to "deny" everything by default, then allow ssh, then enable
+  firewall:
+
+      ufw default deny
+      ufw allow ssh
+      ufw enable
 
 ## Fedora, CentOS firewall rules
 
