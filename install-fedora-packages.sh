@@ -54,7 +54,6 @@ dnf install -y \
   texinfo \
   gcc-c++ \
   man-pages \
-  ctags \
   vim \
   vim-X11 \
   ctags \

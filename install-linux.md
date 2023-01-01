@@ -6045,22 +6045,36 @@ Creates `compile-commands.json` (for Clangd):
 
       compiledb --help
 
-## Exuberant ctags
+## Universal Ctags
+
+Universal Ctags is the maintained fork of the now-unmaintained Exuberant Ctags.
+
+Note that Universal Ctags added an `s` to an Exuberant Ctags option name for
+consistency:
+
+    --extras      # Plural in Universal Ctags to match with --fields et al.
+    --extra       # Singlar in unmaintained Exuberant Ctags.
+
+Universal Ctags also supports more languages (e.g., Rust), making additional
+invocation incompatibilities with Exuberant Ctags.  The `gentags` script works
+around these differences; it is found in two places:
+
+- <https://github.com/drmikehenry/vimfiles>, in `tool/gentags`
+- <https://github.com/drmikehenry/home>, in `bin/gentags`
+
+Run `gentags --help-gentags` for details.
 
 - Install `:role:workstation`:
 
-      agi exuberant-ctags
+      agi universal-ctags
 
-      yi ctags
+## Exuberant Ctags (deprecated)
 
-## Universal ctags
-
-TODO: Figure out the incompatibilities with Exuberant ctags and migrate to
-Universal ctags.
+Prefer Universal Ctags (above) to the unmaintained Exuberant Ctags.
 
 - Install:
 
-      agi universal-ctags
+      agi exuberant-ctags
 
 ## 32-bit Libraries
 

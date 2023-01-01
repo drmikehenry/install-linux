@@ -99,7 +99,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   clang-tools \
   clangd \
   clang-14-doc \
-  exuberant-ctags \
+  universal-ctags \
   gcc-multilib \
   g++-multilib \
   bmake \
