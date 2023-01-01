@@ -284,6 +284,7 @@ Note: must have enabled the corresponding source repository.
 
 - References:
 
+  - <https://www.digitalocean.com/community/tutorials/how-to-handle-apt-key-and-add-apt-repository-deprecation-using-gpg-to-add-external-repositories-on-ubuntu-22-04>
   - <https://github.com/elprup/ppa-mirror>
   - <https://www.linuxuprising.com/2021/01/apt-key-is-deprecated-how-to-add.html>
   - <https://unix.stackexchange.com/questions/332672/how-to-add-a-third-party-repo-and-key-in-debian/582853#582853>
