@@ -230,6 +230,53 @@ Note: must have enabled the corresponding source repository.
 
 ### Add a Personal Package Archive (ppa)
 
+- The general forms for PPA identifiers for a given `USER` and `PPA` name are:
+
+    ppa:USER/PPA
+    USER/PPA
+    USER
+
+  If `PPA` is not given, it defaults to `ppa`.
+
+  The corresponding URL for a PPA named `ppa:USER/PPA` is:
+
+      https://launchpad.net/~USER/+archive/ubuntu/PPA
+
+  For example, a user of `mozillateam` with the default PPA name of `ppa` would
+  be given by any of these:
+
+      ppa:mozillateam/ppa
+      mozillateam/ppa
+      mozillateam
+
+  With an associated URL of:
+
+      https://launchpad.net/~mozillateam/+archive/ubuntu/ppa
+
+  And the PPA `ppa:neovim-ppa/stable` refers to:
+
+      https://launchpad.net/~neovim-ppa/+archive/ubuntu/stable
+
+- For a given `ppa:USER/PPA`, the corresponding location for the PPA's contents
+  are:
+
+      https://ppa.launchpadcontent.net/USER/PPA/ubuntu/
+
+  with contents similar to:
+
+      dists/
+        jammy/
+          InRelease
+          Release
+          Release.gpg
+          by-hash/
+          main/
+      pool/
+        main/
+        universe/
+
+- `mozillateam` is used as an example PPA in the below discussion.
+
 - Obsolete method (makes PPA key usable everywhere):
 
     # DON'T use this anymore:
@@ -237,13 +284,17 @@ Note: must have enabled the corresponding source repository.
 
 - References:
 
+  - <https://github.com/elprup/ppa-mirror>
+  - <https://www.linuxuprising.com/2021/01/apt-key-is-deprecated-how-to-add.html>
   - <https://unix.stackexchange.com/questions/332672/how-to-add-a-third-party-repo-and-key-in-debian/582853#582853>
   - <https://askubuntu.com/questions/1286545/what-commands-exactly-should-replace-the-deprecated-apt-key/1307181#1307181>
 
 - `ppa:mozillateam` points to:
   <https://launchpad.net/~mozillateam/+archive/ubuntu/ppa>
 
-- Visiting the above URL leads to these sources lines:
+- Visiting the above URL and choosing "Technical Details about this PPA", and
+  choosing an appropriate Ubuntu version (e.g., `Jammy (22.04)`) leads to these
+  sources lines:
 
       deb https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu jammy main
       deb-src https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu jammy main

@@ -1230,7 +1230,7 @@ Needed for Windows network shares.
 
 - For latest version, add the Git PPA before installation:
 
-      - Reference: https://launchpad.net/~git-core/+archive/ubuntu/ppa
+  - Reference: <https://launchpad.net/~git-core/+archive/ubuntu/ppa>
 
   - Add PPA:
 
@@ -6466,6 +6466,14 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
   - <https://github.com/neovim/neovim/wiki/Installing-Neovim>
 
+- Ubuntu PPA exists as `ppa:neovim-ppa/stable`, pointing to:
+
+  <https://launchpad.net/~neovim-ppa/+archive/ubuntu/stable>
+
+  Key fingerprint:
+
+      9DBB0BE9366964F134855E2255F96FCF8231B6DD
+
 - Add PPA:
 
       add-apt-repository -y --update ppa:neovim-ppa/stable
@@ -7388,7 +7396,8 @@ References:
 
     wget https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
-  Copy `oracle_vbox_2016.asc` contents into below command.
+  Copy `oracle_vbox_2016.asc` contents (beginning with `-----BEGIN PGP PUBLIC
+  KEY BLOCK-----`) into below command.
 
 - Dearmor Oracle 2016 key into `/etc/apt/keyrings/oracle_vbox_2016.gpg`:
 
