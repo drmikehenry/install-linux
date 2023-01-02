@@ -2886,18 +2886,35 @@ From <https://wiki.ubuntu.com/Tracker>:
 
 Tracker can sap performance.  To disable on a per-user basis:
 
-- (manual) Create a local `trackerd.desktop` to disable Tracker:
+- Reference: <https://askubuntu.com/questions/1344050/how-to-disable-tracker-on-ubuntu-20-04>
 
-      echod -o ~/.config/autostart '
+- (manual) Disable Tracker-related services for the current user (invoke as
+  regular user):
+
+    systemctl --user unmask \
+      tracker-extract-3.service \
+      tracker-miner-fs-3.service \
+      tracker-miner-fs-control-3.service \
+      tracker-writeback-3.service \
+      tracker-xdg-portal-3.service
+
+  Note: to do this globally for all users, use `systemctl --global` instead of
+  `systemctl --user`; however, it's still necessary to use a per-user `.desktop`
+  file adjustment as shown below.
+
+- (homegit) Create a local `.desktop` file to override the autostarting behavior
+  of `/etc/xdg/autostart/tracker-miner-fs-3.desktop`:
+
+      echod -o ~/.config/autostart/tracker-miner-fs-3.desktop '
         [Desktop Entry]
-        Encoding=UTF-8
-        Name=Tracker
-        Hidden=true
+        Hidden = true
       '
+
+  TODO: figure out how to globally provide a `.desktop` override for all users.
 
 - (manual) After disabling, remove cached Tracker files:
 
-      rm -rf ~/.cache/tracker3/
+      tracker3 reset -s -r
 
 # Desktop Automation
 
@@ -5807,7 +5824,7 @@ Progress monitoring for files.
 
       pipxg install cookiecutter
 
-- (home2.git) Configure:
+- (home2git) Configure:
 
       # For direct Github access:
       echod -o ~/.cookiecutterrc '
