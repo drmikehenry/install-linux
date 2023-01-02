@@ -2770,6 +2770,15 @@ interface).
 
 - For each Incoming folder, View | Sorted by | Threaded.
 
+- For Trash folder, Right-click | Properties:
+
+  - General Information | Check "When getting new messages for this account,
+    always check this folder".
+
+  - Retention Policy | Uncheck "Use my account settings"
+
+  - Retention Policy | Check "Delete messages more than 60 days old".
+
 ### Thunderbird Profile Name
 
 Thunderbird creates profiles with random, unpredictable names.  Many files embed
