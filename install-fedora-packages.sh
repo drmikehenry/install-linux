@@ -1,3 +1,4 @@
+#!/bin/sh
 dnf install -y \
   keepassxc \
   hplip \

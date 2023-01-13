@@ -17,14 +17,18 @@ build_pandoc ../install-linux-local/README.md
 
 # For VM testing:
 {
+    echo '#!/bin/sh'
     echo "DEBIAN_FRONTEND=noninteractive apt-get install -y \\"
     find . -name packages-ubuntu.yml -print0 | xargs -0 cat |
         perl -ne 'if (/^\s+-\s+(.*)/) { print "  $1 \\\n"; }'
     echo
 } > install-ubuntu-packages.sh
+chmod +x install-ubuntu-packages.sh
 {
+    echo '#!/bin/sh'
     echo "dnf install -y \\"
     find . -name packages-fedora.yml -print0 | xargs -0 cat |
         perl -ne 'if (/^\s+-\s+(.*)/) { print "  $1 \\\n"; }'
     echo
 } > install-fedora-packages.sh
+chmod +x install-fedora-packages.sh
