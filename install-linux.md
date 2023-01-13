@@ -1633,6 +1633,22 @@ get the latest version:
     apt-add-repository --yes --update ppa:ansible/ansible
     apt install -y ansible
 
+## Ansible configuration
+
+- Can disable the `cowsay` feature several ways:
+
+  See: <https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-disable-cowsay>
+
+  - Setup `ansible.cfg` with:
+
+        [defaults]
+        # Turn off cowsay:
+        nocows = 1
+
+  - Set environment variable `ANSIBLE_NOCOWS=1`.
+
+  - Uninstall `cowsay` itself.
+
 # Clone Standard Repositories
 
 ## Clone home.git, home2.git
