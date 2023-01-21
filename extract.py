@@ -339,6 +339,8 @@ def make_arg_parser() -> argparse.ArgumentParser:
         help="""suppress informational output""",
     )
 
+    parser.add_argument("source", help="markdown source file")
+
     return parser
 
 
@@ -350,7 +352,7 @@ def main():
     else:
         logging.getLogger().setLevel(args.verbose)
 
-    doc = parse_markdown_doc(Path("install-linux.md"))
+    doc = parse_markdown_doc(Path(args.source))
 
     if logger.isEnabledFor(logging.DEBUG):
         walk(doc)

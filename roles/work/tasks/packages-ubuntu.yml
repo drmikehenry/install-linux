@@ -1,0 +1,5 @@
+---
+- name: Install ubuntu `:role:work` packages
+  package:
+    name:
+    - konversation

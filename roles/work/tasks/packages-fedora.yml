@@ -1,0 +1,5 @@
+---
+- name: Install fedora `:role:work` packages
+  package:
+    name:
+    - konversation

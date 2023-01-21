@@ -40,6 +40,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   git \
   myrepos \
   subversion \
+  konversation \
   apt-doc \
   apt-show-source \
   apt-show-versions \

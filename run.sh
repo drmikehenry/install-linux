@@ -7,7 +7,7 @@ build_pandoc()
     pandoc --standalone "$1" -o "$build/$(basename "${1%.md}.html")"
 }
 
-./extract.py
+./extract.py install-linux.md
 
 build_pandoc README.md
 build_pandoc use-linux.md

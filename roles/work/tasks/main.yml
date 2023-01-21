@@ -1,0 +1,10 @@
+---
+- name: Home Ubuntu packages
+  import_tasks: tasks/packages-ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Home Fedora packages
+  import_tasks: tasks/packages-fedora.yml
+  when: ansible_distribution == 'Fedora'
+
+# - import_tasks: tasks/extracted.yml

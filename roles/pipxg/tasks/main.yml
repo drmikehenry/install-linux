@@ -23,9 +23,9 @@
   # Don't complain about the use of ``rm``.
   shell:
     cmd: |
-      rm -rf /tmp/pipx
-      PYTHONUSERBASE=/tmp/pipx pip install --user pipx
-      PYTHONUSERBASE=/tmp/pipx PATH=/tmp/pipx/bin:$PATH pipxg install pipx
+      rm -rf /tmp/pipx &&
+      PYTHONUSERBASE=/tmp/pipx pip install --user pipx &&
+      PYTHONUSERBASE=/tmp/pipx PATH=/tmp/pipx/bin:$PATH pipxg install pipx &&
       rm -rf /tmp/pipx
   args:
     creates: /usr/local/bin/pipx

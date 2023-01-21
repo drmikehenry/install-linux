@@ -14,6 +14,7 @@ dnf install -y \
   git \
   myrepos \
   subversion \
+  konversation \
   rpm-build \
   rpmdevtools \
   '@KDE Plasma Workspaces' \

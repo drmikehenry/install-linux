@@ -2770,7 +2770,7 @@ interface).
   - General | Reading & Display | Uncheck "Show only display name for people in
     my address book".
   - Composition | Composition | Forward messages inline.
-  - Composition | Composition | Send Options button | Text Format | When
+  - (todo) Composition | Composition | Send Options button | Text Format | When
     sending messages...: Ask me what to do.
   - Composition | Composition | Uncheck "Use paragraph format instead of Body
     Text by default".
@@ -5014,7 +5014,7 @@ References:
 
 ## Konversation IRC Client
 
-- Install:
+- Install `:role:work`:
 
       agi konversation
 
