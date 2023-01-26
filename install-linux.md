@@ -8422,11 +8422,25 @@ Takes pictures and other things with webcam.
       sane-find-scanner
       scanimage -L
 
+## Scanning front-ends
+
+### Skanlite scanning front-end
+
+This one has a nice scanning flow (preview, autodetect image size, scan only the
+detected size, etc.).
+
+- Install Gscan2pdf front end `:role:home`:
+
+      agi skanlite
+
+### Gscan2pdf scanning front-end
+
+This has a lot of powerful features, including OCR via tesseract, but for
+general-purpose image scanning, Skanlite is nicer.
+
 - Install Gscan2pdf front end `:role:home`:
 
       agi gscan2pdf
-
-  This has a lot of powerful features, including OCR via tesseract.
 
 ## Scanning alternative front-ends
 
@@ -8445,14 +8459,6 @@ Very minimalistic.
 - Install::
 
       agi simple-scan
-
-### skanlite scanning front-end
-
-This one seems to have a sluggish GUI.
-
-- Install:
-
-      agi skanlite
 
 ### xscanimage scanning front-end
 

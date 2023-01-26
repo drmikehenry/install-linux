@@ -29,5 +29,6 @@
     - libsane-dev
     - libsane1
     - sane-utils
+    - skanlite
     - gscan2pdf
     - maelstrom
