@@ -5538,6 +5538,50 @@ Wdfs provides WebDAV-based filesystem mounts (based on `libfuse`).
 
 ## Shells
 
+### starship
+
+Starship is a cross-shell prompt hook.
+
+- MANUAL: Install:
+
+      cargo install starship
+
+- HOMEGIT: Activate by adding the following to `~/.bashrc`:
+
+  ```bash
+  # Starship support
+
+  if [ -n "$(command -v starship)" ]; then
+      eval "$(starship init bash)"
+  fi
+  ```
+
+- Note: Starship detects SSH sessions by the presence of any of these variables:
+
+      SSH_CONNECTION
+      SSH_CLIENT
+      SSH_TTY
+
+  When launching `vncserver` from an SSH session, the above variables will be
+  inherited by `vncserver` and ultimately will still be set when connecting
+  later via `vncviewer`.  To prevent this, `unset` these variables before
+  launching `vncserver`.
+
+  HOMEGIT Add `~/bin/vncserver-localhost` for this purpose:
+
+  ```bash
+  #!/bin/bash
+
+  # Prevent `starship` from detecting an SSH connection spuriously.  Though
+  # we may be connected via SSH when launching `vncserver`, we'll be connecting
+  # later via `vncviewer` and expect to have the fiction of a local session.
+  unset SSH_CONNECTION
+  unset SSH_CLIENT
+  unset SSH_TTY
+
+  vncserver -localhost yes
+  ```
+
 ### zsh
 
 - Install:
