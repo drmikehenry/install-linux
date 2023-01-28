@@ -7274,12 +7274,16 @@ References:
 
       yi pandoc
 
-- (optional) Get latest version from Github releases page, e.g.:
-  <https://github.com/jgm/pandoc/releases/tag/2.17.1.1/>
+- MANUAL: Get latest version from Github releases page, e.g.:
+  <https://github.com/jgm/pandoc/releases/tag/3.0.1/>
 
   Get amd64 version:
 
-      pandoc-2.17.1.1-1-amd64.deb
+      pandoc-3.0.1-1-amd64.deb
+
+  Install:
+
+      apt install ./pandoc-3.0.1-1-amd64.deb
 
 - Usage hints:
 
