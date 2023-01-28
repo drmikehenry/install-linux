@@ -6715,10 +6715,13 @@ needed.
 
 ### Python Development versions
 
-- Install development versions of Python along with documentation:
+- Install `:role:workstation`:
 
-      agi python-dev python-doc \
-        python3-dev python3-doc
+      agi python3-dev python3-doc
+
+- Install Python 2:
+
+      agi python-dev python-doc
 
 ### Python GUIs
 
@@ -6726,9 +6729,13 @@ needed.
 
 - Ubuntu packages TK support separately.
 
-- Install:
+- Install `:role:workstation`:
 
-      agi python-tk python3-tk
+      agi python3-tk
+
+- Install for Python 2:
+
+      agi python-tk
 
 #### Python PyQt
 

@@ -137,6 +137,9 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   ruby \
   ruby-dev \
   kate \
+  python3-dev \
+  python3-doc \
+  python3-tk \
   shellcheck \
   perl-doc \
   perl-doc-html \
