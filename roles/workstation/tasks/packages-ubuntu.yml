@@ -73,8 +73,8 @@
     - clangd
     - clang-14-doc
     - universal-ctags
-    - gcc-multilib
-    - g++-multilib
+    - gcc-11-multilib
+    - g++-11-multilib
     - bmake
     - rpm2cpio
     - alien
@@ -87,9 +87,9 @@
     - manpages-posix-dev
     - gperf
     - help2man
-    - gcc-powerpc-linux-gnu
-    - gcc-arm-linux-gnueabihf
-    - gcc-aarch64-linux-gnu
+    - gcc-11-powerpc-linux-gnu
+    - gcc-11-arm-linux-gnueabihf
+    - gcc-11-aarch64-linux-gnu
     - binutils-mipsel-linux-gnu
     - vim
     - vim-gtk

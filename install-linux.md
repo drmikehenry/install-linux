@@ -6525,7 +6525,11 @@ Prefer Universal Ctags (above) to the unmaintained Exuberant Ctags.
 
 - Install `:role:workstation`:
 
-      agi gcc-multilib g++-multilib
+      agi gcc-11-multilib g++-11-multilib
+
+  NOTE: Install `multilib` using specific versions only; the generic package
+  `gcc-multilib` conflicts with unrelated cross-compilers like
+  `gcc-11-aarch64-linux-gnu` for obscure reasons.
 
 ## bmake
 
@@ -6570,7 +6574,7 @@ NetBSD make for POSIX compatibility testing.
 
 - Install `:role:workstation`:
 
-      agi gcc-powerpc-linux-gnu
+      agi gcc-11-powerpc-linux-gnu
 
 ## Arm cross compiler
 
@@ -6578,7 +6582,7 @@ Provides `gcc` for 32-bit ARM with "hf" (hardware floating point).
 
 - Install `:role:workstation`:
 
-      agi gcc-arm-linux-gnueabihf
+      agi gcc-11-arm-linux-gnueabihf
 
 ## AARCH64 cross compiler
 
@@ -6586,7 +6590,7 @@ Provides `gcc` for 64-bit ARM.
 
 - Install `:role:workstation`:
 
-      agi gcc-aarch64-linux-gnu
+      agi gcc-11-aarch64-linux-gnu
 
 ## MIPS little-Endian cross compiler
 
