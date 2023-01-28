@@ -11,30 +11,30 @@ See `install-linux-local.md` for any machine-specific setup.
 ## Machine Hardware Configuration
 
 - Setup to boot as UEFI (typical):
-  - (physical) setup in firmware settings.
-  - (VM) System | Motherboard | check "Enable EFI"
-- (VM) Configure 3000+ MB in System | Motherboard | Base Memory.
-- (VM) Set Processors to 2 in System | Processor | Processors.
-- (VM) Setup screen scaling for 4K monitors:
+  - PHYSICAL: setup in firmware settings.
+  - VM: System | Motherboard | check "Enable EFI"
+- VM: Configure 3000+ MB in System | Motherboard | Base Memory.
+- VM: Set Processors to 2 in System | Processor | Processors.
+- VM: Setup screen scaling for 4K monitors:
   - Settings | Display | Screen | Scale Factor: 200%
 - Ensure SATA for hard drive is configured as AHCI:
-  - (physical) setup in firmware settings.
-  - (VM) System | Storage | Controller: SATA | Type: AHCI (already default)
+  - PHYSICAL: setup in firmware settings.
+  - VM: System | Storage | Controller: SATA | Type: AHCI (already default)
 - Setup boot order to boot from USB first (if desired).
-- (VM) Configure for bridged networking (if desired):
+- VM: Configure for bridged networking (if desired):
   - Settings | Network | Attached to: Bridged Adapter
 
 ## Boot Media Creation
 
 - Can `dd` a .iso file directly to a USB flash drive and boot from that.
-- (ubuntu) Download *both* desktop and server iso files.
+- UBUNTU Download *both* desktop and server iso files.
   - Need desktop iso for "Try Ubuntu" mode, installing supporting utilities,
     etc.
   - Need server iso for installing onto RAID volumes.
   - Ubuntu 22.04:
     - Desktop: `ubuntu-22.04-desktop-amd64.iso`
     - Server: `ubuntu-22.04-live-server-amd64.iso`
-- (fedora) Download the live DVD iso file from:
+- FEDORA Download the live DVD iso file from:
   <http://fedoraproject.org/en/get-fedora-all>
   - Fedora 36: `Fedora-Workstation-Live-x86_64-36-1.2.iso`
   - Torrent from: <https://torrent.fedoraproject.org/>
@@ -195,7 +195,7 @@ See `install-linux-local.md` for any machine-specific setup.
 
 # Initial Installation
 
-## (ubuntu) Initial Installation
+## UBUNTU Initial Installation
 
 - Create partitions and volumes using desktop iso as shown above.
 - Boot from Ubuntu Desktop Install DVD (use `UEFI` boot).
@@ -221,7 +221,7 @@ See `install-linux-local.md` for any machine-specific setup.
 - Wait for installation to complete.
 - Reboot into new system.
 
-## (fedora) Initial Installation
+## FEDORA Initial Installation
 
 - Boot from Live CD image (live) or Network Install image (net).
 
@@ -257,7 +257,7 @@ See `install-linux-local.md` for any machine-specific setup.
 
 - Wait; choose "Finish Installation".
 
-- (VM) Power off; snapshot "Base Install".
+- VM: Power off; snapshot "Base Install".
 
 - After reboot:
 
@@ -279,7 +279,7 @@ See `install-linux-local.md` for any machine-specific setup.
 
   - Choose "Start Using Fedora Linux".
 
-  - (VM) Power off; snapshot "Create Power User".
+  - VM: Power off; snapshot "Create Power User".
 
 ## (centos) Initial Installation
 
@@ -325,16 +325,16 @@ See also `README.md` with Ansible instructions.
 
       sudo -i
 
-- (ubuntu) Grant root a password to allow logging in as root directly from the
+- UBUNTU Grant root a password to allow logging in as root directly from the
   console:
 
       passwd
 
-- (ubuntu) Update APT cache:
+- UBUNTU Update APT cache:
 
       apt update
 
-- (ubuntu) Install openssh server:
+- UBUNTU Install openssh server:
 
       apt install -y openssh-server
 
@@ -345,7 +345,7 @@ For convenience, may remotely login to continue setup.
 Note that until `authorized_keys` has been setup for root on the host, can't
 login as root.
 
-### (ubuntu)
+### UBUNTU
 
 - Remotely login as poweruser, then become root:
 
@@ -354,7 +354,7 @@ login as root.
 
 - At first, must use `vi` instead of `vim` (until full support is installed).
 
-### (fedora)
+### FEDORA
 
 - Start the ssh service:
 
@@ -368,7 +368,7 @@ login as root.
 
 ## echod
 
-(automated)
+AUTOMATED:
 
 - Create simple `echod` utility:
 
@@ -505,13 +505,13 @@ while args:
           supersede domain-name "drmikehenry.com";
         '
 
-## (ubuntu) Disable `apt-daily`
+## UBUNTU Disable `apt-daily`
 
-- (automated) Uninstall unattended-upgrades:
+- AUTOMATED Uninstall unattended-upgrades:
 
       apt-get remove unattended-upgrades
 
-- (automated) Disable apt-daily-related services:
+- AUTOMATED Disable apt-daily-related services:
 
       systemctl disable apt-daily{,-upgrade}.{service,timer}
       systemctl stop apt-daily{,-upgrade}.{service,timer}
@@ -524,7 +524,7 @@ while args:
 
 ### Base Firewall Setup for SSH and enable
 
-(automated)
+AUTOMATED:
 
 - Setup to allow ssh, "deny" by default, then enable firewall:
 
@@ -536,7 +536,7 @@ while args:
 
 ### Block multicast DNS of UDP 5355
 
-(manual)
+MANUAL:
 
 UDP port 5355 is for multicast DNS for Windows.  Windows machines leave lots of
 noise in the logs.  To fix this, block the port explicitly:
@@ -545,21 +545,21 @@ noise in the logs.  To fix this, block the port explicitly:
 
 ## Static Hosts
 
-(automated)
+AUTOMATED:
 
 - Setup `/etc/hosts` as necessary for static hosts, e.g.:
 
       192.168.1.2 host1.domain.com host1
 
-## (VM) Guest Additions
+## VM: Guest Additions
 
-(manual)
+MANUAL:
 
-- (ubuntu) Install prerequisites:
+- UBUNTU Install prerequisites:
 
       agi build-essential linux-headers-generic dkms
 
-- (fedora) (centos) Install prerequisites:
+- FEDORA (centos) Install prerequisites:
 
       ygi 'Development Tools'
       yi install dkms kernel-devel
@@ -592,33 +592,33 @@ noise in the logs.  To fix this, block the port explicitly:
 NOTE: Currently, snap-based Firefox fails when home directories aren't located
 in `/home`.
 
-- (automated) Install support for `luseradd`:
+- AUTOMATED Install support for `luseradd`:
 
       agi libuser
 
-- (automated) Install support for `cron` and `semanage`:
+- AUTOMATED Install support for `cron` and `semanage`:
 
       yi cronie cronie-anacron policycoreutils-python-utils
 
-- (automated) (fedora) Setup SELinux context for `/localhome`:
+- AUTOMATED FEDORA Setup SELinux context for `/localhome`:
 
       semanage fcontext -a -e /home /localhome
 
-- (automated) Create `/localhome`:
+- AUTOMATED Create `/localhome`:
 
       mkdir /localhome
 
-- (automated) (ubuntu) Use `/localhome` for new users' home directory for
+- AUTOMATED UBUNTU Use `/localhome` for new users' home directory for
   `adduser` command.  In `/etc/adduser.conf`, change `DHOME=` line to:
 
       DHOME=/localhome
 
-- (automated) Use `/localhome` for new users' home directory for `useradd`
+- AUTOMATED Use `/localhome` for new users' home directory for `useradd`
   command.  In `/etc/default/useradd`, set `HOME=` to:
 
       HOME=/localhome
 
-- (automated) (ubuntu) Configure Apparmor for `/localhome`:
+- AUTOMATED UBUNTU Configure Apparmor for `/localhome`:
 
       echod -o /etc/apparmor.d/tunables/home.d/my_local.net '
         @{HOMEDIRS}+=/localhome/
@@ -635,7 +635,7 @@ in `/home`.
 
 - Create `/root/localhome-migrate.sh` script
 
-  (automated) `:extract:roles/localhome/files/localhome-migrate.sh`:
+  AUTOMATED `:extract:roles/localhome/files/localhome-migrate.sh`:
 
   ```bash
   #!/bin/bash
@@ -679,15 +679,15 @@ in `/home`.
   echo "$(date) localhome-migrate.sh ending"
   ```
 
-- (automated) Make the script executable:
+- AUTOMATED Make the script executable:
 
       chmod +x /root/localhome-migrate.sh
 
-- (automated) Reboot to perform `/localhome` migration:
+- AUTOMATED Reboot to perform `/localhome` migration:
 
       reboot
 
-- (automated) Examine log of migration results:
+- AUTOMATED Examine log of migration results:
 
       cat /root/localhome-migrate.log
 
@@ -719,7 +719,7 @@ in `/home`.
 
 ### Default Editor
 
-- (ubuntu) Set default editor to vim (probably already the default once
+- UBUNTU Set default editor to vim (probably already the default once
   `vim.gtk3` is installed):
 
       sudo update-alternatives --config editor
@@ -741,7 +741,7 @@ in `/home`.
 
 ### sudo
 
-- (manual) (centos) Adjust `secure_path` to include important directories like
+- MANUAL (centos) Adjust `secure_path` to include important directories like
   `/usr/local/sbin` and `/usr/local/bin`:
 
       visudo
@@ -751,7 +751,7 @@ in `/home`.
       #Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
       Defaults    secure_path = /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-- (manual) Create passwordless sudo access for a single user like `mike`:
+- MANUAL Create passwordless sudo access for a single user like `mike`:
 
       echod -o /etc/sudoers.d/mike '
         mike ALL=(ALL)  NOPASSWD: ALL
@@ -776,7 +776,7 @@ in `/home`.
 
 ## Repository Tools
 
-### (ubuntu) Additional Apt Tools
+### UBUNTU Additional Apt Tools
 
 - Install apt-related tools `:role:workstation`:
 
@@ -784,7 +784,7 @@ in `/home`.
 
 - Setup apt-file:
 
-  (automated)
+  AUTOMATED:
 
   - Install and update:
 
@@ -806,7 +806,7 @@ in `/home`.
 
   - May not have equivalent to `apt-get source`.
 
-### (fedora) (centos) RPM Building Tools
+### FEDORA (centos) RPM Building Tools
 
 - Install `:role:workstation`:
 
@@ -814,11 +814,11 @@ in `/home`.
 
 ## Additional Repositories
 
-### (ubuntu) Source Repositories
+### UBUNTU Source Repositories
 
 TODO: Ansible
 
-- (manual) Edit `/etc/apt/sources.list` and uncomment all desired `deb-src`
+- MANUAL Edit `/etc/apt/sources.list` and uncomment all desired `deb-src`
   lines, e.g.:
 
       deb-src http://us.archive.ubuntu.com/ubuntu/ jammy main restricted
@@ -827,7 +827,7 @@ TODO: Ansible
 
       apt-get update
 
-### (fedora) rpmfusion Repositories
+### FEDORA rpmfusion Repositories
 
 - Configuration information from: <http://rpmfusion.org/Configuration/>
 
@@ -835,7 +835,7 @@ TODO: Ansible
 
       yi --nogpgcheck http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-### (fedora) ATrpms Repositories
+### FEDORA ATrpms Repositories
 
 - Instructions from: <http://www.mjmwired.net/resources/mjm-fedora-f17.html>
 
@@ -923,7 +923,7 @@ Normal repositories:
 
         rpm -ivh http://packages.psychotic.ninja/6/base/i386/RPMS/psychotic-release-1.0.0-1.el6.psychotic.noarch.rpm
 
-## (fedora) (centos) SELinux
+## FEDORA (centos) SELinux
 
 - (optional) Set SELinux to be permissive:
 
@@ -990,7 +990,7 @@ Needed for Windows network shares.
 
 #### Setup autofs
 
-(automated)
+AUTOMATED:
 
 - Install `:role:base`:
 
@@ -998,7 +998,7 @@ Needed for Windows network shares.
 
       yi autofs
 
-- (ubuntu) Enable /net:
+- UBUNTU Enable /net:
 
       mkdir /net
 
@@ -1016,7 +1016,7 @@ Needed for Windows network shares.
 
 ## Create Users
 
-(automated)
+AUTOMATED:
 
 - See `install-linux-local/local-accounts.yml`.
 
@@ -1037,13 +1037,13 @@ Needed for Windows network shares.
 
 - Modify groups to make `someuser` an `administrator`:
 
-  - (ubuntu) (Note: This entails more groups than `poweruser` has):
+  - UBUNTU (Note: This entails more groups than `poweruser` has):
 
         for i in adm cdrom sudo plugdev lxd lpadmin sambashare video; do
             usermod -aG $i someuser
         done
 
-  - (fedora) (centos):
+  - FEDORA (centos):
 
         usermod -aG wheel someuser
 
@@ -1057,7 +1057,7 @@ Needed for Windows network shares.
 
 ### Post-create users (ZFS datasets)
 
-- (ubuntu) (manual) Migrate to user-specific ZFS datasets:
+- UBUNTU MANUAL Migrate to user-specific ZFS datasets:
 
   - Done by hand at present separately for each desired user.
 
@@ -1123,7 +1123,7 @@ Needed for Windows network shares.
 
 ### SSH Client Setup
 
-- (manual) Bring over old `~/.ssh/` contents as desired.
+- MANUAL Bring over old `~/.ssh/` contents as desired:
 
   - To create `~/.ssh/` on the new machine with proper permissions, initiate a
     login then abandon it via Ctrl-C:
@@ -1134,7 +1134,7 @@ Needed for Windows network shares.
 
         ssh-copy-id -i ~/.ssh/id_rsa newmachine
 
-- (manual) Configure SSH clients. Note that host-specific settings should come
+- MANUAL Configure SSH clients. Note that host-specific settings should come
   first, since the first-found setting that matches wins:
 
       vim /etc/ssh/ssh_config
@@ -1163,7 +1163,7 @@ Needed for Windows network shares.
   and corresponding `AcceptEnv` directives on the SSH server allows these
   environment variables to be propagated over the SSH connection.
 
-- (manual) Create `~/.ssh/config.d` directory concept:
+- MANUAL Create `~/.ssh/config.d` directory concept:
 
       mkdir ~/.ssh/config.d
       echod -o ~/.ssh/config '
@@ -1183,7 +1183,7 @@ Needed for Windows network shares.
 
 ### SSH Server Setup
 
-(manual)
+MANUAL:
 
 - References:
   - SSH PasswordAuthentication vs ChallengeResponseAuthentication:
@@ -1203,12 +1203,12 @@ Needed for Windows network shares.
 
   Also include any system-specific and/or network-specific configuration.
 
-- (ubuntu) Configure ssh firewall:
+- UBUNTU Configure ssh firewall:
 
       # ssh already allowed by default on port 22, so this is redundant:
       ufw allow ssh
 
-- (fedora) (centos) Configure firewall:
+- FEDORA (centos) Configure firewall:
 
       # On CentOS, ``ssh`` is already added.
       firewall-cmd --add-service ssh
@@ -1303,7 +1303,7 @@ Supported use cases:
 
 ### Python Base Support
 
-(automated)
+AUTOMATED:
 
 - Install venv + pip `:role:workstation`:
 
@@ -1408,8 +1408,6 @@ Supported use cases:
 
 ### Python 2 Base Support
 
-(manual)
-
 - Install Python 2 interpreter and pip:
 
       agi python python-pip
@@ -1489,7 +1487,7 @@ Supported use cases:
         Package "pipsi":
           pipsi
 
-# (optional) (ubuntu) Remove Snaps
+# (optional) UBUNTU Remove Snaps
 
 References:
 
@@ -1515,7 +1513,7 @@ Rationale:
 
 - Snaps are slow to launch.
 
-## (ubuntu) Purge Snaps
+## UBUNTU Purge Snaps
 
 - Purge `snapd`:
 
@@ -1554,9 +1552,9 @@ Rationale:
 
     pgrep -a snap
 
-## (ubuntu) Add Mozilla PPA
+## UBUNTU Add Mozilla PPA
 
-(automated)
+AUTOMATED:
 
 TODO: automated method uses Ansible `apt_repository` which still uses the old
 method via`apt-key`.  Consider alternate method that does the below work.
@@ -1653,7 +1651,7 @@ get the latest version:
 
 ## Clone home.git, home2.git
 
-(automated)
+AUTOMATED:
 
 - Bring over `.home.git` and `.home2.git`:
 
@@ -1694,14 +1692,14 @@ get the latest version:
 
 - Clone vimfiles, vimfiles-local:
 
-  (automated)
+  AUTOMATED:
 
       git clone ssh://server/srv/git/vimfiles.git ~/.vim
       git clone ssh://server/srv/git/vimfiles-local.git ~/.vimlocal
 
 - Perform additional Vim setup:
 
-  (manual)
+  MANUAL
 
       cd ~/.vim/bundle/cpsm
       ./install.sh
@@ -1713,21 +1711,21 @@ get the latest version:
 
 - Clone vimfiles, vimfiles-local for root:
 
-  (automated)
+  AUTOMATED:
 
       git clone ~mike/.vim ~/.vim
       git clone ~mike/.vimlocal ~/.vimlocal
 
 - Perform additional Vim setup for root:
 
-  (manual)
+  MANUAL
 
       cd /root/.vim/bundle/cpsm
       ./install.sh
 
 ## Bash
 
-(manual)
+MANUAL:
 
 - **Retain original `.bash_history`**:
 
@@ -1762,12 +1760,12 @@ get the latest version:
 
 ## Update grub
 
-(manual) TODO Ansible
+MANUAL:
 
 - Update grub configuration to display boot-time messages and append any
   hardware-specific options.
 
-- (ubuntu): Change grub configuration lines:
+- UBUNTU: Change grub configuration lines:
 
       vim /etc/default/grub
 
@@ -1778,7 +1776,7 @@ get the latest version:
 
       update-grub
 
-- (fedora) (centos): Update grub kernel command line options:
+- FEDORA (centos): Update grub kernel command line options:
 
       vim /etc/default/grub
 
@@ -1805,16 +1803,16 @@ get the latest version:
 - `https://static.rust-lang.org` is the default server for Rust toolchains and
   tools like `rustup`.
 
-- (automated) Acquire `rustup`:
+- AUTOMATED Acquire `rustup`:
 
       curl -o /tmp/rustup-init \
         https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
 
-- (automated) Make `rustup-init` executable:
+- AUTOMATED Make `rustup-init` executable:
 
       chmod +x /tmp/rustup-init
 
-- (automated) Invoke `rustup-init` to install `rustup`:
+- AUTOMATED Invoke `rustup-init` to install `rustup`:
 
       /tmp/rustup-init -q -y --no-modify-path
 
@@ -1870,7 +1868,7 @@ get the latest version:
 
 ## Remapping keys
 
-- (manual) Make Capslock be both Control and Escape (experimental):
+- MANUAL Make Capslock be both Control and Escape (experimental):
 
       setxkbmap -option 'caps:ctrl_modifier'
       xcape -e 'Caps_Lock=Escape' -t 100
@@ -1903,7 +1901,7 @@ get the latest version:
 
       systemctl restart gdm
 
-## (ubuntu) Kubuntu Extras
+## UBUNTU Kubuntu Extras
 
 - Install extras `:role:workstation`:
 
@@ -1913,11 +1911,11 @@ get the latest version:
 
 # System update and reboot
 
-- (ubuntu) From a root prompt, install updates:
+- UBUNTU From a root prompt, install updates:
 
       apt-get -y dist-upgrade
 
-- (fedora) (centos) From a root prompt, install updates:
+- FEDORA (centos) From a root prompt, install updates:
 
       yum -y upgrade
 
@@ -1931,7 +1929,7 @@ get the latest version:
 
 - May now login as `mike` user (into Plasma if installed).
 
-- (manual) Change default locations:
+- MANUAL Change default locations:
 
       xdg-user-dirs-update --set DOCUMENTS  ~/x
       xdg-user-dirs-update --set DOWNLOAD   ~/download
@@ -1947,7 +1945,7 @@ get the latest version:
   - `Public`
   - `Templates`
 
-- (manual) Remove default directories, setup symlinks:
+- MANUAL Remove default directories, setup symlinks:
 
       cd ~
       rmdir Documents Downloads Music Pictures Videos
@@ -2022,7 +2020,7 @@ get the latest version:
       - keebackup
   ```
 
-- (manual) Run KeePassXC, then setup via Tools | Settings:
+- MANUAL Run KeePassXC, then setup via Tools | Settings:
 
   - General | uncheck "Load previous databases on startup".
 
@@ -2035,7 +2033,7 @@ get the latest version:
 
 Use Blowfish encryption with KDE wallet instead of GPG.
 
-- (ubuntu) kdewallet is already setup.
+- UBUNTU kdewallet is already setup.
 
 - (centos) Wallet isn't setup properly out-of-the-box:
   - Start `kdewalletmanager`; runs in the task bar.
@@ -2045,7 +2043,7 @@ Use Blowfish encryption with KDE wallet instead of GPG.
 
 ## Keychain
 
-(automated)
+AUTOMATED:
 
 Gentoo keychain is a small script that sets up ssh-agent at first login. The
 agent thereafter will maintain the keys in memory for passwordless usage of ssh.
@@ -2120,7 +2118,7 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
 ## anacron
 
-(manual) TODO Ansible
+MANUAL:
 
 - anacron controls the launch of daily and weekly jobs in `/etc/cron.daily` and
   `/etc/cron.weekly`.
@@ -2249,7 +2247,7 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
 ### Firefox Installation
 
-#### (ubuntu) Firefox Installation from `.deb`
+#### UBUNTU Firefox Installation from `.deb`
 
 - Firefox is generally installed by default on Ubuntu; if manual installation of
   the `.deb` is required:
@@ -2327,7 +2325,7 @@ entire profile.
 
   See <https://kb.mozillazine.org/Default_browser> for details.
 
-- (ubuntu) Setup `x-www-browser` alternative to be Firefox:
+- UBUNTU Setup `x-www-browser` alternative to be Firefox:
 
       sudo update-alternatives --config x-www-browser
 
@@ -2505,7 +2503,7 @@ not running and repeat the previous steps for profile creation, but:
 
 #### Firefox Settings
 
-(manual):
+MANUAL:
 
 - Enable menu bar (right-click next to tab, check `Menu Bar`).
 
@@ -2974,7 +2972,7 @@ Tracker can sap performance.  To disable on a per-user basis:
 
 - Reference: <https://askubuntu.com/questions/1344050/how-to-disable-tracker-on-ubuntu-20-04>
 
-- (manual) Disable Tracker-related services for the current user (invoke as
+- MANUAL Disable Tracker-related services for the current user (invoke as
   regular user):
 
     systemctl --user unmask \
@@ -2998,7 +2996,7 @@ Tracker can sap performance.  To disable on a per-user basis:
 
   TODO: figure out how to globally provide a `.desktop` override for all users.
 
-- (manual) After disabling, remove cached Tracker files:
+- MANUAL After disabling, remove cached Tracker files:
 
       tracker3 reset -s -r
 
@@ -3136,7 +3134,7 @@ or via `systemsettings5`.
 
 ### System Settings | Appearance | Global Theme
 
-(manual)
+MANUAL:
 
 - Launch Feedback: Stop animation after 1 second
 
@@ -3906,7 +3904,7 @@ To bind a shortcut key to an arbitrary command:
 
 ### System Settings | Hardware | Audio
 
-- (manual) If `Playback Streams` is shown, check the `mute` icon.  This
+- MANUAL: If `Playback Streams` is shown, check the `mute` icon.  This
   disables the sounds accompanying warning dialogs (such as when trying to
   close a Konsole with multiple tabs open).  Note that having the slider set to
   zero is insufficient to disable the sounds.  May also visit this dialog
@@ -3921,7 +3919,7 @@ To bind a shortcut key to an arbitrary command:
 
 ### System Settings | Hardware | Power Management
 
-(manual)
+MANUAL:
 
 - (desktop) Energy Saving:
   - Uncheck `Screen Energy Saving`.
@@ -3934,7 +3932,7 @@ To bind a shortcut key to an arbitrary command:
 
 ## Desktop and Wallpaper Settings
 
-(manual)
+MANUAL:
 
 - Right-click on the Desktop, choose `Desktop and Wallpaper Settings`:
 
@@ -3943,7 +3941,7 @@ To bind a shortcut key to an arbitrary command:
 
 ## Task Bar Settings
 
-(manual)
+MANUAL:
 
 - Right-click on the task bar, choose `Show Alternatives`, change to `Task
   Manager` (instead of the now-default "icons only" variant).
@@ -3968,7 +3966,7 @@ To bind a shortcut key to an arbitrary command:
 
 ## Klipper
 
-(manual) Disable Klipper entirely (interacts badly with Gvim on Ubuntu 22.04):
+MANUAL Disable Klipper entirely (interacts badly with Gvim on Ubuntu 22.04):
 
 - Right-click on the System Tray | Configure System Tray.  This is difficult
   because most of the tray's area is covered with "entries" (like Klipper's
@@ -3979,7 +3977,7 @@ To bind a shortcut key to an arbitrary command:
 
 Right-click on Klipper, choose "Configure Clipboard":
 
-- (automated) Disable "Save clipboard contents on exit":
+- AUTOMATED Disable "Save clipboard contents on exit":
   Uncheck "Save clipboard contents on exit".
 
   Ansible `:role:user-plasma`:
@@ -3993,7 +3991,7 @@ Right-click on Klipper, choose "Configure Clipboard":
       value: "false"
   ```
 
-- (automated) Disable "Prevent empty clipboard":
+- AUTOMATED Disable "Prevent empty clipboard":
   Uncheck "Prevent empty clipboard".
 
   Ansible `:role:user-plasma`:
@@ -4007,7 +4005,7 @@ Right-click on Klipper, choose "Configure Clipboard":
       value: "false"
   ```
 
-- (automated) Enable "Ignore selection":
+- AUTOMATED Enable "Ignore selection":
   Check "Ignore selection".
 
   Ansible `:role:user-plasma`:
@@ -4024,7 +4022,7 @@ Right-click on Klipper, choose "Configure Clipboard":
   This fixes a crash with GVim on Plasma when selecting large amounts of text
   (<https://github.com/vim/vim/issues/1023>).
 
-- (automated) Set "Clipboard history size":
+- AUTOMATED Set "Clipboard history size":
   Set "Clipboard history size" to "1 entry".
 
   Ansible `:role:user-plasma`:
@@ -4232,7 +4230,7 @@ Ansible `:role:user-plasma`:
 
 In Konsole, choose Settings | Configure Keyboard Shortcuts:
 
-- (manual) Set "What's This?" shortcut to None (default: Shift+F1).
+- MANUAL Set "What's This?" shortcut to None (default: Shift+F1).
 
   TODO Ansible perform above configuration by adding these lines in
   `~/.local/share/kxmlgui5/konsole/konsoleui.rc`:
@@ -4243,7 +4241,7 @@ In Konsole, choose Settings | Configure Keyboard Shortcuts:
        </ActionProperties>
       </gui>
 
-- (manual) Set "Move tab to the left" shortcut to Ctrl+Shift+Left.
+- MANUAL: Set "Move tab to the left" shortcut to Ctrl+Shift+Left.
   Note: default is Ctrl+Alt+Left; this reassigns the key from "Focus Left
   Terminal".
 
@@ -4257,7 +4255,7 @@ In Konsole, choose Settings | Configure Keyboard Shortcuts:
        </ActionProperties>
       </gui>
 
-- (manual) Set "Move tab to the right" shortcut to Ctrl+Shift+Right.
+- MANUAL: Set "Move tab to the right" shortcut to Ctrl+Shift+Right.
   Note: default is Ctrl+Alt+Right; this reassigns the key from "Focus Right
   Terminal".
 
@@ -4457,13 +4455,13 @@ Most parts are already installed for use with `kleopatra` or `kgpg`.
 
 ## kleopatra GPG Support
 
-- (fedora) (centos) Already installed with Plasma.
+- FEDORA (centos) Already installed with Plasma.
 
 - Install:
 
       agi kleopatra
 
-      # (fedora) (centos) Already installed with Plasma.
+      # FEDORA (centos) Already installed with Plasma.
 
 - Launch `kleopatra`.
 
@@ -4515,9 +4513,9 @@ printer-specific driver support will be done via separate applications.
 
       yi hplip
 
-- (manual) Create printers:
+- MANUAL Create printers:
 
-      # (ubuntu)
+      # UBUNTU
       for p in {crayon,pencil}; do
         lpadmin -p $p \
           -E \
@@ -4526,7 +4524,7 @@ printer-specific driver support will be done via separate applications.
           -L 'Computer room'
       done
 
-- (manual) Configure printers:
+- MANUAL Configure printers:
 
       lpadmin -p pencil  -D 'Black & White printer'
       lpadmin -p crayon  -D 'Color printer'
@@ -4580,7 +4578,7 @@ More configuration via `systemsettings5` | Printers:
 
 # Admin
 
-## (ubuntu) Disable Dynamic motd
+## UBUNTU Disable Dynamic motd
 
 - Reference:
 
@@ -4606,7 +4604,7 @@ More configuration via `systemsettings5` | Printers:
     when: ansible_distribution == 'Ubuntu'
   ```
 
-## (ubuntu) cron Schedule
+## UBUNTU cron Schedule
 
 - Ubuntu default times for daily, weekly, and monthly jobs is during the 6 a.m.
   hour. Correct this to 2 a.m.:
@@ -4642,7 +4640,7 @@ More configuration via `systemsettings5` | Printers:
 
 # Snapshot
 
-- (manual) Install and setup `rsnapshot`.
+- MANUAL: Install and setup `rsnapshot`.
 
 - Install rsnapshot:
 
@@ -4745,7 +4743,7 @@ More configuration via `systemsettings5` | Printers:
 
 ## postfix for Satellite Nodes
 
-(manual)
+MANUAL:
 
 Use Postfix for "satellite" nodes that communicate **with a local SMTP server**.
 
@@ -4753,7 +4751,7 @@ Use Postfix for "satellite" nodes that communicate **with a local SMTP server**.
 
       agi postfix
 
-- (ubuntu):
+- UBUNTU:
 
   - When installing, answer the configuration questions as:
     - Choose `satellite` email system.
@@ -4774,7 +4772,7 @@ Use Postfix for "satellite" nodes that communicate **with a local SMTP server**.
 
 ## exim4 for local-only mail delivery
 
-(manual)
+MANUAL:
 
 Use exim4 for nodes **without a local SMTP server**.
 
@@ -4799,7 +4797,7 @@ Use exim4 for nodes **without a local SMTP server**.
 
 ## Mail Aliases
 
-(manual)
+MANUAL:
 
 - Choose user for delivery of `root` email; edit `/etc/aliases`, change this
   line:
@@ -4871,7 +4869,7 @@ Note: Ubuntu 16.04 uses mailutils now for the `mail` command.
 
 ## LibreOffice
 
-(manual)
+MANUAL:
 
 - (optional) Use latest version from PPA:
 
@@ -5108,7 +5106,7 @@ References:
 
 ## TeamViewer
 
-- (ubuntu) Install:
+- UBUNTU Install:
 
   - Visit <https://www.teamviewer.com/en/download/linux/>
 
@@ -5120,7 +5118,7 @@ References:
 
         dpkg -i ~mike/download/internet/teamviewer/teamviewer_15.35.7_amd64.deb
 
-- (fedora) Install:
+- FEDORA Install:
 
   - Install 32-bit library for xrandr:
 
@@ -5192,9 +5190,9 @@ References:
 
 Wdfs provides WebDAV-based filesystem mounts (based on `libfuse`).
 
-### (ubuntu) wdfs
+### UBUNTU wdfs
 
-(manual)
+MANUAL:
 
 **NOTE** Need to install libneon27-gnutls-dev to avoid this bug:
 <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622140>
@@ -5238,9 +5236,9 @@ Wdfs provides WebDAV-based filesystem mounts (based on `libfuse`).
 
       sudo tar -C / -zxf wdfs_1.4.2-1_amd64.tar.gz
 
-### (fedora) wdfs
+### FEDORA wdfs
 
-(manual)
+MANUAL:
 
 - Install:
 
@@ -5248,7 +5246,7 @@ Wdfs provides WebDAV-based filesystem mounts (based on `libfuse`).
 
 ### (all) wdfs
 
-(manual)
+MANUAL:
 
 - Optional test server: <https://webdavserver.com/>
 
@@ -5290,7 +5288,7 @@ Wdfs provides WebDAV-based filesystem mounts (based on `libfuse`).
 
       yi davfs2
 
-  (ubuntu) At the dialog prompt, may allow unprivileged users to mount if
+  UBUNTU At the dialog prompt, may allow unprivileged users to mount if
   desired (otherwise, only root may mount).
 
 - Man pages:
@@ -5341,7 +5339,7 @@ Wdfs provides WebDAV-based filesystem mounts (based on `libfuse`).
 
 ## Android File Transfer for Linux
 
-(manual)
+MANUAL:
 
 - <https://github.com/whoozle/android-file-transfer-linux/releases>
 
@@ -5839,7 +5837,7 @@ Progress monitoring for files.
 
       yi dos2unix
 
-- (ubuntu) Create the traditional names `unix2dos`, `dos2unix`:
+- UBUNTU Create the traditional names `unix2dos`, `dos2unix`:
 
       sudo ln -s /usr/bin/{todos,unix2dos}
       sudo ln -s /usr/bin/{fromdos,dos2unix}
@@ -5873,9 +5871,9 @@ Progress monitoring for files.
 
       yi words
 
-### (ubuntu) Language support
+### UBUNTU Language support
 
-(manual)
+MANUAL:
 
 - The notification "Language Support is Incomplete" indicates that some language
   packages are not installed.  To report the list of missing packages:
@@ -6040,9 +6038,9 @@ Creates self-installing shar-like archives.
 
 - Google Chrome home: <http://www.google.com/chrome/>
 
-### (ubuntu) Google Chrome
+### UBUNTU Google Chrome
 
-(manual)
+MANUAL:
 
 - Instructions: <https://itslinuxfoss.com/install-google-chrome-ubuntu-22-04/>
 
@@ -6080,7 +6078,7 @@ For differences between Chrome and Chromium:
 
 At present, chromium-browser for Ubuntu doesn't seem to have kwallet support.
 
-### (fedora) Google Chrome
+### FEDORA Google Chrome
 
 - Instructions from:
   <http://www.if-not-true-then-false.com/2010/install-google-chrome-with-yum-on-fedora-red-hat-rhel/>
@@ -6204,7 +6202,7 @@ At present, chromium-browser for Ubuntu doesn't seem to have kwallet support.
       Forward connection on any port to port 80 (DNAT –to-destination :80)
       Except for normal services (just RETURN for normal activity)
 
-## (ubuntu) Netcat (OpenBSD variant)
+## UBUNTU Netcat (OpenBSD variant)
 
 - Install:
 
@@ -6289,7 +6287,7 @@ socks proxy, so if DNS isn't working properly, this won't work either.
 
       yi wireshark
 
-  (ubuntu) Allow non-superusers to capture packets.
+  UBUNTU Allow non-superusers to capture packets.
 
 ## telnet
 
@@ -6699,7 +6697,7 @@ needed.
       # 5.8.0 is the newest version that works with Python2.
       pipsig2 install ipython==5.8.0
 
-- (manual) Create default configuration (shared for Python 2, Python 3):
+- MANUAL Create default configuration (shared for Python 2, Python 3):
 
       ipython profile create
 
@@ -6707,7 +6705,7 @@ needed.
 
       cp ~/.ipython/profile_default/ipython_config.py{,.dist}
 
-- (manual) Edit configuration:
+- MANUAL Edit configuration:
 
       vim ~/.ipython/profile_default/ipython_config.py
 
@@ -6783,7 +6781,7 @@ needed.
 
 - Python 3-based flake8:
 
-  (automated)
+  AUTOMATED:
 
       pipxg install flake8
       # Now install add-ons into flake8 virtualenv:
@@ -6824,7 +6822,7 @@ needed.
 
 #### Python isort
 
-(manual)
+MANUAL:
 
 - Install:
 
@@ -6832,7 +6830,7 @@ needed.
 
 #### Python Language Server
 
-(automated)
+AUTOMATED:
 
 - Install:
 
@@ -6877,7 +6875,7 @@ tool.
 
 ### Multiple Python Interpreters via pyenv
 
-(manual)
+MANUAL:
 
 - `pyenv` tools: <https://github.com/pyenv/pyenv>
 
@@ -7056,7 +7054,7 @@ Fake data for testing Python scripts.
 
 ### shfmt Formatter
 
-(manual) TODO Ansible
+MANUAL: TODO Ansible
 
 - Reference: <https://github.com/mvdan/sh>
 
@@ -7160,13 +7158,13 @@ Fake data for testing Python scripts.
 
 ## Java
 
-### (ubuntu) Java
+### UBUNTU Java
 
 - <https://help.ubuntu.com/community/Java>
 - openjdk-11-jre is installed. See other packages such as openjdk-11-jdk for
   more options.
 
-### (fedora) Java
+### FEDORA Java
 
 - Fedora FAQ recommends OpenJDK version:
   <https://fedoraproject.org/wiki/Java/FAQ>
@@ -7187,7 +7185,7 @@ Fake data for testing Python scripts.
 
 For the "Go" programming language.
 
-- (ubuntu) For old distro, setup PPA:
+- UBUNTU For old distro, setup PPA:
 
       add-apt-repository -y --update ppa:longsleep/golang-backports
 
@@ -7207,7 +7205,7 @@ For the "Go" programming language.
         fi
       '
 
-- (manual) Pre-create `~/go/bin` so that it will be added to `PATH` at next
+- MANUAL Pre-create `~/go/bin` so that it will be added to `PATH` at next
   login:
 
       mkdir -p ~/go/bin
@@ -7287,7 +7285,7 @@ References:
 
 ### sphinx with pygments
 
-(automated)
+AUTOMATED:
 
 - Install:
 
@@ -7308,7 +7306,7 @@ References:
 
 ### markdown lint
 
-(manual)
+MANUAL:
 
 - Install (as root):
 
@@ -7489,9 +7487,9 @@ References:
 
 - Oracle instructions from: <http://www.virtualbox.org/wiki/Linux_Downloads>
 
-### (ubuntu) VirtualBox
+### UBUNTU VirtualBox
 
-(manual)
+MANUAL:
 
 - Instructions:
 
@@ -7605,7 +7603,7 @@ References:
 
       VBoxManage list extpacks
 
-### (fedora) VirtualBox
+### FEDORA VirtualBox
 
 - Instructions from:
   <http://www.if-not-true-then-false.com/2010/install-virtualbox-with-yum-on-fedora-centos-red-hat-rhel/>
@@ -7643,7 +7641,7 @@ References:
 
 ### (all) VirtualBox
 
-(manual)
+MANUAL:
 
 - Add user(s) to vboxusers group:
 
@@ -8001,7 +7999,7 @@ Record five seconds to a file, then play it back:
 
 ### timidity MIDI Playback
 
-(manual)
+MANUAL:
 
 - Reference:
   - <https://help.ubuntu.com/community/Midi/SoftwareSynthesisHowTo>
@@ -8123,7 +8121,7 @@ Record five seconds to a file, then play it back:
 
       yi geeqie
 
-- (manual) Run `geeqie` and configure via Edit | Preferences | Preferences:
+- MANUAL Run `geeqie` and configure via Edit | Preferences | Preferences:
 
   - Behavior | Delete | check "Use no trash at all".
 
@@ -8272,7 +8270,7 @@ Manipulate jpeg files (e.g., losslessly rotate jpeg file).
 
       ffmpeg -i 1021_20180619000000.ts -target ntsc-dvd 1021_20180619000000.mpg
 
-#### (ubuntu) (alternative) Custom Build ffmpeg from Source
+#### UBUNTU (alternative) Custom Build ffmpeg from Source
 
 Custom build for ffmpeg.
 
@@ -8312,7 +8310,7 @@ Custom build for ffmpeg.
 
       agi mplayer mplayer-gui
 
-- (ubuntu) Configure gnome-mplayer:
+- UBUNTU Configure gnome-mplayer:
 
   - Launch via `gnome-mplayer`.
   - Edit | Preferences (to configure).
@@ -8483,7 +8481,7 @@ Takes pictures and other things with webcam.
 
       agi libsane libsane-common libsane-dev libsane1 sane-utils
 
-- (manual) Look for scanner:
+- MANUAL Look for scanner:
 
       sane-find-scanner
       scanimage -L
@@ -8550,7 +8548,7 @@ Trivial GUI for scanning to a file; no preview or editing.
 
       yi PySolFC{,-music,-cardsets}
 
-- (ubuntu) PySol 2.6.4-3 is broken on Ubuntu 22.04.  After installation,
+- UBUNTU PySol 2.6.4-3 is broken on Ubuntu 22.04.  After installation,
   launching causes this exception:
 
       Traceback (most recent call last):
@@ -8713,7 +8711,7 @@ The "2048" game in your terminal.
 
 ## Sage
 
-- (ubuntu):
+- UBUNTU:
 
   - <https://help.ubuntu.com/community/SAGE>
 
