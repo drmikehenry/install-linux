@@ -1796,6 +1796,76 @@ get the latest version:
   **NOTE** Do not point at `/etc/grub2.cfg`, as that symlink will be
   clobbered because of backup behavior in `grub2-mkconfig`.
 
+# Rust base setup
+
+- Install Rust tooling early to allow for `cargo install yadda`.
+
+- Reference: <https://rustup.rs/>
+
+- `https://static.rust-lang.org` is the default server for Rust toolchains and
+  tools like `rustup`.
+
+- (automated) Acquire `rustup`:
+
+      curl -o /tmp/rustup-init \
+        https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+
+- (automated) Make `rustup-init` executable:
+
+      chmod +x /tmp/rustup-init
+
+- (automated) Invoke `rustup-init` to install `rustup`:
+
+      /tmp/rustup-init -q -y --no-modify-path
+
+  Use `--no-modify-path` because (homegit) has version-controlled settings for
+  `PATH` that include `~/.cargo/bin`.
+
+  Note that `rustup-init` installs a toolchain and various tools in
+  `~/.cargo/bin`, e.g.:
+
+      cargo
+      cargo-clippy
+      cargo-fmt
+      cargo-miri
+      clippy-driver
+      rls
+      rustc
+      rustdoc
+      rustfmt
+      rust-gdb
+      rust-lldb
+      rustup
+
+- Install additional components if desired:
+
+      rustup component add rls rust-src
+
+- View components (installed and available):
+
+      rustup component list
+
+- Install nightly toolchain for a given date:
+
+      rustup install nightly-2022-05-30
+
+  Set as default toolchain:
+
+      rustup default nightly-2022-05-30
+
+  Add components:
+
+      rustup component add rls rust-src
+
+- (homegit) Setup global rustfmt.toml:
+
+      mkdir -p ~/.config/rustfmt
+      echod -o ~/.config/rustfmt/rustfmt.toml '
+        edition = "2018"
+        max_width = 100
+      '
+
+
 # Graphical Environment
 
 ## Remapping keys
@@ -7117,70 +7187,7 @@ References:
 
 ## Rust
 
-- Reference: <https://rustup.rs/>
-
-- `https://static.rust-lang.org` is the default server for Rust toolchains and
-  tools like `rustup`.
-
-- (automated) Acquire `rustup`:
-
-      curl -o /tmp/rustup-init \
-        https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
-
-- (automated) Make `rustup-init` executable:
-
-      chmod +x /tmp/rustup-init
-
-- (automated) Invoke `rustup-init` to install `rustup`:
-
-      /tmp/rustup-init -q -y --no-modify-path
-
-  Use `--no-modify-path` because (homegit) has version-controlled settings for
-  `PATH` that include `~/.cargo/bin`.
-
-  Note that `rustup-init` installs a toolchain and various tools in
-  `~/.cargo/bin`, e.g.:
-
-      cargo
-      cargo-clippy
-      cargo-fmt
-      cargo-miri
-      clippy-driver
-      rls
-      rustc
-      rustdoc
-      rustfmt
-      rust-gdb
-      rust-lldb
-      rustup
-
-- Install additional components if desired:
-
-      rustup component add rls rust-src
-
-- View components (installed and available):
-
-      rustup component list
-
-- Install nightly toolchain for a given date:
-
-      rustup install nightly-2022-05-30
-
-  Set as default toolchain:
-
-      rustup default nightly-2022-05-30
-
-  Add components:
-
-      rustup component add rls rust-src
-
-- (homegit) Setup global rustfmt.toml:
-
-      mkdir -p ~/.config/rustfmt
-      echod -o ~/.config/rustfmt/rustfmt.toml '
-        edition = "2018"
-        max_width = 100
-      '
+- See "Rust base setup" for basic Rust support.
 
 ### Rust Analyzer
 
