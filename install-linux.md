@@ -5544,6 +5544,11 @@ Starship is a cross-shell prompt hook.
 
       cargo install starship
 
+  Optionally, promote `starship` executable to `/usr/local/bin`:
+
+      sudo cp ~/.cargo/bin/starship  /usr/local/bin
+      cargo uninstall starship
+
 - HOMEGIT: Activate by adding the following to `~/.bashrc`:
 
   ```bash
