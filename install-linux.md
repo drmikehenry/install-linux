@@ -39,7 +39,7 @@ See `install-linux-local.md` for any machine-specific setup.
   - Fedora 36: `Fedora-Workstation-Live-x86_64-36-1.2.iso`
   - Torrent from: <https://torrent.fedoraproject.org/>
     - <https://torrent.fedoraproject.org/torrents/Fedora-Workstation-Live-x86_64-36.torrent>
-- (centos) Download the DVD iso file from a mirror at:
+- CENTOS Download the DVD iso file from a mirror at:
   <http://isoredirect.centos.org/centos/7/isos/x86_64/>
   - CentOS 7.4: `CentOS-7-x86_64-DVD-1708.iso`
 
@@ -223,24 +223,24 @@ See `install-linux-local.md` for any machine-specific setup.
 
 ## FEDORA Initial Installation
 
-- Boot from Live CD image (live) or Network Install image (net).
+- Boot from Live CD image LIVE or Network Install image NET.
 
 - If any kernel options are required:
 
-  - (live) At "Start Fedora Workstation Live" option, press Tab key to edit
+  - LIVE: At "Start Fedora Workstation Live" option, press Tab key to edit
     kernel options.
-  - (net) At "Install or upgrade Fedora" option, press Tab key to edit
+  - NET: At "Install or upgrade Fedora" option, press Tab key to edit
     kernel options.
   - Append any required kernel options for boot (e.g., `nox2apic`).
 
 - Custom partitioning:
 
-  - (live) Just run a terminal in the GUI.
-  - (net) Press Alt-F2 and login as root to get a shell.
+  - LIVE: Just run a terminal in the GUI.
+  - NET: Press Alt-F2 and login as root to get a shell.
 
   Then follow custom partitioning instructions using `mdadm` et al.
 
-- (live) When prompted, choose "Install to Hard Drive".
+- LIVE: When prompted, choose "Install to Hard Drive".
 
 - Choose English (United States).
 
@@ -281,7 +281,7 @@ See `install-linux-local.md` for any machine-specific setup.
 
   - VM: Power off; snapshot "Create Power User".
 
-## (centos) Initial Installation
+## CENTOS Initial Installation
 
 - Boot from DVD image.
 - If need custom kernel options, press `e` on `Install CentOS 7` and append them
@@ -398,7 +398,7 @@ while args:
 
 ## Base Aliases
 
-- (homegit) Setup root aliases used during installation:
+- HOMEGIT Setup root aliases used during installation:
 
       vi ~/.bashrc
 
@@ -417,7 +417,7 @@ while args:
 
 ## Base Network Customization
 
-- (optional) Use static IP address:
+- OPTIONAL: Use static IP address:
 
   - Disable NetworkManager:
 
@@ -448,9 +448,9 @@ while args:
         dns-search drmikehenry.com
         dns-nameservers 192.168.254.250
 
-- (desktop) (mobile) Configure wired and wireless settings via NetworkManager.
+- DESKTOP MOBILE: Configure wired and wireless settings via NetworkManager.
 
-- (mobile) Setup wired Ethernet for "hotplug" to avoid delay at boot:
+- MOBILE: Setup wired Ethernet for "hotplug" to avoid delay at boot:
 
   - Still a problem in Ubuntu 18.04.
   - Seems like preventing the wait is the right idea.
@@ -489,7 +489,7 @@ while args:
       # timeout 300;
       timeout 5;
 
-- (mobile) Setup search domain for DHCP on "public" networks:
+- MOBILE: Setup search domain for DHCP on "public" networks:
 
   - Enumerate interfaces via `ip link`.
 
@@ -559,7 +559,7 @@ MANUAL:
 
       agi build-essential linux-headers-generic dkms
 
-- FEDORA (centos) Install prerequisites:
+- FEDORA CENTOS Install prerequisites:
 
       ygi 'Development Tools'
       yi install dkms kernel-devel
@@ -577,7 +577,7 @@ MANUAL:
   Generally, errors indicate that the kernel source is not installed, or that
   the source version doesn't match the running kernel.
 
-- (optional) Setup shared clipboard:
+- OPTIONAL: Setup shared clipboard:
 
   NOTE: This can cause some issues with clipboard fighting.
 
@@ -587,7 +587,7 @@ MANUAL:
 
       reboot
 
-## (optional) Local Home Directories
+## OPTIONAL: Local Home Directories
 
 NOTE: Currently, snap-based Firefox fails when home directories aren't located
 in `/home`.
@@ -737,11 +737,11 @@ in `/home`.
 
   (In general, note that `/etc/alternatives/` are symlinks to the alternatives.)
 
-- (centos) Already defaults to vim.
+- CENTOS Already defaults to vim.
 
 ### sudo
 
-- MANUAL (centos) Adjust `secure_path` to include important directories like
+- MANUAL CENTOS Adjust `secure_path` to include important directories like
   `/usr/local/sbin` and `/usr/local/bin`:
 
       visudo
@@ -806,7 +806,7 @@ in `/home`.
 
   - May not have equivalent to `apt-get source`.
 
-### FEDORA (centos) RPM Building Tools
+### FEDORA CENTOS RPM Building Tools
 
 - Install `:role:workstation`:
 
@@ -857,7 +857,7 @@ TODO: Ansible
 
       rpm --import http://packages.atrpms.net/RPM-GPG-KEY.atrpms
 
-### (centos) Additional Repositories
+### CENTOS Additional Repositories
 
 Non-http mirrors of repositories:
 
@@ -923,9 +923,9 @@ Normal repositories:
 
         rpm -ivh http://packages.psychotic.ninja/6/base/i386/RPMS/psychotic-release-1.0.0-1.el6.psychotic.noarch.rpm
 
-## FEDORA (centos) SELinux
+## FEDORA CENTOS SELinux
 
-- (optional) Set SELinux to be permissive:
+- OPTIONAL: Set SELinux to be permissive:
 
       vim /etc/selinux/config
 
@@ -1043,7 +1043,7 @@ AUTOMATED:
             usermod -aG $i someuser
         done
 
-  - FEDORA (centos):
+  - FEDORA CENTOS:
 
         usermod -aG wheel someuser
 
@@ -1097,7 +1097,7 @@ AUTOMATED:
           -o canmount=on \
           -o mountpoint="$user_home"
 
-  - (optional) Create any additional ZFS datasets living below `$HOME`:
+  - OPTIONAL: Create any additional ZFS datasets living below `$HOME`:
 
         zfs create \
           "rpool/USERDATA/$user_uuid/vms" \
@@ -1208,7 +1208,7 @@ MANUAL:
       # ssh already allowed by default on port 22, so this is redundant:
       ufw allow ssh
 
-- FEDORA (centos) Configure firewall:
+- FEDORA CENTOS Configure firewall:
 
       # On CentOS, ``ssh`` is already added.
       firewall-cmd --add-service ssh
@@ -1487,7 +1487,7 @@ AUTOMATED:
         Package "pipsi":
           pipsi
 
-# (optional) UBUNTU Remove Snaps
+# OPTIONAL: UBUNTU Remove Snaps
 
 References:
 
@@ -1704,7 +1704,7 @@ AUTOMATED:
       cd ~/.vim/bundle/cpsm
       ./install.sh
 
-- (optional) After upgrade, restore these from old installation:
+- OPTIONAL: After upgrade, restore these from old installation:
 
       ~/.viminfo
       ~/.cache/vim
@@ -1732,13 +1732,13 @@ MANUAL:
   - For `root` and `mike`, prepend `~/.bash_history` from previous installation
     to current history file using text editor.
 
-- (homegit) Use `~/.bashrc` settings from source control in general.
+- HOMEGIT Use `~/.bashrc` settings from source control in general.
 
 - The version of readline used in Bash 5.1 enables "bracketed paste" by default,
   which causes text pasted into the Bash prompt to stay highlighted and not
   execute (even if the text contains a final newline).
 
-  (homegit) To restore the old behavior, create `~/.inputrc` with contents:
+  HOMEGIT To restore the old behavior, create `~/.inputrc` with contents:
 
       set enable-bracketed-paste off
 
@@ -1776,7 +1776,7 @@ MANUAL:
 
       update-grub
 
-- FEDORA (centos): Update grub kernel command line options:
+- FEDORA CENTOS: Update grub kernel command line options:
 
       vim /etc/default/grub
 
@@ -1816,7 +1816,7 @@ MANUAL:
 
       /tmp/rustup-init -q -y --no-modify-path
 
-  Use `--no-modify-path` because (homegit) has version-controlled settings for
+  Use `--no-modify-path` because HOMEGIT has version-controlled settings for
   `PATH` that include `~/.cargo/bin`.
 
   Note that `rustup-init` installs a toolchain and various tools in
@@ -1855,7 +1855,7 @@ MANUAL:
 
       rustup component add rls rust-src
 
-- (homegit) Setup global rustfmt.toml:
+- HOMEGIT Setup global rustfmt.toml:
 
       mkdir -p ~/.config/rustfmt
       echod -o ~/.config/rustfmt/rustfmt.toml '
@@ -1915,7 +1915,7 @@ MANUAL:
 
       apt-get -y dist-upgrade
 
-- FEDORA (centos) From a root prompt, install updates:
+- FEDORA CENTOS From a root prompt, install updates:
 
       yum -y upgrade
 
@@ -1953,12 +1953,12 @@ MANUAL:
       ln -s /m/shared/pictures ~/pictures
       ln -s /m/shared/videos ~/videos
 
-      # (non-bolt)
+      # NON_BOLT:
       ln -s /home/m/mike/x ~/x
       ln -s /home/m/shared/download ~/download
       ln -s /home/m/shared/music/Music ~/music
 
-      # (bolt)
+      # BOLT:
       ln -s /m/mike/x ~/x
       ln -s /m/shared/download ~/download
       ln -s /m/shared/music/Music ~/music
@@ -2035,7 +2035,7 @@ Use Blowfish encryption with KDE wallet instead of GPG.
 
 - UBUNTU kdewallet is already setup.
 
-- (centos) Wallet isn't setup properly out-of-the-box:
+- CENTOS Wallet isn't setup properly out-of-the-box:
   - Start `kdewalletmanager`; runs in the task bar.
   - Open the wallet manager.
   - Create the default wallet; must be named `kdewallet`.
@@ -2054,7 +2054,7 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
       yi keychain
 
-- (homegit) Create `ssh-identities` script to list valid ssh identities:
+- HOMEGIT Create `ssh-identities` script to list valid ssh identities:
 
       echod -o ~/bin/ssh-identities '
         #!/bin/sh
@@ -2063,7 +2063,7 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
       '
       chmod +x ~/bin/ssh-identities
 
-- (homegit) Append the following configuration lines:
+- HOMEGIT Append the following configuration lines:
 
       echod -a ~/.profile '
         # Require interactive shell, keychain present, and stdin/stdout are ttys.
@@ -2076,7 +2076,7 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
   - First, setup KDE wallet with a key (run `kwalletmanager`).
 
-  - (homegit) Create script to source at Plasma startup to launch `ssh-agent` if
+  - HOMEGIT Create script to source at Plasma startup to launch `ssh-agent` if
     necessary:
 
         mkdir -p ~/.config/plasma-workspace/env
@@ -2084,7 +2084,7 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
           [ -n "$SSH_AGENT_PID" ] || eval "$(ssh-agent -s)"
         '
 
-  - (homegit) Create script to enumerate SSH identities:
+  - HOMEGIT Create script to enumerate SSH identities:
 
         echod -o ~/bin/ssh-identities '
           #!/bin/sh
@@ -2094,7 +2094,7 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
         chmod +x ~/bin/ssh-identities '
 
-  - (homegit) Create `.desktop` to invoke `ssh-identities`
+  - HOMEGIT Create `.desktop` to invoke `ssh-identities`
     at Plasma startup:
 
         mkdir -p ~/.config/autostart
@@ -2393,7 +2393,7 @@ Version=2
 Because of the `Default=1` setting, `Profile1` is the default profile (with the
 path `sl0b92ny.default`).
 
-#### (recommended) Symlinking the Profile
+#### RECOMMENDED Symlinking the Profile
 
 The easiest way to get a predictable name is to create a symlink to the profile
 directory, e.g.:
@@ -2401,7 +2401,7 @@ directory, e.g.:
     cd ~/.mozilla/firefox
     ln -s sl0b92ny.default mike
 
-#### (alternative) Create a New Firefox Profile
+#### ALTERNATIVE Create a New Firefox Profile
 
 Alternatively, a new profile can be created with a predictable name.
 
@@ -2468,7 +2468,7 @@ Version=2
 Allowing Firefox to start sets the `Default=<profile_name>` key in
 `[InstallXXXXXX]` and the `Default=1` key in `[Profile0]`.
 
-#### (optional) Create Extra Firefox Profiles
+#### OPTIONAL: Create Extra Firefox Profiles
 
 To create an additional profile (e.g., `ExtraProfileName`), ensure Firefox is
 not running and repeat the previous steps for profile creation, but:
@@ -2590,7 +2590,7 @@ MANUAL:
       dom.webnotifications.enabled = false
       dom.webnotifications.serviceworker.enabled = false
 
-- (optional) Search for `dom.event.clipboardevents.enabled`, change to
+- OPTIONAL: Search for `dom.event.clipboardevents.enabled`, change to
   `false`.
 
   This setting prevents websites from disabling copy/paste.  It can also cause
@@ -2761,7 +2761,7 @@ interface).
 
 ### Thunderbird Settings
 
-- (mobile) Setup hosts for `mailman.drmikehenry.com`:
+- MOBILE: Setup hosts for `mailman.drmikehenry.com`:
 
       echod -a /etc/hosts '
         #127.0.0.1        mailman.drmikehenry.com mailman
@@ -2838,7 +2838,7 @@ interface).
   - General | Reading & Display | Uncheck "Show only display name for people in
     my address book".
   - Composition | Composition | Forward messages inline.
-  - (todo) Composition | Composition | Send Options button | Text Format | When
+  - TODO: Composition | Composition | Send Options button | Text Format | When
     sending messages...: Ask me what to do.
   - Composition | Composition | Uncheck "Use paragraph format instead of Body
     Text by default".
@@ -2986,7 +2986,7 @@ Tracker can sap performance.  To disable on a per-user basis:
   `systemctl --user`; however, it's still necessary to use a per-user `.desktop`
   file adjustment as shown below.
 
-- (homegit) Create a local `.desktop` file to override the autostarting behavior
+- HOMEGIT Create a local `.desktop` file to override the autostarting behavior
   of `/etc/xdg/autostart/tracker-miner-fs-3.desktop`:
 
       echod -o ~/.config/autostart/tracker-miner-fs-3.desktop '
@@ -3921,14 +3921,14 @@ To bind a shortcut key to an arbitrary command:
 
 MANUAL:
 
-- (desktop) Energy Saving:
+- DESKTOP: Energy Saving:
   - Uncheck `Screen Energy Saving`.
-- (mobile) Energy Saving | On AC power:
+- MOBILE: Energy Saving | On AC power:
   - Uncheck `Screen Brightness`.
   - Uncheck `Dim Screen`.
   - Uncheck `Screen Energy Saving`.
   - Button events handling | When laptop lid closed | Lock screen.
-- (mobile) Energy Saving | Adjust settings for `On Battery` to taste.
+- MOBILE: Energy Saving | Adjust settings for `On Battery` to taste.
 
 ## Desktop and Wallpaper Settings
 
@@ -4166,7 +4166,7 @@ Font identifier tools:
 
 ## Konsole
 
-- (centos) Install extra terminfo entries:
+- CENTOS Install extra terminfo entries:
 
       yi ncurses-term
 
@@ -4275,7 +4275,7 @@ In Konsole, choose Settings | Configure Konsole, then continue.
 
 #### ... Make current tab more distinguishable
 
-- (homegit) Create file `~/.config/konsole.css` with contents:
+- HOMEGIT Create file `~/.config/konsole.css` with contents:
 
       QTabBar::tab::selected {
           background: lightblue;
@@ -4455,13 +4455,13 @@ Most parts are already installed for use with `kleopatra` or `kgpg`.
 
 ## kleopatra GPG Support
 
-- FEDORA (centos) Already installed with Plasma.
+- FEDORA CENTOS Already installed with Plasma.
 
 - Install:
 
       agi kleopatra
 
-      # FEDORA (centos) Already installed with Plasma.
+      # FEDORA CENTOS Already installed with Plasma.
 
 - Launch `kleopatra`.
 
@@ -4653,7 +4653,7 @@ More configuration via `systemsettings5` | Printers:
       mkdir /snapshot
       chattr +i /snapshot
 
-- (bolt) Using zfs: create separate volume for snapshots:
+- BOLT Using zfs: create separate volume for snapshots:
 
       zfs create -o mountpoint=/snapshot bolt/snapshot
 
@@ -4661,13 +4661,13 @@ More configuration via `systemsettings5` | Printers:
 
   **Note**: LVM volumes starting with "snapshot" are reserved :-(
 
-  - (bolt):
+  - BOLT:
 
         lvcreate bolt -L 459G -n lv_snapshot
         mke2fs -t ext4 /dev/bolt/lv_snapshot
         mount /dev/bolt/lv_snapshot /snapshot
 
-  - (casey):
+  - CASEY:
 
         lvcreate casey_spinner -L 500G -n lv_snapshot
         mke2fs -t ext4 /dev/casey_spinner/lv_snapshot
@@ -4828,7 +4828,7 @@ Note: Ubuntu 16.04 uses mailutils now for the `mail` command.
 
   Provides enhanced `mail` command.
 
-- (all):
+- ALL:
 
   - Test sending an email:
 
@@ -4871,7 +4871,7 @@ Note: Ubuntu 16.04 uses mailutils now for the `mail` command.
 
 MANUAL:
 
-- (optional) Use latest version from PPA:
+- OPTIONAL: Use latest version from PPA:
 
   - Reference: <https://launchpad.net/~libreoffice/+archive/ubuntu/ppa>
 
@@ -4933,7 +4933,7 @@ References:
       mkdir -p /m/data/money/gnucash-config/config
       sudo chown -R beth:data /m/data/money/gnucash-config
 
-- (home2git) Create Plasma environment variable script:
+- HOME2GIT Create Plasma environment variable script:
 
       mkdir -p ~/.config/plasma-workspace/env
       vim ~/.config/plasma-workspace/env/gnucash.sh
@@ -4943,13 +4943,13 @@ References:
       export GNC_DATA_HOME=/m/data/money/gnucash-config/data
       export GNC_CONFIG_HOME=/m/data/money/gnucash-config/config
 
-  (lovelace) Create manually.
+  LOVELACE: Create manually.
 
-- (home2git) To share with console logins, place the following in `.profile2`:
+- HOME2GIT To share with console logins, place the following in `.profile2`:
 
       echo '. $HOME/.config/plasma-workspace/env/gnucash.sh' >> ~/.profile2
 
-  (lovelace) Place at end of `~/.bashrc`.
+  LOVELACE: Place at end of `~/.bashrc`.
 
 - Logout/login again to make variables take effect.
 
@@ -5244,7 +5244,7 @@ MANUAL:
 
       yi wdfs
 
-### (all) wdfs
+### ALL wdfs
 
 MANUAL:
 
@@ -5371,7 +5371,7 @@ MANUAL:
 
       agi ripgrep
 
-- (optional) Install latest via `cargo install ripgrep`.
+- OPTIONAL: Install latest via `cargo install ripgrep`.
 
 - Download a release from <https://github.com/BurntSushi/ripgrep/releases>;
   typically, install from .deb, e.g.:
@@ -5957,7 +5957,7 @@ MANUAL:
 
       pipxg install cookiecutter
 
-- (home2git) Configure:
+- HOME2GIT Configure:
 
       # For direct Github access:
       echod -o ~/.cookiecutterrc '
@@ -6103,7 +6103,7 @@ At present, chromium-browser for Ubuntu doesn't seem to have kwallet support.
 
       yi google-chrome-stable
 
-### (all) Google Chrome
+### ALL Google Chrome
 
 - Configure: Choose icon to right of URL bar | Settings (same as visiting the
   URL <chrome://chrome/settings/>):
@@ -7360,7 +7360,7 @@ MANUAL:
 
         pandoc file.md -o file.html
 
-- (optional) Build from source:
+- OPTIONAL: Build from source:
 
   - Need 2022-05-14 pandoc to convert with two-character indentation in output
     Markdown using pandoc compiled from source on Ubuntu 22-04 (the latest
@@ -7385,7 +7385,7 @@ MANUAL:
   - Binary `pandoc` will be in `$CABALDIR/bin` (`~/.cabal/bin`).
     Can be copied into `/usr/local/bin/`.
 
-- (optional) Install using cabal for latest version (fedora 17 is too old):
+- OPTIONAL: Install using cabal for latest version (fedora 17 is too old):
 
       sudo cabal update
       sudo cabal install pandoc
@@ -7644,7 +7644,7 @@ MANUAL:
     Extensions, click on blue diamond and browse to .vbox-extpack file to
     install.
 
-### (all) VirtualBox
+### ALL VirtualBox
 
 MANUAL:
 
@@ -8027,7 +8027,7 @@ MANUAL:
 
       agi timidity
 
-- (optional) Adjust `/etc/timidity/timidity.cfg` as shown in `man timidity.cfg`.
+- OPTIONAL: Adjust `/etc/timidity/timidity.cfg` as shown in `man timidity.cfg`.
 
 - Play sample MIDI file:
 
@@ -8275,7 +8275,7 @@ Manipulate jpeg files (e.g., losslessly rotate jpeg file).
 
       ffmpeg -i 1021_20180619000000.ts -target ntsc-dvd 1021_20180619000000.mpg
 
-#### UBUNTU (alternative) Custom Build ffmpeg from Source
+#### UBUNTU ALTERNATIVE Custom Build ffmpeg from Source
 
 Custom build for ffmpeg.
 

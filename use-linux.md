@@ -1076,7 +1076,7 @@ This runs `/var/lib/dpkg/info/PACKAGE.postinst configure` (so-called
 
       lshw -class disk -short
 
-- Use `lshw-gui` (fedora) or `lshw-gtk` (ubuntu) for GUI version.
+- Use `lshw-gui` FEDORA or `lshw-gtk` (ubuntu) for GUI version.
 
 - Use `dmidecode` to display system DMI table (SMBIOS information).
 
@@ -1172,7 +1172,7 @@ This runs `/var/lib/dpkg/info/PACKAGE.postinst configure` (so-called
 
       wget -e 'robots=off' -m --no-parent http://somesite.com/some/path/
 
-# (fedora) (centos) SELinux management
+# FEDORA CENTOS SELinux management
 
 - SELinux references:
 
@@ -1258,7 +1258,7 @@ This runs `/var/lib/dpkg/info/PACKAGE.postinst configure` (so-called
 
       semodule_unpackage local_mail.pp
 
-# (fedora) (centos) SELinux port management
+# FEDORA CENTOS SELinux port management
 
 To enable `name_bind` for a port (e.g., for allowing SSHD to bind to a
 non-standard port), use `semanage`.
@@ -1695,7 +1695,7 @@ mirrored disk for the vdev.
 
   This uses the environment variable `PROFILE_SOURCED` to prevent multiple
   sourcing of the startup files.  (Note that `PROFILE_SOURCED` is a non-standard
-  variable defined in (homegit) at the top of `~/.profile`.)
+  variable defined in HOMEGIT at the top of `~/.profile`.)
 
 ## X11 multi-head via xrandr
 

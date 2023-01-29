@@ -15,7 +15,7 @@ title: casey Installation
 
 - Boot EFI Ubuntu ISO and "Try Ubuntu".
 
-- (optional) Erase SSDs:
+- OPTIONAL: Erase SSDs:
 
       echo -n mem > /sys/power/state
       # Press power button to awaken.
@@ -37,7 +37,7 @@ title: casey Installation
 - Your computer's name: casey
 - Pick a username: poweruser
 
-- (optional) Reboot into new Ubuntu to test; then boot back into "Try Ubuntu".
+- OPTIONAL: Reboot into new Ubuntu to test; then boot back into "Try Ubuntu".
 
 ### Prepare to use bolt notes
 
@@ -83,7 +83,7 @@ title: casey Installation
     # bpool.zfs size: 253M
     # rpool.zfs size: 6.5G
 
-    # (optional) examine partitions:
+    # OPTIONAL: examine partitions:
     sgdisk -p /dev/sda
 
     mount /dev/sda1 /mnt/esp

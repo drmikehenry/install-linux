@@ -147,15 +147,15 @@ to setup a minimal system.
 
       sudo -i
 
-- (ubuntu) Give `ubuntu` user a password:
+- UBUNTU: Give `ubuntu` user a password:
 
       passwd ubuntu
 
-- (ubuntu) Update APT cache:
+- UBUNTU: Update APT cache:
 
       apt update
 
-- (ubuntu) Install openssh server:
+- UBUNTU: Install openssh server:
 
       apt install -y openssh-server
 
@@ -184,11 +184,11 @@ to setup a minimal system.
 
       sudo -i
 
-- (ubuntu) Update APT cache:
+- UBUNTU: Update APT cache:
 
       apt update
 
-- (ubuntu) Install openssh server:
+- UBUNTU: Install openssh server:
 
       apt install -y openssh-server
 

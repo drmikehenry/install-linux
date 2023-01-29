@@ -10,9 +10,9 @@ See `machines/` directory for per-machine instructions.
 
 ## Setup automount for `/m/`
 
-(automated)
+AUTOMATED:
 
-- (non-bolt) Create symlink for `/m`:
+- NON_BOLT: Create symlink for `/m`:
 
       ln -s /net/bolt.drmikehenry.com/m /m
 
@@ -20,15 +20,15 @@ See `machines/` directory for per-machine instructions.
 
 ## Setup automount for `/nfshome/`
 
-(manual)
+MANUAL:
 
-- (non-bolt) Create symlink for `/nfshome`:
+- NON_BOLT: Create symlink for `/nfshome`:
 
       ln -s /net/bolt.drmikehenry.com/home /nfshome
 
 ## SSH client setup
 
-- (manual) Configure SSH clients.
+- MANUAL: Configure SSH clients.
 
       vim /etc/ssh/ssh_config
 

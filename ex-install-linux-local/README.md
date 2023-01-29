@@ -27,7 +27,7 @@ See `install-linux/README.md` for overview.
         -l $ANSIBLE_HOST \
         bootstrap-local.yml
 
-- (optional) Setup `/localhome`-based home directories:
+- OPTIONAL Setup `/localhome`-based home directories:
 
       ansible-playbook \
         -u root \
@@ -44,21 +44,21 @@ See `install-linux/README.md` for overview.
         -l $ANSIBLE_HOST \
         base.yml
 
-- (workstation) workstation-mounts:
+- WORKSTATION: workstation-mounts:
 
       ansible-playbook \
         -u root \
         -l $ANSIBLE_HOST \
         workstation-mounts.yml
 
-- (optional) (ubuntu) Remove snaps:
+- OPTIONAL UBUNTU Remove snaps:
 
       ansible-playbook \
         -u root \
         -l $ANSIBLE_HOST \
         remove-snaps.yml
 
-- (optional) (ubuntu) Use Mozilla PPA for Firefox, Thunderbird:
+- OPTIONAL UBUNTU Use Mozilla PPA for Firefox, Thunderbird:
 
       ansible-playbook \
         -u root \
@@ -92,23 +92,30 @@ See `install-linux/README.md` for overview.
         -l $ANSIBLE_HOST \
         user-root-git-repos.yml
 
-- (workstation) workstation:
+- Setup `$ANSIBLE_USER` for Rust:
+
+      ansible-playbook \
+        -u $ANSIBLE_USER \
+        -l $ANSIBLE_HOST \
+        user-rust.yml
+
+- WORKSTATION: workstation:
 
       ansible-playbook \
         -u root \
         -l $ANSIBLE_HOST \
         workstation.yml
 
-  (fedora) Might want to do this as root (now that Plasma is here), or
+  FEDORA Might want to do this as root (now that Plasma is here), or
   just reboot:
 
       systemctl isolate graphical.target
 
-- (ubuntu) Restart `gdm` so that Plasma becomes a valid option:
+- UBUNTU Restart `gdm` so that Plasma becomes a valid option:
 
       systemctl restart gdm
 
-- (home) home:
+- HOME: home:
 
       ansible-playbook \
         -u root \
@@ -121,10 +128,3 @@ See `install-linux/README.md` for overview.
         -u $ANSIBLE_USER \
         -l $ANSIBLE_HOST \
         user-plasma.yml
-
-- Setup `$ANSIBLE_USER` for Rust:
-
-      ansible-playbook \
-        -u $ANSIBLE_USER \
-        -l $ANSIBLE_HOST \
-        user-rust.yml
