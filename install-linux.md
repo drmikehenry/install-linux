@@ -7251,14 +7251,17 @@ References:
 
 - Available from: <https://rust-analyzer.github.io/>
 
-- Download from releases area.
+- Download `rust-analyzer-x86_64-unknown-linux-gnu.gz` from the releases area;
+  for example, version `2023-01-30` is found at:
+
+      https://github.com/rust-lang/rust-analyzer/releases/2023-01-30
 
 - Expand into directory in the path, e.g.:
 
       sudo cp rust-analyzer-x86_64-unknown-linux-gnu.gz /usr/local/bin
-      sudo gunzip /usr/local/bin/rust-analyzer-x86_64-unknown-linux-gnu.gz
+      sudo gunzip -f /usr/local/bin/rust-analyzer-x86_64-unknown-linux-gnu.gz
       sudo chmod +x /usr/local/bin/rust-analyzer-x86_64-unknown-linux-gnu
-      sudo ln -s \
+      sudo ln -sf \
         /usr/local/bin/rust-analyzer-x86_64-unknown-linux-gnu \
         /usr/local/bin/rust-analyzer
 
