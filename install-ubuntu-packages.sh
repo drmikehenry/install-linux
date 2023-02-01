@@ -125,6 +125,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   html2text \
   linux-tools-generic \
   manpages-posix-dev \
+  gcc-mingw-w64-x86-64 \
   gperf \
   help2man \
   gcc-11-powerpc-linux-gnu \
