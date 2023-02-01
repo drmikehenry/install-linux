@@ -7249,6 +7249,8 @@ References:
 
 ### Rust Analyzer
 
+MANUAL:
+
 - Available from: <https://rust-analyzer.github.io/>
 
 - Download `rust-analyzer-x86_64-unknown-linux-gnu.gz` from the releases area;
