@@ -68,6 +68,13 @@ See `install-linux/README.md` for overview.
   Note: this also reinstalls Firefox from the PPA because the snap version was
   likely purged (and Firefox is installed by default).
 
+- OPTIONAL UBUNTU Use Firefox tarball:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        firefox-tarball.yml
+
 - accounts:
 
       ansible-playbook \
