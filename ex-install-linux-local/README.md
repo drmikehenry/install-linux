@@ -75,12 +75,19 @@ See `install-linux/README.md` for overview.
         -l $ANSIBLE_HOST \
         accounts.yml
 
-- local-passwords:
+- Set root password:
 
       ansible-playbook \
         -u root \
         -l $ANSIBLE_HOST \
-        local-passwords.yml
+        root-password.yml
+
+- Set some_user's password:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        some_user-password.yml
 
 **TODO** Insert ZFS instructions for setting up per-user datasets.
 
