@@ -68,12 +68,12 @@ See `install-linux/README.md` for overview.
   Note: this also reinstalls Firefox from the PPA because the snap version was
   likely purged (and Firefox is installed by default).
 
-- local-accounts:
+- accounts:
 
       ansible-playbook \
         -u root \
         -l $ANSIBLE_HOST \
-        local-accounts.yml
+        accounts.yml
 
 - local-passwords:
 
