@@ -1,0 +1,21 @@
+---
+# Variables:
+#   - "FIREFOX_VERSION": version of Firefox to install (e.g., `104.0.2`).
+#   - "FIREFOX_LOCAL_DIR": directory holding Firefox tarballs on control node
+#                          (e.g., $HOME/x/shared/software/packages/firefox)
+# Require tarball to be named as:
+#   firefox-{{ FIREFOX_VERSION }}-linux-x86_64.tar.bz2
+- name: Extract firefox tarball
+  unarchive:
+    src: "{{ FIREFOX_LOCAL_DIR }}/firefox-{{ FIREFOX_VERSION }}-linux-x86_64.tar.bz2"
+    dest: "/opt"
+    creates: "/opt/firefox-{{ FIREFOX_VERSION }}/firefox"
+    extra_opts:
+      - "--transform"
+      - "s/^firefox/firefox-{{ FIREFOX_VERSION }}/"
+
+- name: Create firefox symlink
+  file:
+    src: "/opt/firefox-{{ FIREFOX_VERSION }}/firefox"
+    dest: "/usr/local/bin/firefox"
+    state: link
