@@ -1,76 +1,76 @@
 #!/bin/sh
 dnf install -y \
-  keepassxc \
-  hplip \
+  ack \
   audacity \
-  gimp \
-  Maelstrom \
-  wget \
-  curl \
-  vim \
-  nfs-utils \
-  cifs-utils \
   autofs \
+  bitstream-vera-sans-mono-fonts \
+  '@C Development Tools and Libraries' \
+  cifs-utils \
+  cmake \
+  cmake-gui \
+  colordiff \
+  ctags \
+  curl \
+  ddd \
+  '@Development Libraries' \
+  '@Development Tools' \
+  dos2unix \
+  doxygen \
+  gcc-c++ \
+  geeqie \
+  gimp \
   git \
-  myrepos \
-  subversion \
+  git-gui \
+  golang \
+  google-droid-sans-fonts \
+  google-droid-sans-mono-fonts \
+  graphviz \
+  hdparm \
+  hplip \
+  '@KDE Plasma Workspaces' \
+  kdiff3 \
+  keepassxc \
+  keychain \
+  konqueror \
   konversation \
+  levien-inconsolata-fonts \
+  lshw \
+  lshw-gui \
+  Maelstrom \
+  mailx \
+  man-pages \
+  meld \
+  mscgen \
+  mutt \
+  myrepos \
+  nfs-utils \
+  nmap \
+  okular \
+  pandoc \
+  perl-ExtUtils-Embed \
+  qgit \
   rpm-build \
   rpmdevtools \
-  '@KDE Plasma Workspaces' \
-  keychain \
+  ruby \
+  ruby-devel \
+  scons \
+  smartmontools \
+  socat \
+  speedcrunch \
+  strace \
+  stress \
+  subversion \
+  texinfo \
+  the_silver_searcher \
+  tidy \
+  tmux \
+  traceroute \
+  vim \
+  vim \
+  vim-X11 \
+  wget \
+  wireshark \
   wmctrl \
   xclip \
   xsel \
-  google-droid-sans-fonts \
-  google-droid-sans-mono-fonts \
-  levien-inconsolata-fonts \
-  bitstream-vera-sans-mono-fonts \
-  tmux \
-  konqueror \
-  mutt \
-  mailx \
-  ack \
-  the_silver_searcher \
-  meld \
-  kdiff3 \
-  colordiff \
-  lshw \
-  lshw-gui \
-  smartmontools \
-  hdparm \
-  dos2unix \
-  stress \
-  strace \
-  socat \
-  traceroute \
-  nmap \
-  wireshark \
-  git-gui \
-  qgit \
-  '@Development Tools' \
-  '@Development Libraries' \
-  '@C Development Tools and Libraries' \
-  scons \
-  cmake \
-  cmake-gui \
-  ddd \
-  texinfo \
-  gcc-c++ \
-  man-pages \
-  vim \
-  vim-X11 \
-  ctags \
-  ruby \
-  ruby-devel \
-  perl-ExtUtils-Embed \
-  doxygen \
-  graphviz \
-  mscgen \
-  golang \
-  pandoc \
-  tidy \
-  okular \
-  geeqie \
-  speedcrunch \
 
