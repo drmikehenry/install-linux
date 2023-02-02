@@ -25,7 +25,7 @@ See `install-linux/README.md` for overview.
       ansible-playbook \
         -u root \
         -l $ANSIBLE_HOST \
-        bootstrap-local.yml
+        bootstrap.yml
 
 - OPTIONAL Setup `/localhome`-based home directories:
 
