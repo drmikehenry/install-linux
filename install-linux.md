@@ -4312,6 +4312,12 @@ In Konsole, choose Settings | Configure Konsole, then continue.
       value: "file:.config/konsole.css"
   ```
 
+- MANUAL: Disable toolbars:
+
+  - Right-click next to the "Help" menu.
+  - Uncheck "Main Toolbar".
+  - Uncheck "Session Toolbar".
+
 ## XTerm
 
 - References:
