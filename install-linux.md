@@ -2046,7 +2046,7 @@ AUTOMATED:
 Gentoo keychain is a small script that sets up ssh-agent at first login. The
 agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
-- Install `:role:workstation`:
+- Install `:role:base`:
 
       agi keychain
 

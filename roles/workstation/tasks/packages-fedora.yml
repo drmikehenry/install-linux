@@ -5,7 +5,6 @@
     - rpm-build
     - rpmdevtools
     - '@KDE Plasma Workspaces'
-    - keychain
     - wmctrl
     - xclip
     - xsel

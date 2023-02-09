@@ -10,7 +10,6 @@
     - python3-pip
     - kubuntu-desktop
     - kubuntu-restricted-extras
-    - keychain
     - wmctrl
     - xdotool
     - xclip
