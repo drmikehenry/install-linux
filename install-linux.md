@@ -1170,11 +1170,10 @@ AUTOMATED:
         Include config.d/*.conf
       '
 
-  Example usage:
+  MANUAL: Disable X11 forwarding for Github:
 
-      echod -o ~/.ssh/config.d/example '
-        # Example file.
-        Host somehost.com
+      echod -o ~/.ssh/config.d/github.conf '
+        Host github.com
           ForwardX11 no
       '
 
