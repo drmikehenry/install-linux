@@ -1741,7 +1741,7 @@ MANUAL:
 
       set enable-bracketed-paste off
 
-  To manually disable bracketed past, entered this command directly at the Bash
+  To manually disable bracketed paste, entered this command directly at the Bash
   prompt:
 
       bind 'set enable-bracketed-paste off'
