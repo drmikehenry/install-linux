@@ -127,6 +127,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   scons \
   scons-doc \
   shellcheck \
+  shfmt \
   silversearcher-ag \
   skanlite \
   smartmontools \

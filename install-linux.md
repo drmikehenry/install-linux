@@ -7070,15 +7070,11 @@ Fake data for testing Python scripts.
 
 ### shfmt Formatter
 
-MANUAL: TODO Ansible
-
 - Reference: <https://github.com/mvdan/sh>
 
-- Ensure "golang" is installed.
+- Install `:role:workstation`:
 
-- Install as normal user:
-
-      go install mvdan.cc/sh/cmd/shfmt@latest
+      agi shfmt
 
 ## Perl
 
