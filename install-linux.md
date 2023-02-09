@@ -7211,7 +7211,7 @@ For the "Go" programming language.
 
       yi golang
 
-- Setup `~/.profile`:
+- HOMEGIT: Setup `~/.profile`:
 
       echod -a ~/.profile '
         # Go support.
