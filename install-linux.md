@@ -8157,7 +8157,7 @@ MANUAL:
 
       yi geeqie
 
-- MANUAL Run `geeqie` and configure via Edit | Preferences | Preferences:
+- MANUAL Run `geeqie` and configure via Edit | Preferences:
 
   - Behavior | Delete | check "Use no trash at all".
 
