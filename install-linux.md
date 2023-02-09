@@ -1114,7 +1114,7 @@ AUTOMATED:
         chown -R "$user": "$user_home"
         rsync -a "$user_home_orig/" "$user_home/"
 
-  -  If successful, remove the old directory:
+  - If successful, remove the old directory:
 
         # !! Only if successful above.
         rm -rf "$user_home_orig/"
@@ -1862,7 +1862,6 @@ MANUAL:
         edition = "2018"
         max_width = 100
       '
-
 
 # Graphical Environment
 
@@ -5259,8 +5258,8 @@ MANUAL:
   **NOTE** First, visit above link; this will redirect to a custom URL
   like this:
 
-    # ***Get a new URL; don't use this one!
-    https://webdavserver.com/Userbfc856d
+      # ***Get a new URL; don't use this one!
+      https://webdavserver.com/Userbfc856d
 
   Do this each time, since the custom URL above is valid only temporarily.
 
@@ -5320,8 +5319,8 @@ MANUAL:
 
   - Add a line in `/etc/fstab` for each mount, e.g.:
 
-      # For user SomeUser who's a member of SomeGroup:
-      https://some.host/path/to/webdav_share  /webdav/SomeUser/webdav_share davfs noauto,user,uid=SomeUser,gid=SomeGroup 0 0
+        # For user SomeUser who's a member of SomeGroup:
+        https://some.host/path/to/webdav_share  /webdav/SomeUser/webdav_share davfs noauto,user,uid=SomeUser,gid=SomeGroup 0 0
 
 ## jmtpfs
 
@@ -5831,7 +5830,6 @@ Progress monitoring for files.
 
       pv file | nc -w 1 somewhere.com 3000
 
-
 - Also can watch fds for an existing process:
 
       # In one termina; don't let this run too long!
@@ -5892,7 +5890,6 @@ MANUAL:
       check-language-support
 
 - To install these missing packages:
-
 
       apt install $(check-language-support)
 
@@ -6474,7 +6471,6 @@ socks proxy, so if DNS isn't working properly, this won't work either.
         SplitEmptyFunction: true
         SplitEmptyRecord: true
         SplitEmptyNamespace: true
-
 
 - Create global per-user `~/.clang-format` with the above content.
 
@@ -7541,7 +7537,7 @@ MANUAL:
 
 - (one-time) Acquire Oracle 2016 key:
 
-    wget https://www.virtualbox.org/download/oracle_vbox_2016.asc
+      wget https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
   Copy `oracle_vbox_2016.asc` contents (beginning with `-----BEGIN PGP PUBLIC
   KEY BLOCK-----`) into below command.
