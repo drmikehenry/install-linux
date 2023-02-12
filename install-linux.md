@@ -2994,12 +2994,12 @@ Tracker can sap performance.  To disable on a per-user basis:
 - MANUAL Disable Tracker-related services for the current user (invoke as
   regular user):
 
-    systemctl --user unmask \
-      tracker-extract-3.service \
-      tracker-miner-fs-3.service \
-      tracker-miner-fs-control-3.service \
-      tracker-writeback-3.service \
-      tracker-xdg-portal-3.service
+      systemctl --user unmask \
+        tracker-extract-3.service \
+        tracker-miner-fs-3.service \
+        tracker-miner-fs-control-3.service \
+        tracker-writeback-3.service \
+        tracker-xdg-portal-3.service
 
   Note: to do this globally for all users, use `systemctl --global` instead of
   `systemctl --user`; however, it's still necessary to use a per-user `.desktop`
@@ -4586,7 +4586,7 @@ More configuration via `systemsettings5` | Printers:
 
 - For black & white printers:
 
-  > - Configure | Printer Options | Color | Print Color as Gray: On
+  - Configure | Printer Options | Color | Print Color as Gray: On
 
 ## Printing Text from the Command Line
 
@@ -5246,7 +5246,7 @@ MANUAL:
 
   - Description of the package:
 
-    > WebDAV-based fuse filesystem.
+        WebDAV-based fuse filesystem.
 
   Note: Using `checkinstall` instead of `make install` builds a `.deb` package
   (`wdfs_1.4.2-1_amd64.deb` in this case) and then installs the package.
