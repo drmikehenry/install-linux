@@ -2072,23 +2072,24 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
       yi keychain
 
-- HOMEGIT Create `ssh-identities` script to list valid ssh identities:
+- HOMEGIT Create `~/bin/ssh-identities` script to list valid ssh identities:
 
-      echod -o ~/bin/ssh-identities '
-        #!/bin/sh
+      #!/bin/sh
 
-        find ~/.ssh -maxdepth 1 -name 'id_*' -not -name '*.pub' -print
-      '
+      find ~/.ssh -maxdepth 1 -name 'id_*' -not -name '*.pub' -print
+
+  Make it executable:
+
       chmod +x ~/bin/ssh-identities
 
-- HOMEGIT Append the following configuration lines:
+- HOMEGIT Append the following configuration lines to `~/.profile`:
 
-      echod -a ~/.profile '
-        # Require interactive shell, keychain present, and stdin/stdout are ttys.
-        if [ "$PS1" ] && [ "$(command -v keychain)" ] && tty -s && tty -s 0<&1; then
-            eval "$(keychain --eval --nogui --quiet "$(~/bin/ssh-identities)")"
-        fi
-      '
+  ```sh
+  # Require interactive shell, keychain present, and stdin/stdout are ttys.
+  if [ "$PS1" ] && [ "$(command -v keychain)" ] && tty -s && tty -s 0<&1; then
+      eval "$(keychain --eval --nogui --quiet "$(~/bin/ssh-identities)")"
+  fi
+  ```
 
 - For ssh-add during Plasma startup:
 
