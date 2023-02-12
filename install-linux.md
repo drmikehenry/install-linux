@@ -1921,6 +1921,26 @@ MANUAL:
 
       reboot
 
+## Simulate a Login at Plasma startup
+
+- For Plasma-X11, `~/.xsessionrc` (as described elsewhere) will be invoked; but
+  for Plasma-Wayland, this file is ignored.
+
+  HOMEGIT To simulate a true login in a Plasma-specific way, create
+  `~/.config/plasma-workspace/env/source-profile.sh` with the same contents as
+  `~/.xsessionrc` above:
+
+  ```sh
+  if [ -z "$PROFILE_SOURCED" ]; then
+      . /etc/profile
+      . $HOME/.profile
+  fi
+  ```
+
+  The environment variable `PROFILE_SOURCED` prevents multiple sourcing of the
+  startup files.  (This is important for X11-based Plasma, which uses both
+  `~/.xsessionrc` and `~/.config/plasma-workspace/env/`.
+
 # Mission-Critical Apps
 
 ## Login as `mike`
