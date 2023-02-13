@@ -6072,18 +6072,17 @@ MANUAL:
 
 - Instructions: <https://itslinuxfoss.com/install-google-chrome-ubuntu-22-04/>
 
-- Install key:
-  **TODO** Avoid `apt-key add`:
+- Download and install Google's signing key:
 
-      #wget -q -O - https://dl.google.com/linux/linux_signing_key.pub |
-      #  sudo apt-key add -
+      curl -fsSL https://dl.google.com/linux/linux_signing_key.pub |
+        sudo gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
 
 - Chrome sets up the cron job `/opt/google/chrome/cron/google-chrome` to
   periodically update `/etc/apt/sources.list.d/google-chrome.list`. To bootstrap
   the process, pre-create that file:
 
-      echod -o /etc/apt/sources.list.d/google-chrome.list '
-        deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+      sudo echod -o /etc/apt/sources.list.d/google-chrome.list '
+        deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main
       '
 
 - Update and install stable version:

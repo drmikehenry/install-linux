@@ -284,6 +284,8 @@ Note: must have enabled the corresponding source repository.
 
 - References:
 
+  - <https://stackoverflow.com/questions/68992799/warning-apt-key-is-deprecated-manage-keyring-files-in-trusted-gpg-d-instead>
+  - <https://discourse.ubuntu.com/t/spec-apt-deb822-sources-by-default/29333>
   - <https://www.digitalocean.com/community/tutorials/how-to-handle-apt-key-and-add-apt-repository-deprecation-using-gpg-to-add-external-repositories-on-ubuntu-22-04>
   - <https://github.com/elprup/ppa-mirror>
   - <https://www.linuxuprising.com/2021/01/apt-key-is-deprecated-how-to-add.html>
