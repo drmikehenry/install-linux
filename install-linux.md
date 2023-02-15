@@ -1591,6 +1591,7 @@ method via`apt-key`.  Consider alternate method that does the below work.
         URIs: https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu/
         Suites: $(lsb_release -cs)
         Components: main
+        Architectures: $(dpkg --print-architecture)
         Signed-By: /etc/apt/keyrings/mozillateam.gpg
       "
 
@@ -7790,27 +7791,34 @@ MANUAL:
   - "Containers from Scratch", Liz Rice, GOTO 2018:
     <https://youtu.be/8fi7uSYlOdc>
 
+MANUAL:
+
 - Install key:
 
-  **TODO** Avoid `apt-key add`:
-
-      #curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-
-- Verify key:
-
-      apt-key fingerprint 0EBFCD88
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg |
+        sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
 - Add repository:
 
-      add-apt-repository \
-        -y --update \
-        "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-        $(lsb_release -cs) \
-        stable"
+      echod -o /etc/apt/sources.list.d/docker.sources "
+        Types: deb
+        URIs: https://download.docker.com/linux/ubuntu
+        Suites: $(lsb_release -cs)
+        Components: stable
+        Architectures: $(dpkg --print-architecture)
+        Signed-By: /etc/apt/keyrings/docker.gpg
+      "
 
-- Install "Docker Engine - Community" and containerd:
+      apt-get update
 
-      agi docker-ce docker-ce-cli containerd.io docker-compose-plugin
+- Install Docker components:
+
+      agi \
+        docker-ce \
+        docker-ce-cli \
+        containerd.io \
+        docker-compose-plugin \
+        docker-buildx-plugin
 
 - Add user to `docker` group:
 
