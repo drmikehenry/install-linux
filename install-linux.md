@@ -2657,8 +2657,8 @@ Policies are defined in
 Article for setting up policies to avoid automatic updates:
 <https://linuxreviews.org/HOWTO_Make_Mozilla_Firefox_Stop_Nagging_You_About_Updates_And_Other_Annoying_Idiocy>
 
-- Create `/etc/firefox/policies/policies.json` with the below contents to avoid
-  automatic Firefox updates:
+- MANUAL Create `/etc/firefox/policies/policies.json` with the below contents to
+  avoid automatic Firefox updates:
 
       {
           "policies": {
