@@ -7365,6 +7365,35 @@ MANUAL:
 
       gem install mdl
 
+- Install offline:
+
+  On Internet-connected machine:
+
+      mkdir -p ~/tmp/gems
+      cd ~/tmp/gems
+      gem fetch mdl
+      gem unpack mdl-0.12.0.gem
+      cd mdl-0.12.0
+      bundle3.0 config set --local path 'vendor/bundle'
+      bundle3.0 cache
+      # Could not find rake-13.0.6.gem for installation
+      gem fetch rake -v 13.0.6
+      mv rake-13.0.6.gem vendor/cache
+      bundle3.0 cache
+      # Could not find rexml-3.2.5.gem for installation
+      gem fetch rexml -v 3.2.5
+      mv rexml-3.2.5 vendor/cache
+      bundle3.0 cache
+      mv ../mdl-0.12.0.gem vendor/cache
+      tar -C vendor/cache/ -zcf ~/transfer/mdl.tar.gz .
+
+  On offline machine:
+
+      mkdir -p ~/tmp/gems
+      cd ~/tmp/gems
+      tar -xf ~/transfer/mdl.tar.gz
+      sudo gem install --local mdl
+
 - Usage:
 
       mdl some_file.md
