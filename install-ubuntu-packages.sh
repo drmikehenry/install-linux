@@ -96,6 +96,8 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   mplayer \
   mplayer-gui \
   mscgen \
+  musl-dev \
+  musl-tools \
   mutt \
   myrepos \
   nautilus \

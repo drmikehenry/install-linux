@@ -68,6 +68,8 @@
     - meld
     - moreutils
     - mscgen
+    - musl-dev
+    - musl-tools
     - mutt
     - nautilus
     - nmap

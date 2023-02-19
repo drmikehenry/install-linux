@@ -1863,6 +1863,34 @@ MANUAL:
         max_width = 100
       '
 
+- To support the target `x86_64-unknown-linux-musl`:
+
+  - Install `:role:workstation`:
+
+        agi musl-dev musl-tools
+
+  - MANUAL: Add the target:
+
+        rustup target add x86_64-unknown-linux-musl
+
+  - Build via:
+
+        cargo build --target x86_64-unknown-linux-musl
+
+- To cross-compile to the target `x86_64-pc-windows-gnu`:
+
+  - Install `:role:workstation`:
+
+        agi gcc-mingw-w64-x86-64
+
+  - MANUAL: Add the target:
+
+        rustup target add x86_64-pc-windows-gnu
+
+  - Build via:
+
+        cargo build --target x86_64-pc-windows-gnu
+
 # Graphical Environment
 
 ## Remapping keys
@@ -6588,6 +6616,17 @@ NetBSD make for POSIX compatibility testing.
       dieharder -g random-glibc2 -a
 
 # Cross-development tools
+
+## musl-based development
+
+MUSL libc is an alternative to Glibc that supports static linking well.
+
+It is useful for compilation of Rust using the target
+`x86_64-unknown-linux-musl`.
+
+- Install `:role:workstation`:
+
+      agi musl-dev musl-tools
 
 ## gcc-mingw-w64
 
