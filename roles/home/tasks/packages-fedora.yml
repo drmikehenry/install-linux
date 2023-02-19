@@ -2,8 +2,8 @@
 - name: Install fedora `:role:home` packages
   package:
     name:
-    - keepassxc
-    - hplip
+    - Maelstrom
     - audacity
     - gimp
-    - Maelstrom
+    - hplip
+    - keepassxc

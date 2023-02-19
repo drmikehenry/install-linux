@@ -2,15 +2,15 @@
 - name: Install ubuntu `:role:base` packages
   package:
     name:
-    - wget
-    - curl
-    - vim
-    - gdisk
-    - gparted
-    - nfs-common
-    - cifs-utils
     - autofs
+    - cifs-utils
+    - curl
+    - gdisk
     - git
-    - myrepos
-    - subversion
+    - gparted
     - keychain
+    - myrepos
+    - nfs-common
+    - subversion
+    - vim
+    - wget

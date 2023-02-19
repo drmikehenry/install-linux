@@ -234,7 +234,7 @@ def extract_install(
     code: MarkoCode,
     roles: T.List[str],
     role_yaml_parts: T.DefaultDict[str, T.List[str]],
-    dist_role_packages: T.Dict[str, T.DefaultDict[str, T.List[str]]],
+    dist_role_packages: T.Dict[str, T.DefaultDict[str, T.Set[str]]],
 ) -> None:
     if not isinstance(code, marko.block.CodeBlock):
         logger.warning("Install missing code block (try --verbose)")
@@ -259,7 +259,7 @@ def extract_install(
                 else:
                     assert False
                 for role in roles:
-                    dist_role_packages[dist][role].extend(packages)
+                    dist_role_packages[dist][role].update(packages)
         else:
             logger.warning(f"Unknown 'Install' line {line!r} (try --verbose)")
 
@@ -281,9 +281,9 @@ def extract_general(doc: marko.block.Element) -> None:
     role_yaml_parts: T.DefaultDict[str, T.List[str]] = collections.defaultdict(
         list
     )
-    dist_role_packages: T.Dict[str, T.DefaultDict[str, T.List[str]]] = {
-        "ubuntu": collections.defaultdict(list),
-        "fedora": collections.defaultdict(list),
+    dist_role_packages: T.Dict[str, T.DefaultDict[str, T.Set[str]]] = {
+        "ubuntu": collections.defaultdict(set),
+        "fedora": collections.defaultdict(set),
     }
 
     for tag_map, keywords, para, code in extract_tagged_code(doc):
@@ -312,7 +312,7 @@ def extract_general(doc: marko.block.Element) -> None:
             yaml_path = Path(f"roles/{role}/tasks/packages-{dist}.yml")
             package_step = dict(
                 name=f"Install {dist} `:role:{role}` packages",
-                package=dict(name=packages),
+                package=dict(name=sorted(packages)),
             )
             yaml_path.write_text(yaml_dump([package_step]))
 

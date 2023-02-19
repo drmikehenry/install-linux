@@ -2,33 +2,33 @@
 - name: Install ubuntu `:role:home` packages
   package:
     name:
-    - keepassxc
-    - hplip
+    - audacity
+    - brasero
+    - devede
+    - ffmpeg
+    - gimp
     - gnucash
     - gnucash-common
     - gnucash-docs
-    - python3-gnucash
-    - pithos
-    - pavucontrol
-    - paprefs
-    - pavumeter
-    - audacity
-    - mpg321
-    - gwenview
+    - gscan2pdf
     - gthumb
-    - gimp
-    - ffmpeg
-    - devede
-    - mplayer
-    - mplayer-gui
-    - vlc
+    - gwenview
+    - hplip
     - k3b
-    - brasero
+    - keepassxc
     - libsane
     - libsane-common
     - libsane-dev
     - libsane1
+    - maelstrom
+    - mpg321
+    - mplayer
+    - mplayer-gui
+    - paprefs
+    - pavucontrol
+    - pavumeter
+    - pithos
+    - python3-gnucash
     - sane-utils
     - skanlite
-    - gscan2pdf
-    - maelstrom
+    - vlc

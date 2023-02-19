@@ -2,120 +2,118 @@
 - name: Install ubuntu `:role:workstation` packages
   package:
     name:
+    - ack
+    - alien
     - apt-doc
     - apt-show-source
     - apt-show-versions
     - apt-utils
-    - python3-venv
-    - python3-pip
-    - kubuntu-desktop
-    - kubuntu-restricted-extras
-    - wmctrl
-    - xdotool
-    - xclip
-    - xsel
     - autokey-gtk
-    - fonts-inconsolata
-    - ttf-bitstream-vera
-    - fonts-dejavu
-    - fonts-hack-ttf
-    - ttf-mscorefonts-installer
-    - tmux
-    - nautilus
-    - konqueror
-    - mutt
-    - mailutils
-    - ripgrep
-    - ack
-    - silversearcher-ag
-    - meld
-    - kdiff3
-    - colordiff
-    - inotify-tools
-    - lshw
-    - lshw-gtk
-    - smartmontools
-    - hdparm
-    - pigz
-    - liblz4-tool
-    - zstd
-    - pv
-    - tofrodos
-    - tree
-    - stress
-    - moreutils
-    - socat
-    - traceroute
-    - nmap
-    - wireshark
-    - git-doc
-    - git-svn
-    - git-gui
-    - qgit
-    - build-essential
-    - linux-headers-generic
-    - cmake
-    - ddd
     - automake
     - autopoint
-    - make-doc
-    - manpages-dev
-    - texinfo
-    - texi2html
-    - scons
-    - scons-doc
-    - glibc-doc
+    - binutils-mipsel-linux-gnu
+    - bmake
+    - build-essential
+    - cdecl
     - clang
+    - clang-14-doc
     - clang-format
     - clang-tidy
     - clang-tools
     - clangd
-    - clang-14-doc
-    - universal-ctags
-    - gcc-11-multilib
+    - cmake
+    - colordiff
+    - ddd
+    - doxygen
+    - doxygen-doc
+    - evince
+    - exiftool
+    - fonts-dejavu
+    - fonts-hack-ttf
+    - fonts-inconsolata
     - g++-11-multilib
-    - bmake
+    - gcc-11-aarch64-linux-gnu
+    - gcc-11-arm-linux-gnueabihf
+    - gcc-11-multilib
+    - gcc-11-powerpc-linux-gnu
+    - gcc-mingw-w64-x86-64
+    - geeqie
+    - git-doc
+    - git-gui
+    - git-svn
+    - glibc-doc
+    - golang
+    - gperf
+    - graphviz
+    - graphviz-doc
+    - hdparm
+    - help2man
+    - html2text
+    - imagemagick
+    - inotify-tools
+    - kate
+    - kdiff3
+    - konqueror
+    - kubuntu-desktop
+    - kubuntu-restricted-extras
+    - liblz4-tool
+    - linux-headers-generic
+    - linux-tools-generic
+    - lshw
+    - lshw-gtk
+    - mailutils
+    - make-doc
+    - manpages-dev
+    - manpages-posix-dev
+    - meld
+    - moreutils
+    - mscgen
+    - mutt
+    - nautilus
+    - nmap
+    - okular
+    - pandoc
+    - perl-doc
+    - perl-doc-html
+    - pigz
+    - pv
+    - python3-dev
+    - python3-doc
+    - python3-pip
+    - python3-tk
+    - python3-venv
+    - qgit
+    - ripgrep
     - rpm2cpio
-    - alien
-    - cdecl
+    - ruby
+    - ruby-dev
+    - scons
+    - scons-doc
+    - shellcheck
+    - shfmt
+    - silversearcher-ag
+    - smartmontools
+    - socat
+    - speedcrunch
     - sqlite3
     - sqlite3-doc
     - sqlitebrowser
-    - html2text
-    - linux-tools-generic
-    - manpages-posix-dev
-    - gcc-mingw-w64-x86-64
-    - gperf
-    - help2man
-    - gcc-11-powerpc-linux-gnu
-    - gcc-11-arm-linux-gnueabihf
-    - gcc-11-aarch64-linux-gnu
-    - binutils-mipsel-linux-gnu
+    - stress
+    - texi2html
+    - texinfo
+    - tidy
+    - tmux
+    - tofrodos
+    - traceroute
+    - tree
+    - ttf-bitstream-vera
+    - ttf-mscorefonts-installer
+    - universal-ctags
     - vim
     - vim-gtk
-    - universal-ctags
-    - ruby
-    - ruby-dev
-    - kate
-    - python3-dev
-    - python3-doc
-    - python3-tk
-    - shellcheck
-    - shfmt
-    - perl-doc
-    - perl-doc-html
-    - doxygen
-    - doxygen-doc
-    - graphviz
-    - graphviz-doc
-    - mscgen
-    - golang
-    - pandoc
-    - tidy
-    - html2text
-    - exiftool
-    - okular
-    - evince
-    - geeqie
-    - imagemagick
-    - speedcrunch
+    - wireshark
+    - wmctrl
+    - xclip
+    - xdotool
+    - xsel
+    - zstd

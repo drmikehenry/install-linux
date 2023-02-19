@@ -2,13 +2,13 @@
 - name: Install fedora `:role:base` packages
   package:
     name:
-    - wget
-    - curl
-    - vim
-    - nfs-utils
-    - cifs-utils
     - autofs
+    - cifs-utils
+    - curl
     - git
-    - myrepos
-    - subversion
     - keychain
+    - myrepos
+    - nfs-utils
+    - subversion
+    - vim
+    - wget

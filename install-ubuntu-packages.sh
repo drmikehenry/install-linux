@@ -65,7 +65,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   help2man \
   hplip \
   html2text \
-  html2text \
   imagemagick \
   inotify-tools \
   k3b \
@@ -147,7 +146,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   tree \
   ttf-bitstream-vera \
   ttf-mscorefonts-installer \
-  universal-ctags \
   universal-ctags \
   vim \
   vim \
