@@ -226,6 +226,7 @@ Note: must have enabled the corresponding source repository.
     apt-get dist-upgrade --dry-run
 
 ### Configuration of repositories via command-line
+
 <https://help.ubuntu.com/community/Repositories/CommandLine>
 
 ### Add a Personal Package Archive (ppa)
