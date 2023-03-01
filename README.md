@@ -120,6 +120,11 @@ on a *managed node*.
       apt-add-repository --yes --update ppa:ansible/ansible
       apt install -y ansible
 
+- Install `sshpass` (necessary for Ansible to use the 'ssh' connection type with
+  passwords):
+
+      apt install -y sshpass
+
 - Acquire `ansible/` directory to `~/projects/ansible`.
 
 - Run ansible.
