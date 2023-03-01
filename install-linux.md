@@ -6951,6 +6951,18 @@ tool.
 
 ### Multiple Python Interpreters via pyenv
 
+**NOTE** On Ubuntu 22.04, `pyenv install 3.6.14` fails with a `segmentation
+fault`.  See related tickets:
+
+- <https://github.com/pyenv/pyenv/issues/2046>
+- <https://github.com/pyenv/pyenv/issues/2141>
+- <https://github.com/pyenv/pyenv/issues/2239>
+
+The following work-arounds mentioned in the tickets avoid this issue:
+
+    CCFLAGS=-O2 pyenv install 3.6.14
+    CC=clang pyenv install 3.6.14
+
 MANUAL:
 
 - `pyenv` tools: <https://github.com/pyenv/pyenv>
