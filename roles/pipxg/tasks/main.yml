@@ -29,7 +29,6 @@
       rm -rf /tmp/pipx
   args:
     creates: /usr/local/bin/pipx
-    warn: false
 
 - name: Install virtualenvwrapper
   command: pipxg install virtualenvwrapper

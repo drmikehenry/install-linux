@@ -20,7 +20,6 @@
     GIT_DIR="{{ home }}/.home.git" GIT_WORK_TREE="{{ home }}" git reset --hard
   args:
     creates: "{{ home }}/.common.sh"
-    warn: false
 
 - name: "Setup home2.git for {{ user }}"
   become: "{{ become_root }}"
@@ -31,7 +30,6 @@
     GIT_DIR="{{ home }}/.home2.git" GIT_WORK_TREE="{{ home }}" git reset --hard
   args:
     creates: "{{ home }}/.bashrc2"
-    warn: false
 
 - name: "Setup vimfiles for {{ user }}"
   become: "{{ become_root }}"
@@ -41,7 +39,6 @@
     git clone "{{ git_url_vimfiles }}" "{{ home }}/.vim"
   args:
     creates: "{{ home }}/.vim/vimrc"
-    warn: false
 
 - name: "Setup vimfiles-local for {{ user }}"
   become: "{{ become_root }}"
@@ -51,4 +48,3 @@
     git clone "{{ git_url_vimfiles_local }}" "{{ home }}/.vimlocal"
   args:
     creates: "{{ home }}/.vimlocal/CHANGES.txt"
-    warn: false

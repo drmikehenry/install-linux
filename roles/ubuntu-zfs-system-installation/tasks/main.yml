@@ -96,8 +96,6 @@
     mkdir /mnt/run
     mount -t tmpfs tmpfs /mnt/run
     mkdir /mnt/run/lock
-  args:
-    warn: false
 
 - name: 'Install the minimal system'
   command:
