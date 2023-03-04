@@ -56,6 +56,7 @@
     - konqueror
     - kubuntu-desktop
     - kubuntu-restricted-extras
+    - libboost-all-dev
     - liblz4-tool
     - linux-headers-generic
     - linux-tools-generic

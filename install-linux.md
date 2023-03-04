@@ -7102,7 +7102,7 @@ Fake data for testing Python scripts.
 
 ### boost
 
-- Install:
+- Install `:role:workstation`:
 
       agi libboost-all-dev
 

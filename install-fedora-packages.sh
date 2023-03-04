@@ -4,6 +4,7 @@ dnf install -y \
   audacity \
   autofs \
   bitstream-vera-sans-mono-fonts \
+  boost-devel \
   '@C Development Tools and Libraries' \
   cifs-utils \
   cmake \

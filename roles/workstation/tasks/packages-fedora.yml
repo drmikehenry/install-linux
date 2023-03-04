@@ -8,6 +8,7 @@
     - '@KDE Plasma Workspaces'
     - ack
     - bitstream-vera-sans-mono-fonts
+    - boost-devel
     - cmake
     - cmake-gui
     - colordiff

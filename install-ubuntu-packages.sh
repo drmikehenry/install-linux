@@ -76,6 +76,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   konversation \
   kubuntu-desktop \
   kubuntu-restricted-extras \
+  libboost-all-dev \
   liblz4-tool \
   libsane \
   libsane1 \
