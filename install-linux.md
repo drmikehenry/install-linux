@@ -8513,14 +8513,6 @@ Video player.
 
       agi pitivi
 
-### avidemux
-
-- Useful for trimming length of a video.
-
-- Install:
-
-      yi avidemux
-
 ## DVD Burning
 
 ### k3b
