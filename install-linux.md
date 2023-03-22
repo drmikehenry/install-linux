@@ -2290,6 +2290,8 @@ MANUAL:
         # min hour dom  mon dow  user  what
         # Main machine (casey):
           30  2     *    *   *   root  /root/bin/unison.sh -batch -terse
+        # Laptop (farm):
+          30  3     *    *   *   root  /root/bin/unison.sh -batch -terse
         # Laptop (mobi):
           30  4     *    *   *   root  /root/bin/unison.sh -batch -terse
 
