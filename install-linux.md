@@ -2179,6 +2179,8 @@ MANUAL:
 
 ## Unison
 
+MANUAL:
+
 - As of Unison v2.52, there is replica format support across Unison versions
   back to v2.48:
 
