@@ -8414,6 +8414,27 @@ Manipulate jpeg files (e.g., losslessly rotate jpeg file).
 
       ffmpeg -i 1021_20180619000000.ts -target ntsc-dvd 1021_20180619000000.mpg
 
+#### ffmpeg usage
+
+- References:
+  - <https://trac.ffmpeg.org/wiki/Seeking>
+  - <https://stackoverflow.com/questions/18444194/cutting-the-videos-based-on-start-and-end-time-using-ffmpeg>
+
+- Use input seeking to skip the first minute and 23 seconds:
+
+      ffmpeg -ss 00:01:23 -i input.mp4 output.mp4
+
+- Use input seeking to stop at two minutes 23 seconds:
+
+      ffmpeg -ss 00:01:23 -to 00:02:23 -i input.mp4 output.mp4
+
+  This will make a one-minute-long video.
+
+- Use `-c copy` to perform very-fast copying without transcoding; note that this
+  will move to the nearest key frame, so the timing won't be exact:
+
+      ffmpeg -ss 00:01:23 -to 00:02:23 -i input.mp4 -c copy output.mp4
+
 #### UBUNTU ALTERNATIVE Custom Build ffmpeg from Source
 
 Custom build for ffmpeg.
