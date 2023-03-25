@@ -2026,7 +2026,7 @@ MANUAL:
 
 - Create mount points:
 
-      sudo mkdir -p /mnt/{keepass,keemirror,keebackup}
+      sudo mkdir -p /mnt/{keebeth,keemike,keehome}
 
   Ansible `:role:home`:
 
@@ -2037,17 +2037,17 @@ MANUAL:
       state: directory
       mode: 0755
     loop:
-      - keepass
-      - keemirror
-      - keebackup
+      - keebeth
+      - keemike
+      - keehome
   ```
 
 - Setup mount points in `/etc/fstab`:
 
       echod -a /etc/fstab '
-      LABEL=KEEPASS   /mnt/keepass    vfat shortname=lower,user,noauto 0 0
-      LABEL=KEEMIRROR /mnt/keemirror  vfat shortname=lower,user,noauto 0 0
-      LABEL=KEEBACKUP /mnt/keebackup  vfat shortname=lower,user,noauto 0 0
+      LABEL=KEEBETH /mnt/keebeth  vfat shortname=lower,user,noauto 0 0
+      LABEL=KEEMIKE /mnt/keemike  vfat shortname=lower,user,noauto 0 0
+      LABEL=KEEHOME /mnt/keehome  vfat shortname=lower,user,noauto 0 0
       '
 
   Ansible `:role:home`:
@@ -2062,9 +2062,9 @@ MANUAL:
       opts: "shortname=lower,user"
       state: present
     loop:
-      - keepass
-      - keemirror
-      - keebackup
+      - keebeth
+      - keemike
+      - keehome
   ```
 
 - MANUAL Run KeePassXC, then setup via Tools | Settings:
