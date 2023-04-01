@@ -954,13 +954,6 @@ Normal repositories:
 
 ## Filesystem Support
 
-### Disable automounting of volumes below `/media`
-
-- MANUAL The `udisks2` service may be masked to prevent automounting:
-
-      systemctl stop udisks2.service
-      systemctl mask udisks2.service
-
 ### Local Filesystems
 
 #### gdisk Partitioning Tool
