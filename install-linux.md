@@ -2781,6 +2781,8 @@ interface).
 
 ### Firefox Bookmark Synchronization
 
+MANUAL:
+
 - Use `~/bin2/bookmarks` to push or pull bookmarks.
 
 - Setup cron jobs for push/pull via `crontab -e`.
@@ -2984,6 +2986,8 @@ User:
 Leave mail on server until manual deletion.
 
 ### Thunderbird Address Book Synchronization
+
+MANUAL:
 
 - Use `~/bin2/abook` to push or pull address book.
 
