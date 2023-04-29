@@ -4274,12 +4274,59 @@ In Konsole, choose Settings | Manage Profiles | choose "Custom" profile | Edit:
 Ansible `:role:user-plasma`:
 
 ```yaml
-- name: Create `Custom` Konsole Profile
+- name: Set `Custom` Konsole Profile History Size
   kconfig:
     file: ../.local/share/konsole/Custom.profile
     group: "Scrolling"
     key: "HistorySize"
     value: "100000"
+```
+
+#### Konsole Big Profile Creation
+
+Create `Big` profile to adjust profile-related settings.
+
+In Konsole, choose Settings | Manage Profiles | New:
+
+- Choose name `Big`.
+
+- Check "Default profile".
+
+- Choose OK.
+
+Adjust font to `Hack 14pt`:
+
+- Choose Settings | Manage Profiles | Big | Edit:
+
+  - Appearance | Font | `Hack 14pt`
+
+Ansible `:role:user-plasma`:
+
+```yaml
+- name: Create `Big` Konsole Profile
+  kconfig:
+    file: ../.local/share/konsole/Big.profile
+    group: "General"
+    key: "Name"
+    value: "Big"
+- name: Set `Big` Konsole Profile Parent
+  kconfig:
+    file: ../.local/share/konsole/Big.profile
+    group: "General"
+    key: "Parent"
+    value: "Custom/"
+- name: Set `Big` Konsole Profile History Size
+  kconfig:
+    file: ../.local/share/konsole/Big.profile
+    group: "Scrolling"
+    key: "HistorySize"
+    value: "100000"
+- name: Set `Big` Konsole Profile Font
+  kconfig:
+    file: ../.local/share/konsole/Big.profile
+    group: "Appearance"
+    key: "Font"
+    value: "Hack,14,-1,7,50,0,0,0,0,0"
 ```
 
 ### Konsole Keyboard Shortcuts

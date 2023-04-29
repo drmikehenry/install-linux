@@ -390,12 +390,36 @@
     group: "Desktop Entry"
     key: "DefaultProfile"
     value: "Custom.profile"
-- name: Create `Custom` Konsole Profile
+- name: Set `Custom` Konsole Profile History Size
   kconfig:
     file: ../.local/share/konsole/Custom.profile
     group: "Scrolling"
     key: "HistorySize"
     value: "100000"
+- name: Create `Big` Konsole Profile
+  kconfig:
+    file: ../.local/share/konsole/Big.profile
+    group: "General"
+    key: "Name"
+    value: "Big"
+- name: Set `Big` Konsole Profile Parent
+  kconfig:
+    file: ../.local/share/konsole/Big.profile
+    group: "General"
+    key: "Parent"
+    value: "Custom/"
+- name: Set `Big` Konsole Profile History Size
+  kconfig:
+    file: ../.local/share/konsole/Big.profile
+    group: "Scrolling"
+    key: "HistorySize"
+    value: "100000"
+- name: Set `Big` Konsole Profile Font
+  kconfig:
+    file: ../.local/share/konsole/Big.profile
+    group: "Appearance"
+    key: "Font"
+    value: "Hack,14,-1,7,50,0,0,0,0,0"
 - name: Always show Konsole Tab Bar
   kconfig:
     file: konsolerc
