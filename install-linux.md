@@ -1835,15 +1835,15 @@ MANUAL:
       rust-lldb
       rustup
 
-- Install additional components if desired:
+- MANUAL Install additional components if desired:
 
-      rustup component add rls rust-src
+      rustup component add rls rust-src rust-analyzer
 
 - View components (installed and available):
 
       rustup component list
 
-- Install nightly toolchain for a given date:
+- MANUAL Install nightly toolchain for a given date:
 
       rustup install nightly-2022-05-30
 
@@ -1853,7 +1853,7 @@ MANUAL:
 
   Add components:
 
-      rustup component add rls rust-src
+      rustup component add rls rust-src rust-analyzer
 
 - HOMEGIT Setup global rustfmt.toml:
 
@@ -7336,7 +7336,11 @@ References:
 
 ### Rust Analyzer
 
-MANUAL:
+OBSOLETE: Now that `rustup` 1.26 has a shim for `rust-analyzer` that dynamically
+uses the `rust-analyzer` binary that ships with the toolchain, it's not
+necessary to install `rust-analyzer` separately.  Instead, use:
+
+    rustup component add rust-analyzer
 
 - Available from: <https://rust-analyzer.github.io/>
 
