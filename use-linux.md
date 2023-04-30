@@ -1160,6 +1160,24 @@ This runs `/var/lib/dpkg/info/PACKAGE.postinst configure` (so-called
 
     (Currently on Fedora 17, ARG_MAX is 2 MB.)
 
+# ssh
+
+## ssh obsolete algorithms
+
+- For use with old ssh, can enable obsolete algorithms.  Choose algorithms based
+  on error message, e.g.:
+
+      Unable to negotiate with 1.2.3.4 port 22: no matching key exchange
+      method found. Their offer:
+      diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+
+  Use this (based also on error about host key algorithm)::
+
+      ssh \
+        -oKexAlgorithms=+diffie-hellman-group-exchange-sha1 \
+        -oHostKeyAlgorithms=+ssh-rsa \
+        1.2.3.4
+
 # wget
 
 - Mirroring via wget:
