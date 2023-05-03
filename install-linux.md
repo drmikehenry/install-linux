@@ -2397,6 +2397,16 @@ entire profile.
   - "Ask HN: How to disable right-click blocking in the browser"
     <https://news.ycombinator.com/item?id=32285459>
 
+#### Firefox clear cached redirect
+
+Firefox caches previous redirect requests.  To clear these:
+
+- Edit | Preferences | Privacy & Security | Cookies and Site Data | Clear Data:
+
+  - Uncheck "Cookies and Site Data".
+  - Check "Cached Web Content" (this is the only checked item)
+  - Choose "Clear".
+
 ### Firefox Configuration
 
 #### Firefox Profiles
