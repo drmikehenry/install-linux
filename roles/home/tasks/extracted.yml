@@ -8,6 +8,7 @@
     - keebeth
     - keemike
     - keehome
+    - keeback
 - name: Setup Keepass fstab entries
   mount:
     path: "/mnt/{{ item }}"
@@ -20,3 +21,4 @@
     - keebeth
     - keemike
     - keehome
+    - keeback

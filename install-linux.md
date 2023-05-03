@@ -2026,7 +2026,7 @@ MANUAL:
 
 - Create mount points:
 
-      sudo mkdir -p /mnt/{keebeth,keemike,keehome}
+      sudo mkdir -p /mnt/{keebeth,keemike,keehome,keeback}
 
   Ansible `:role:home`:
 
@@ -2040,6 +2040,7 @@ MANUAL:
       - keebeth
       - keemike
       - keehome
+      - keeback
   ```
 
 - Setup mount points in `/etc/fstab`:
@@ -2048,6 +2049,7 @@ MANUAL:
       LABEL=KEEBETH /mnt/keebeth  vfat shortname=lower,user,noauto 0 0
       LABEL=KEEMIKE /mnt/keemike  vfat shortname=lower,user,noauto 0 0
       LABEL=KEEHOME /mnt/keehome  vfat shortname=lower,user,noauto 0 0
+      LABEL=KEEBACK /mnt/keeback  vfat shortname=lower,user,noauto 0 0
       '
 
   Ansible `:role:home`:
@@ -2065,6 +2067,7 @@ MANUAL:
       - keebeth
       - keemike
       - keehome
+      - keeback
   ```
 
 - MANUAL Run KeePassXC, then setup via Tools | Settings:
