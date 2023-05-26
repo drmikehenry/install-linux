@@ -5617,6 +5617,15 @@ MANUAL:
 
       yi meld
 
+#### meld configuration
+
+- Meld | Preferences | File Filters:
+  - Check `Media`.
+
+  - Use `+` to add filter `dev` with contents:
+
+        build .mypy_cache .lib
+
 ### kdiff3
 
 - Install `:role:workstation`:
