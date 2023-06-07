@@ -2210,10 +2210,14 @@ MANUAL:
       # Perform extraction to /usr/local/bin as above, then:
       ln -s /usr/local/bin/unison-2.52 /usr/local/bin/unison
 
-- For now, `~/bin/unison.sh` uses `unison -addversionno` to invoke
+- For now, `~/bin/unisonwrap` uses `unison -addversionno` to invoke
   `unison-<major>.<minor>` on the server; eventually when all clients have
   upgraded to v2.52+, the server can have the `/usr/local/bin/unison` symlink
   and clients can stop using `-addversionno`.
+
+  Note: `unisonwrap` is named without a `.sh` suffix because cron-job emails can
+  otherwise get flagged as having a url (e.g., `/home/mike/bin/unison.sh` looks
+  like a URL to spamassassin).
 
 ### Configure unison
 
@@ -2283,7 +2287,7 @@ MANUAL:
   unison is run on the server side. It may be left off when the version is known
   to be the same.
 
-  The `~/bin/unison.sh` script forces `-addversionno` to ensure the right
+  The `~/bin/unisonwrap` script forces `-addversionno` to ensure the right
   version is always used.
 
 - Setup nightly unison sync:
@@ -2292,11 +2296,11 @@ MANUAL:
 
         # min hour dom  mon dow  user  what
         # Main machine (casey):
-          30  2     *    *   *   root  /root/bin/unison.sh -batch -terse
+          30  2     *    *   *   root  /root/bin/unisonwrap -batch -terse
         # Laptop (farm):
-          30  3     *    *   *   root  /root/bin/unison.sh -batch -terse
+          30  3     *    *   *   root  /root/bin/unisonwrap -batch -terse
         # Laptop (mobi):
-          30  4     *    *   *   root  /root/bin/unison.sh -batch -terse
+          30  4     *    *   *   root  /root/bin/unisonwrap -batch -terse
 
 ## Firefox
 
