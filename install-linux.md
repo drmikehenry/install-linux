@@ -4873,6 +4873,13 @@ MANUAL:
 
 Use Postfix for "satellite" nodes that communicate **with a local SMTP server**.
 
+NOTE: **Use square brackets** for `relayhost=[hostname]`:
+<http://www.postfix.org/postconf.5.html#relayhost>
+
+Standard satellite setup logic doesn't use the square brackets; it just uses the
+FQDN directly.  This allows postfix to use MX-lookup for the destination,
+overriding the chosen relayhost.  **This must be manually fixed**.
+
 - Install postfix:
 
       agi postfix
@@ -4895,6 +4902,11 @@ Use Postfix for "satellite" nodes that communicate **with a local SMTP server**.
       '
 
       systemctl restart postfix
+
+- **Fixup relayhost** to use square brackets, e.g.:
+
+      sed -i -E 's/^\s*relayhost\s*=\s*[[]?([^][]+)[]]?/relayhost = [\1]/' \
+        /etc/postfix/main.cf
 
 ## exim4 for local-only mail delivery
 
