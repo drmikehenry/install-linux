@@ -4908,6 +4908,9 @@ overriding the chosen relayhost.  **This must be manually fixed**.
       sed -i -E 's/^\s*relayhost\s*=\s*[[]?([^][]+)[]]?/relayhost = [\1]/' \
         /etc/postfix/main.cf
 
+  *NOTE* This works for `hostname`, but note that `hostname:1234` should become
+  `[hostname]:1234`.
+
 ## exim4 for local-only mail delivery
 
 MANUAL:
