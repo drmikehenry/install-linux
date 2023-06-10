@@ -207,14 +207,14 @@ See `install-linux-local.md` for any machine-specific setup.
 - Check "Install third-party software...".
 - Installation type:
   - Choose "Erase disk and install Ubuntu":
-    - Advanced Features: Erase disk and use ZFS
-    Alternatively, choose "Something else" for custom partitioning.
+    - Advanced Features: Erase disk and use ZFS Alternatively, choose "Something
+      else" for custom partitioning.
 - Choose "Install now".
 - Where are you?: `New_York`
 - Who are you?:
   - Your name: `Power User`
-  - Your computer's name: `ubuntu22-04` (for example; use single word, not a
-    FQDN, no underscore).
+  - Your computer's name with FQDN: `ubuntu2204.domain.com` (for example;
+    use no underscores; don't put `.` in hostname)
   - Username: `poweruser`
   - Password: `the_actual_password`
   - (Note: this user will have UID=1000.)
