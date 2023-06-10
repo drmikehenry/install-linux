@@ -4849,6 +4849,7 @@ More configuration via `systemsettings5` | Printers:
       backup  /etc/           bolt/
       backup  /home/          bolt/
       backup  /usr/local/     bolt/
+      backup  /backup/        bolt/
 
       # casey backups:
       backup  /etc/           casey/
@@ -4864,6 +4865,15 @@ More configuration via `systemsettings5` | Printers:
         10  23        1,8,15,22   *   *   root  rsnapshot weekly
         20  23        *           *   *   root  rsnapshot daily
         30  7-23      *           *   *   root  rsnapshot hourly
+
+- Note: for systems without extra hard drive space, can `rsync` to
+  `bolt:/backup/` and have bolt perform the rsnapshot functionality.
+
+  E.g., create `~/bin2/backup-farm` to rsync into `bolt:/backup/farm/` and place
+  into `/etc/crontab` on `farm`:
+
+      # min hour     dom         mon dow  user  what
+        00  02        *           *   *   root  /root/bin2/backup-farm
 
 # Simple Mail Setup
 
