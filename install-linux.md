@@ -3766,7 +3766,49 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+C,none,Activate or Launch Chrome"
   ```
 
-- `activate-gvim0` shortcut: Ctrl+Alt+0
+- `activate-nvim0` shortcut: Ctrl+Alt+0
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
+  - name: Create 'activate-nvim0.desktop'
+    copy:
+      dest: .local/share/applications/activate-nvim0.desktop
+      content: |
+        [Desktop Entry]
+        Type=Application
+        Name=Activate or Launch Nvim0
+        Exec=sh -c 'activate "nvim-qt --name NVIM0 -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM0" "NVIM0.nvim-qt"'
+  - name: Shortcut for 'activate-nvim0.desktop'
+    kconfig:
+      file: kglobalshortcutsrc
+      group: "activate-nvim0.desktop"
+      key: "_launch"
+      value: "Ctrl+Alt+0,none,Activate or Launch Nvim0"
+  ```
+
+- `activate-nvim)` shortcut: Ctrl+Alt+)
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
+  - name: Create 'activate-nvim).desktop'
+    copy:
+      dest: .local/share/applications/activate-nvim).desktop
+      content: |
+        [Desktop Entry]
+        Type=Application
+        Name=Activate or Launch Nvim)
+        Exec=sh -c 'activate "nvim-qt --name NVIM) -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM)" "NVIM).nvim-qt"'
+  - name: Shortcut for 'activate-nvim).desktop'
+    kconfig:
+      file: kglobalshortcutsrc
+      group: "activate-nvim).desktop"
+      key: "_launch"
+      value: "Ctrl+Alt+),none,Activate or Launch Nvim)"
+  ```
+
+- `activate-gvim0` shortcut: Ctrl+Alt+9
 
   Ansible `:role:user-plasma`:
 
@@ -3784,10 +3826,10 @@ To bind a shortcut key to an arbitrary command:
       file: kglobalshortcutsrc
       group: "activate-gvim0.desktop"
       key: "_launch"
-      value: "Ctrl+Alt+0,none,Activate or Launch Gvim0"
+      value: "Ctrl+Alt+9,none,Activate or Launch Gvim0"
   ```
 
-- `activate-gvim)` shortcut: Ctrl+Alt+)
+- `activate-gvim)` shortcut: Ctrl+Alt+(
 
   Ansible `:role:user-plasma`:
 
@@ -3805,7 +3847,7 @@ To bind a shortcut key to an arbitrary command:
       file: kglobalshortcutsrc
       group: "activate-gvim).desktop"
       key: "_launch"
-      value: "Ctrl+Alt+),none,Activate or Launch Gvim)"
+      value: "Ctrl+Alt+(,none,Activate or Launch Gvim)"
   ```
 
 - `activate-gvim-email` shortcut: Ctrl+Alt+o
