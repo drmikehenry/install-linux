@@ -1794,6 +1794,34 @@ mirrored disk for the vdev.
       XDG_PICTURES_DIR="$HOME/Pictures"
       XDG_VIDEOS_DIR="$HOME/Videos"
 
+## xdg `.Desktop` files
+
+- References:
+
+  - <https://wiki.archlinux.org/title/Desktop_entries>
+
+- Per-user applications live in `.desktop` files in
+  `~/.local/share/applications/`.
+
+- Example simple application:
+
+  - Create `~/.local/share/applications/copysel.desktop` with contents:
+
+        [Desktop Entry]
+        Type=Application
+        Name=copysel
+        Exec=copysel
+
+- After creating a new `.desktop` file, may need to inform the system via:
+
+      update-desktop-database ~/.local/share/applications
+
+- Cannot expand environment variables in general within a `.desktop` file, but
+  as a special case for the `Exec=` line, use `sh -c '$use/$env/vars/here'`,
+  e.g.:
+
+      Exec=sh -c 'activate "nvim-qt --name NVIM0 -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM0" "NVIM0.nvim-qt"'
+
 # KDE Plasma
 
 ## Setting an environment variable for Plasma
