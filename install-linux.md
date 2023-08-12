@@ -6553,6 +6553,27 @@ socks proxy, so if DNS isn't working properly, this won't work either.
       aws s3 cp --no-sign-request \
         s3://static-rust-lang-org/rustup/release-stable.toml .
 
+## Sparrow-wifi
+
+Sparrow-wifi is a Graphical WiFi Analyzer for Linux.
+
+- Sparrow-wifi repository:
+  <https://github.com/ghostop14/sparrow-wifi>
+
+- Install prereqs:
+
+      agi iw aircrack-ng
+
+- Install and run (all as root)::
+
+      cd ~/build
+      git clone https://github.com/ghostop14/sparrow-wifi
+      cd sparrow-wifi
+      python -m venv venv
+      . venv/bin/activate
+      pip install gps3 python-dateutil requests pyqt5 pyqtchart numpy matplotlib
+      python sparrow-wifi.py
+
 # Version Control
 
 ## Git
