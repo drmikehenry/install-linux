@@ -2774,6 +2774,9 @@ interface).
 
 #### Privacy Badger
 
+- Seems like it causes problems with `walmart.com`, redirecting to sign-in page
+  whenever the front page is visited.  Disabling for now.
+
 - Install URL:
   <https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/>
 
