@@ -4676,6 +4676,36 @@ printer-specific driver support will be done via separate applications.
   - `-o Name=Value`: set default value for named PPD option
   - `-d`: set the default printer
 
+### Crashing printer filter issues
+
+MANUAL:
+
+- Symptoms include being unable to print via command line, e.g.:
+
+      ls | lpr
+
+- Reference:
+  - "CUPS filter texttopdf aborts when 'Noto Color Emoji' font is present":
+    <https://github.com/apple/cups/issues/5787>
+
+- Reject the "Noto Color Emoji" font:
+
+      echod -o /etc/fonts/local.conf '
+        <?xml version="1.0"?>
+        <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+        <fontconfig>
+          <selectfont>
+            <rejectfont>
+              <glob>/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf</glob>
+            </rejectfont>
+          </selectfont>
+        </fontconfig>
+      '
+
+- Rebuild font cache:
+
+      fc-cache -f -v
+
 ### HP Color LaserJet M553n
 
 - Install hplip `:role:home`:
