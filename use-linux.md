@@ -185,6 +185,16 @@ Auto-fix missing dependencies after `dpkg -i` failure:
 
 Note: must have enabled the corresponding source repository.
 
+### Recursive package dependencies
+
+- Install:
+
+      agi apt-rdepends
+
+- Query dependencies for package `python3.10`:
+
+      apt-rdepends --build-depends --follow=DEPENDS python3.10
+
 ### Just show the packages needed to build source PACKAGE
 
     apt-cache showsrc PACKAGE

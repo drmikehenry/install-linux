@@ -18,6 +18,12 @@
   command: apt-file update
   when: ansible_distribution == 'Ubuntu' and apt_file is changed
 
+- name: Install apt-rdepends
+  package:
+    name:
+      - apt-rdepends
+  when: ansible_distribution == 'Ubuntu'
+
 - import_role:
     name: pipxg
 
