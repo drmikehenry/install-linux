@@ -4088,8 +4088,9 @@ MANUAL Disable Klipper entirely (interacts badly with Gvim on Ubuntu 22.04):
 
 - Right-click on the System Tray | Configure System Tray.  This is difficult
   because most of the tray's area is covered with "entries" (like Klipper's
-  icon).  Try right-clicking at the edge of the System Tray (between the tray
-  and the clock, for example).
+  icon).  Try right-clicking below the little black triangle that shows the
+  hidden tray items, or failing that try clicking at the edge of the System Tray
+  (between the tray and the clock, for example).
 
 - Entries | System Services | Clipboard, choose `Disabled`.
 
@@ -6957,6 +6958,28 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 - Install `:role:workstation`:
 
       agi kate
+
+### PyCharm community edition
+
+- Download from <https://www.jetbrains.com/pycharm/download/>
+
+- On Linux, save tarball of the form `pycharm-community-2023.2.5.tar.gz`.
+
+- Choose installation location:
+
+      # For system-wide installation:
+      cd /opt
+
+      # For per-user testing:
+      cd ~/tmp
+
+- Expand tarball:
+
+      tar -zxf pycharm-community-2023.2.5.tar.gz
+
+- Run PyCharm::
+
+      pycharm-community-2023.2.5/bin/pycharm.sh
 
 ## Python
 
