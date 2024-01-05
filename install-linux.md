@@ -8135,6 +8135,20 @@ MANUAL:
 
 - Logout and login `mike` user (or use `newgrp docker`).
 
+- Configure:
+
+  Docker uses Ctrl-p as a prefix key for detaching (Ctrl-p Ctrl-q).  To avoid
+  this, configure to use Ctrl-@ instead:
+
+  HOMEGIT Setup Docker config:
+
+      mkdir -p ~/.docker
+      echod -o ~/.docker/config.json '
+        {
+            "detachkeys": "ctrl-@"
+        }
+      '
+
 - Verify installation:
 
       docker run hello-world
