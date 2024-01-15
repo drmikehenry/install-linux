@@ -1890,3 +1890,28 @@ A file named `~/.config/autostart-scripts/original_name` will be moved to
 `~/.config/autostart/original_name.desktop` will be created to launch the script
 using a standard `.desktop` file in the standard directory
 `~/.config/autostart/`.
+
+# Audio tools
+
+## Record currently playing audio
+
+- Reference: <https://superuser.com/questions/1570333/how-can-i-record-audio-output-from-command-line-in-linux>
+
+- Install prerequisites:
+
+      apt-get install pulseaudio-utils lame mpg123
+
+- Determine audio output devices:
+
+      pacmd list-sinks | grep -e 'name:' -e 'index' -e 'Speakers'
+
+  Sample output:
+
+      * index: 1
+            name: <alsa_output.pci-0000_00_1f.3.analog-stereo>
+                    analog-output-speaker: Speakers (priority 10000, latency offset 0 usec, available: no)
+
+- Append `.monitor` to the audio device name and record via:
+
+      parec -d alsa_output.pci-0000_00_1f.3.analog-stereo.monitor |
+        lame -r -V0 - out.mp3
