@@ -2757,6 +2757,13 @@ Tools | Add-ons | Preferences for uBlock Origin:
     - Fanboy’s Annoyance
     - Fanboy’s Social
     - uBlock filters - Annoyances
+- My Filters:
+  - Use `@@` in front of a rule to override all blocks.
+  - `improve.duckduckgo.com/t/` is blocked by an EasyPrivacy rule, causing
+    multi-second delays at times.  Unblock by adding this custom filter:
+
+        ! To counter EasyPrivacy's `||duckduckgo.com/t/` rule:
+        @@||duckduckgo.com/t/
 
 #### Old Reddit Redirect
 
