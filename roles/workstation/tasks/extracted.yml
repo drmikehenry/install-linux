@@ -58,6 +58,14 @@
   command: pipxg install mypy
   args:
     creates: /usr/local/bin/mypy
+- name: pipxg Install ruff
+  command: pipxg install ruff
+  args:
+    creates: /usr/local/bin/ruff
+- name: pipxg Install flake8-to-ruff
+  command: pipxg install flake8-to-ruff
+  args:
+    creates: /usr/local/bin/flake8-to-ruff
 - name: pipxg Install black
   command: pipxg install black
   args:

@@ -7085,6 +7085,35 @@ needed.
 
       pipxg install mypy
 
+#### Python ruff
+
+`ruff` is written in Rust but installable via `pip`.
+
+`flake8-to-ruff` is available to convert `flake8` configuration to `ruff`
+configuration.
+
+- Install `:role:workstation`:
+
+      pipxg install ruff
+
+- Install `:role:workstation`:
+
+      pipxg install flake8-to-ruff
+
+- Example usage:
+
+      cd some-python-project
+      flake8-to-ruff setup.cfg >> pyproject.toml
+
+HOMEGIT Ruff per-user configuration:
+
+- Create `~/.config/ruff/pyproject.toml` with desired configuration defaults for
+  Ruff.  Start with original flake8 configuration as found in a project, e.g.:
+
+      mkdir ~/.config/ruff
+      flake8-to-ruff ~/projects/some-project/setup.cfg \
+        > ~/.config/ruff/pyproject.toml
+
 #### Python flake8
 
 - Python 3-based flake8:
