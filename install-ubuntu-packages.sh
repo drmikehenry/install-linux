@@ -63,7 +63,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   gwenview \
   hdparm \
   help2man \
-  hplip \
   html2text \
   imagemagick \
   inotify-tools \

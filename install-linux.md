@@ -4714,9 +4714,36 @@ MANUAL:
 
       fc-cache -f -v
 
+### Brother Color Laser HL-L8360CDW series
+
+- MANUAL Create printers:
+
+      # UBUNTU
+      for p in {crayon,pencil}; do
+        lpadmin -p $p \
+          -E \
+          -v ipp://192.168.1.128 \
+          -m everywhere \
+          -L 'Computer room'
+      done
+
+- MANUAL Configure printers:
+
+      lpadmin -p pencil  -D 'Black & White printer'
+      lpadmin -p crayon  -D 'Color printer'
+
+      lpoptions -p pencil  -o 'ColorModel=Gray'
+
+      # Set the default printer.
+      lpadmin -d crayon
+
+- View printer options:
+
+    lpoptions -p pencil -l
+
 ### HP Color LaserJet M553n
 
-- Install hplip `:role:home`:
+- MANUAL Install hplip:
 
       agi hplip
 
@@ -4738,7 +4765,7 @@ MANUAL:
       lpadmin -p pencil  -D 'Black & White printer'
       lpadmin -p crayon  -D 'Color printer'
 
-      lpadmin -p pencil  -o 'HPColorAsGray=True'
+      lpoptions -p pencil  -o 'HPColorAsGray=True'
 
       # Set the default printer.
       lpadmin -d crayon

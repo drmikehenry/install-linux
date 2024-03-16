@@ -27,7 +27,6 @@ dnf install -y \
   google-droid-sans-mono-fonts \
   graphviz \
   hdparm \
-  hplip \
   '@KDE Plasma Workspaces' \
   kdiff3 \
   keepassxc \
