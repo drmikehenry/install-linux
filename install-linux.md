@@ -3224,6 +3224,17 @@ MANUAL:
 - Colors | Breeze Classic (this has better highlighting for the active window's
   title bar).
 
+### System Settings | Workspace | Startup and Shutdown | Desktop Session
+
+MANUAL:
+
+- Change "When logging in" to "Start with an empty session".
+
+TODO: Automate this.  The setting appears to live in `~/.config/ksmserverrc`:
+
+    [General]
+    loginMode=emptySession
+
 ### System Settings | Workspace | Workspace Behavior
 
 #### ... Screen Edges
