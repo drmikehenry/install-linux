@@ -230,6 +230,14 @@
     group: "activate-firefox.desktop"
     key: "_launch"
     value: "Ctrl+Alt+F,none,Activate or Launch Firefox"
+- name: Create 'activate-chrome.desktop'
+  copy:
+    dest: .local/share/applications/activate-chrome.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Activate or Launch chrome
+      Exec=activate chrome navigator.chrome
 - name: Create 'activate-nvim0.desktop'
   copy:
     dest: .local/share/applications/activate-nvim0.desktop

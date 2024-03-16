@@ -3734,6 +3734,21 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+F,none,Activate or Launch Firefox"
   ```
 
+- `activate-chrome` shortcut: (alternate for Ctrl+Alt+F)
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
+  - name: Create 'activate-chrome.desktop'
+    copy:
+      dest: .local/share/applications/activate-chrome.desktop
+      content: |
+        [Desktop Entry]
+        Type=Application
+        Name=Activate or Launch chrome
+        Exec=activate chrome navigator.chrome
+  ```
+
 - `activate-thunderbird` shortcut: Ctrl+Alt+T
 
   Ansible `:role:home-user-plasma`:
