@@ -7975,9 +7975,13 @@ MANUAL:
 
       apt-get update
 
+- Install gcc-12 as a prerequisite for VirtualBox 7.0:
+
+      agi gcc-12
+
 - Install virtualbox and extension pack:
 
-      agi virtualbox-6.1
+      agi virtualbox-7.0
 
   **NOTE** virtualbox-ext-pack is apparently an Ubuntu-provided package that
   should not be mixed with virtualbox installed directly from Oracle's
