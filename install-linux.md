@@ -4944,9 +4944,9 @@ More configuration via `systemsettings5` | Printers:
       vim /etc/crontab
 
       # min hour     dom         mon dow  user  what
-        00  23        1           *   *   root  rsnapshot monthly
-        10  23        1,8,15,22   *   *   root  rsnapshot weekly
-        20  23        *           *   *   root  rsnapshot daily
+        00  22        1           *   *   root  rsnapshot monthly
+        30  22        1,8,15,22   *   *   root  rsnapshot weekly
+        00  23        *           *   *   root  rsnapshot daily
         30  7-23      *           *   *   root  rsnapshot hourly
 
 - Note: for systems without extra hard drive space, can `rsync` to
