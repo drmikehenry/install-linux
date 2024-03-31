@@ -5000,7 +5000,7 @@ More configuration via `systemsettings5` | Printers:
         00  22        1           *   *   root  rsnapshot monthly
         30  22        1,8,15,22   *   *   root  rsnapshot weekly
         00  23        *           *   *   root  rsnapshot daily
-        30  7-23      *           *   *   root  rsnapshot hourly
+        00  7-20/2    *           *   *   root  rsnapshot hourly
 
 - Note: for systems without extra hard drive space, can `rsync` to
   `bolt:/backup/` and have bolt perform the rsnapshot functionality.
