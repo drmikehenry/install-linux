@@ -3,3 +3,5 @@
   package:
     name:
     - konversation
+    - tigervnc-standalone-server
+    - tigervnc-viewer

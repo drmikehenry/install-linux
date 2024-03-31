@@ -5391,6 +5391,165 @@ References:
 
 # Remote Desktop
 
+## VNC
+
+VNC stands for Virtual Network Computer.  A VNC client uses the VNC
+protocol to connect to a VNC server for remotely controlling the server's host.
+
+### VNC display numbers and ports
+
+- A VNC server allocates an X display number (of the form `:n`, typically
+  `:1`).  VNC clients connect to this server by providing the same display
+  number.
+
+- The VNC protocol runs over TCP port numbers of the form `5900+n`, where
+  `n` is the associated X display number.  In the typical case, the display is
+  `:1` and the associated port is `5901`.
+
+- To use a different port, use a different display number for both server
+  and client.  For example, to use display `:2`:
+
+      # On server_host:
+      vncserver :2
+
+      # On a client:
+      vncviewer server_host:2
+
+### VNC tunneling with SSH
+
+For security, it's common to use SSH port forwarding to make a secure
+tunnel between client and server.  On the client, SSH forwards
+`localhost:client_port` to `server_host`, connecting to the server's
+`localhost:server_port`.  This gives flexibility to use different display
+numbers for the client and server (mainly to allow for independent choice of
+port numbers on the server and client).
+
+For example, with `client_port=5903` (display `:3`) and `server_port=5905`
+(display `:5`):
+
+    # On server_host, setup VNC server on display `:5`:
+    vncserver -localhost yes :5
+
+    # On client, setup tunnel:
+    ssh -t -L 5903:localhost:5905 server_host
+
+    # On client in another terminal, launch the VNC viewer on
+    # localhost with display `:3`:
+    vncviewer :3
+
+As another example:
+
+    # Map `:1` to `:1` (port 5901 on both sides).
+    # -C  use compression
+    # -f  go to the background just before command execution;
+    # -N  but no command to execute
+    # -o ExitOnForwardFailure=yes   make sure forwarding works first
+    ssh -C -f -N -o ExitOnForwardFailure=yes \
+      -L 5901:localhost:5901 server_host
+
+### VNC server
+
+TigerVNC provides a VNC server that runs on a machine and provides
+for remote access to that machine via a VNC viewer.
+
+- **Use this on the host to be controlled remotely**.
+
+- Install `:role:work`:
+
+      agi tigervnc-standalone-server
+
+- Choose default desktop environment for X session:
+
+  MANUAL:
+
+      echo startplasma-x11 > ~/.xsession
+      chmod +x ~/.xsession
+
+- Setup VNC password:
+
+  MANUAL:
+
+      vncpasswd
+
+- E.g., to launch server on localhost only, using display `:1`:
+
+      # Typically do this over an ssh connection from thin client with
+      # port forwarding:
+      vncserver -localhost yes :1
+
+- To view running VNC servers:
+
+      vncserver -list
+
+  Sample output:
+
+      TigerVNC server sessions:
+
+      X DISPLAY #     RFB PORT #      RFB UNIX PATH   PROCESS ID #    SERVER
+      1               5901                            2584            Xtigervnc
+
+- To kill a running `vncserver` instance, provide the display number after
+  the `-kill` option; for example, to kill the server for display `:1`:
+
+      vncserver -kill :1
+
+- Install `glxgears` demo for frame rate testing:
+
+      agi mesa-utils
+
+  Invoke as:
+
+      glxgears
+
+  Sample timings:
+
+  - Testing using tigervnc from thin to VM: 3219 frames in 5.0
+    seconds = 643.642 FPS
+  - Testing using `ssh -YC` from thin with startplasma-x11: 167
+    frames in 5.0 seconds = 33.144 FPS
+
+### VNC viewer (client)
+
+- Install `:role:work`:
+
+      agi tigervnc-viewer
+
+## VNC from thin client to thick client
+
+- Logon to thin client using failsafe mode (without a window manager).
+
+- Start local GNOME window manager, "mutter":
+
+      mutter &
+
+- Launch a GNOME terminal:
+
+      gnome-terminal &
+
+- In one GNOME terminal tab, setup SSH tunnel to VM:
+
+      ssh -t -L 5901:localhost:5901 THICK_HOST
+
+- In a second GNOME terminal tab, launch viewer to localhost:
+
+      vncviewer localhost:1 -MenuKey Scroll_Lock -FullScreen
+
+  Better, create a script `vncviewer-localhost:1` that ensures
+  `xlock` happens after session ends:
+
+      #!/bin/sh
+
+      trap 'xlock -mode blank' EXIT
+
+      xset s 3600
+      xset r rate 250 32
+      vncviewer localhost:1 -MenuKey Scroll_Lock -FullScreen
+
+  This sets screen blanking and keyboard repeat rate
+  preferences.
+
+  Press Scroll Lock to access vnc menu.
+
 ## TeamViewer
 
 - UBUNTU Install:

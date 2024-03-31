@@ -142,6 +142,8 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   texi2html \
   texinfo \
   tidy \
+  tigervnc-standalone-server \
+  tigervnc-viewer \
   tmux \
   tofrodos \
   traceroute \
