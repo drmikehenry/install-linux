@@ -46,6 +46,13 @@
     - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone
       dest: /usr/local/bin/virtualenv-clone
 
+- name: Install poetry
+  script: |
+    pipxg install poetry &&
+      pipxg inject poetry poetry-plugin-export
+  args:
+    creates: /usr/local/bin/poetry
+
 - name: Install flake8
   script: |
     pipxg install flake8 &&

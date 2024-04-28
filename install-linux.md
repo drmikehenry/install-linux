@@ -7241,6 +7241,23 @@ needed.
 
       agi python-dev python-doc
 
+### Python Poetry
+
+AUTOMATED:
+
+- Install:
+
+      pipxg install poetry
+
+      pipxg inject poetry poetry-plugin-export
+
+MANUAL:
+
+- Sadly, even after explicitly installing the `poetry-plugin-export` plugin,
+  poetry still warns about it.  Disable the warning as an unprivileged user via:
+
+      poetry config warnings.export false
+
 ### Python GUIs
 
 #### Python TK
