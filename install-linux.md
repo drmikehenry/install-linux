@@ -1334,14 +1334,13 @@ AUTOMATED:
 
       chmod +x /usr/local/bin/pipxg
 
-- Use a temporary "user" area to install pipx:
+- Install a temporary `pipx` into a venv:
 
-      PYTHONUSERBASE=$PWD/pipxtmp pip install --user pipx
+      python3 -m venv pipxtmp && pipxtmp/bin/pip install pipx
 
 - Bootstrap `pipx` into the global pipx area:
 
-      PYTHONUSERBASE=$PWD/pipxtmp \
-        PATH=$PYTHONUSERBASE/bin:$PATH pipxg install pipx
+      PATH=$PWD/pipxtmp/bin:$PATH pipxg install pipx
 
 - Remove the temporary user area:
 
