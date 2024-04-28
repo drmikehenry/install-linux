@@ -7108,7 +7108,7 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
 - Install `:role:workstation`:
 
-      agi vim vim-gtk universal-ctags ruby ruby-dev
+      agi vim vim-gtk3 universal-ctags ruby ruby-dev
 
       yi vim vim-X11 ctags ruby ruby-devel perl-ExtUtils-Embed
 

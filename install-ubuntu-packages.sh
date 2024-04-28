@@ -153,7 +153,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   universal-ctags \
   vim \
   vim \
-  vim-gtk \
+  vim-gtk3 \
   vlc \
   wget \
   wireshark \

@@ -113,7 +113,7 @@
     - ttf-mscorefonts-installer
     - universal-ctags
     - vim
-    - vim-gtk
+    - vim-gtk3
     - wireshark
     - wmctrl
     - xclip
