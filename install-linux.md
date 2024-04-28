@@ -1039,7 +1039,7 @@ AUTOMATED:
 
   - UBUNTU (Note: This entails more groups than `poweruser` has):
 
-        for i in adm cdrom sudo plugdev lxd lpadmin sambashare video; do
+        for i in adm cdrom sudo plugdev lxd lpadmin video; do
             usermod -aG $i someuser
         done
 

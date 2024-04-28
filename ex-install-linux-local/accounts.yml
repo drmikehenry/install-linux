@@ -36,7 +36,6 @@
         - plugdev
         - lpadmin
         - lxd
-        - sambashare
         - video
         - some_group
       append: yes
