@@ -15,7 +15,6 @@
     - gwenview
     - k3b
     - keepassxc
-    - libsane
     - libsane-common
     - libsane-dev
     - libsane1
@@ -23,9 +22,6 @@
     - mpg321
     - mplayer
     - mplayer-gui
-    - paprefs
-    - pavucontrol
-    - pavumeter
     - pithos
     - python3-gnucash
     - sane-utils

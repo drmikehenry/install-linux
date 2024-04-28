@@ -8608,21 +8608,26 @@ Record five seconds to a file, then play it back:
 
 ### Pulseaudio Tools
 
+MANUAL:
+
+- Note: distros are replacing pulseaudio with pipewire, so these are becoming
+  obsolete.
+
 - References:
 
   - Online microphone test: <https://www.onlinemictest.com/>
 
 - Use `pavucontrol` to fix input/output (microphone/speaker) settings.
 
-- Install volume control `:role:home`:
+- Install volume control:
 
       agi pavucontrol
 
-- Install preferences tool `:role:home`:
+- Install preferences tool:
 
       agi paprefs
 
-- Install volume meter `:role:home`:
+- Install volume meter:
 
       agi pavumeter
 
@@ -9143,7 +9148,7 @@ Takes pictures and other things with webcam.
 
 - Install `:role:home`:
 
-      agi libsane libsane-common libsane-dev libsane1 sane-utils
+      agi libsane-common libsane-dev libsane1 sane-utils
 
 - MANUAL Look for scanner:
 

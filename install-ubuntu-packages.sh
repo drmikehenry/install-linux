@@ -77,7 +77,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   kubuntu-restricted-extras \
   libboost-all-dev \
   liblz4-tool \
-  libsane \
   libsane1 \
   libsane-common \
   libsane-dev \
@@ -105,9 +104,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   nmap \
   okular \
   pandoc \
-  paprefs \
-  pavucontrol \
-  pavumeter \
   perl-doc \
   perl-doc-html \
   pigz \
