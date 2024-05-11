@@ -36,16 +36,17 @@ MANUAL:
 
       # Add these lines at the top of the file:
       Host bolt bolt.drmikehenry.com
-              Port 12345
+          Port 12345
 
       Host dmh drmikehenry.com
-              HostName drmikehenry.com
-              User drmikehenry
+          HostName drmikehenry.com
+          User drmikehenry
 
       Host github.com
-              ForwardX11 no
+          ForwardX11 no
 
       Host *
-              ForwardX11 yes
-              ServerAliveInterval 300
-              SendEnv COLORFGBG
+          ForwardX11 yes
+          ServerAliveInterval 300
+          SendEnv COLORFGBG
+          SendEnv COLORTERM

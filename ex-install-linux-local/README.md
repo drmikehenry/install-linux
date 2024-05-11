@@ -27,30 +27,6 @@ See `install-linux/README.md` for overview.
         -l $ANSIBLE_HOST \
         bootstrap.yml
 
-- OPTIONAL Setup `/localhome`-based home directories:
-
-      ansible-playbook \
-        -u root \
-        -l $ANSIBLE_HOST \
-        localhome.yml
-
-  `/root/localhome-migrate.log` will be fetched and displayed.  Inspect the
-  output to verify the migration was successful.
-
-- base:
-
-      ansible-playbook \
-        -u root \
-        -l $ANSIBLE_HOST \
-        base.yml
-
-- WORKSTATION: workstation-mounts:
-
-      ansible-playbook \
-        -u root \
-        -l $ANSIBLE_HOST \
-        workstation-mounts.yml
-
 - OPTIONAL UBUNTU Remove snaps:
 
       ansible-playbook \
@@ -74,6 +50,30 @@ See `install-linux/README.md` for overview.
         -u root \
         -l $ANSIBLE_HOST \
         firefox-tarball.yml
+
+- OPTIONAL Setup `/localhome`-based home directories:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        localhome.yml
+
+  `/root/localhome-migrate.log` will be fetched and displayed.  Inspect the
+  output to verify the migration was successful.
+
+- base:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        base.yml
+
+- WORKSTATION: workstation-mounts:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        workstation-mounts.yml
 
 - accounts:
 
