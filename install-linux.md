@@ -8453,7 +8453,7 @@ MANUAL:
         Signed-By: /etc/apt/keyrings/docker.gpg
       "
 
-      apt-get update
+      apt update
 
 - Install Docker components:
 
