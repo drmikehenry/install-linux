@@ -1893,7 +1893,7 @@ MANUAL:
 
 - MANUAL Install additional components if desired:
 
-      rustup component add rls rust-src rust-analyzer
+      rustup component add rust-src rust-analyzer
 
 - View components (installed and available):
 
@@ -1909,7 +1909,7 @@ MANUAL:
 
   Add components:
 
-      rustup component add rls rust-src rust-analyzer
+      rustup component add rust-src rust-analyzer
 
 - HOMEGIT Setup global rustfmt.toml:
 
