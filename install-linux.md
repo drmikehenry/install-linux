@@ -818,14 +818,39 @@ in `/home`.
 
 TODO: Ansible
 
-- MANUAL Edit `/etc/apt/sources.list` and uncomment all desired `deb-src`
-  lines, e.g.:
+MANUAL:
+
+- Ubuntu 24.04 brings a new format ("deb822") for repository sources.  Instead
+  of `/etc/apt/sources.list`, there is now
+  `/etc/apt/sources.list.d/ubuntu.sources` with default contents below:
+
+      Types: deb
+      URIs: http://us.archive.ubuntu.com/ubuntu/
+      Suites: noble noble-updates noble-backports
+      Components: main restricted universe multiverse
+      Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+      Types: deb
+      URIs: http://security.ubuntu.com/ubuntu/
+      Suites: noble-security
+      Components: main restricted universe multiverse
+      Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+  The `deb` type is for the binary packages, and `deb-src` is for source
+  packages.  Adjust each `Types: deb` line to be `Types: deb deb-src` to include
+  source repositories for everything.  This may be done via:
+
+      sed -i 's/^Types: deb$/Types: deb deb-src/' \
+        /etc/apt/sources.list.d/ubuntu.sources
+
+- For Ubuntu 22.04 and earlier, edit `/etc/apt/sources.list` and uncomment all
+  desired `deb-src` lines, e.g.:
 
       deb-src http://us.archive.ubuntu.com/ubuntu/ jammy main restricted
 
-- Update apt cache:
+- Update apt cache to use the new source repositories:
 
-      apt-get update
+      apt update
 
 ### FEDORA rpmfusion Repositories
 
