@@ -3275,10 +3275,13 @@ or via `systemsettings5`.
 
 MANUAL:
 
-- Launch Feedback: Stop animation after 1 second
+- (Ubuntu 22.04) Launch Feedback: Stop animation after 1 second
 
 - Colors | Breeze Classic (this has better highlighting for the active window's
   title bar).
+
+- (Ubuntu 24.04) Cursors | Configure Launch Feedback: Stop animation after 1
+  second
 
 ### System Settings | Workspace | Startup and Shutdown | Desktop Session
 
