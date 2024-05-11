@@ -1159,47 +1159,63 @@ AUTOMATED:
 
         ssh-copy-id -i ~/.ssh/id_rsa newmachine
 
-- MANUAL Configure SSH clients. Note that host-specific settings should come
-  first, since the first-found setting that matches wins:
+- Configure SSH clients globally.
 
-      vim /etc/ssh/ssh_config
+  - *Host-specific settings should come first*, since the first-found setting
+    that matches wins.
 
-  Contents:
+  - Use numbered config files below `/etc/ssh/ssh_config.d/`, with high-numbered
+    files for `Host *` settings.
 
-      # Add these lines at the top of the file:
-      Host host1 host1.domain.com
-              Port 12345
+  - **ENSURE FILES ARE NOT GROUP WRITABLE** via::
 
-      # General settings:
-      Host *
+        chmod go-w /etc/ssh_config.d/*
+
+  - The variable `COLORFGBG` is set by KDE Konsole to indicate console
+    foreground and background colors.  Tools such as Vim use this variable to
+    determine what colorscheme to use.  For example, `COLORFGBG=15;0` sets a
+    white-on-black scheme (such that Vim sets `background=dark`).  Similarly,
+    when the `COLORTERM` environment variable contains the value `truecolor`,
+    vimfiles will set `termguicolors` which will cause Vim to assume 24-bit
+    color support in the terminal and to use the GUI colors for the current
+    colorscheme (which are typically nicer).  Using appropriate `SendEnv`
+    directives on the SSH client and corresponding `AcceptEnv` directives on the
+    SSH server allows these environment variables to be propagated over the SSH
+    connection.
+
+  - MANUAL Setup general settings for all hosts:
+
+        echod -o /etc/ssh/ssh_config.d/90-general.conf '
+          # General settings:
+          Host *
               ForwardX11 yes
               ServerAliveInterval 300
               SendEnv COLORFGBG
               SendEnv COLORTERM
+        '
+        chmod go-w /etc/ssh/ssh_config.d/90-general.conf
 
-  The variable `COLORFGBG` is set by KDE Konsole to indicate console foreground
-  and background colors.  Tools such as Vim use this variable to determine what
-  colorscheme to use.  For example, `COLORFGBG=15;0` sets a white-on-black
-  scheme (such that Vim sets `background=dark`).  Similarly, when the
-  `COLORTERM` environment variable contains the value `truecolor`, vimfiles will
-  set `termguicolors` which will cause Vim to assume 24-bit color support in the
-  terminal and to use the GUI colors for the current colorscheme (which are
-  typically nicer).  Using appropriate `SendEnv` directives on the SSH client
-  and corresponding `AcceptEnv` directives on the SSH server allows these
-  environment variables to be propagated over the SSH connection.
+  - MANUAL: Disable X11 forwarding for Github:
+
+        echod -o /etc/ssh/ssh_config.d/10-github.conf '
+          Host github.com
+              ForwardX11 no
+        '
+        chmod go-w /etc/ssh/ssh_config.d/10-github.conf
+
+  - Example: setup a host-specific configuration file:
+
+        echod -o /etc/ssh/ssh_config.d/10-host1.conf '
+          Host host1 host1.domain.com
+              Port 12345
+        '
+        chmod go-w /etc/ssh/ssh_config.d/10-host1.conf
 
 - MANUAL Create `~/.ssh/config.d` directory concept:
 
       mkdir ~/.ssh/config.d
       echod -o ~/.ssh/config '
         Include config.d/*.conf
-      '
-
-  MANUAL: Disable X11 forwarding for Github:
-
-      echod -o ~/.ssh/config.d/github.conf '
-        Host github.com
-          ForwardX11 no
       '
 
   Note: the `config` file is not in homegit (yet) because of the need for proper

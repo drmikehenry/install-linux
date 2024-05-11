@@ -28,25 +28,14 @@ MANUAL:
 
 ## SSH client setup
 
-- MANUAL: Configure SSH clients.
+See `SSH client setup` in `install-linux.md` for overall instructions.
 
-      vim /etc/ssh/ssh_config
+- Setup `bolt` server configuration:
 
-  Contents (TODO use server-specific port number for `12345` below):
-
-      # Add these lines at the top of the file:
+    echod -o /etc/ssh/ssh_config.d/10-bolt.conf '
       Host bolt bolt.drmikehenry.com
           Port 12345
+    '
+    chmod go-w /etc/ssh/ssh_config.d/10-bolt.conf
 
-      Host dmh drmikehenry.com
-          HostName drmikehenry.com
-          User drmikehenry
-
-      Host github.com
-          ForwardX11 no
-
-      Host *
-          ForwardX11 yes
-          ServerAliveInterval 300
-          SendEnv COLORFGBG
-          SendEnv COLORTERM
+  **NOTE** Adjust port number above to server-specific value.
