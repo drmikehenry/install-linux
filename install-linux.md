@@ -4769,36 +4769,6 @@ printer-specific driver support will be done via separate applications.
   - `-o Name=Value`: set default value for named PPD option
   - `-d`: set the default printer
 
-### Crashing printer filter issues
-
-MANUAL:
-
-- Symptoms include being unable to print via command line, e.g.:
-
-      ls | lpr
-
-- Reference:
-  - "CUPS filter texttopdf aborts when 'Noto Color Emoji' font is present":
-    <https://github.com/apple/cups/issues/5787>
-
-- Reject the "Noto Color Emoji" font:
-
-      echod -o /etc/fonts/local.conf '
-        <?xml version="1.0"?>
-        <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-        <fontconfig>
-          <selectfont>
-            <rejectfont>
-              <glob>/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf</glob>
-            </rejectfont>
-          </selectfont>
-        </fontconfig>
-      '
-
-- Rebuild font cache:
-
-      fc-cache -f -v
-
 ### Brother Color Laser HL-L8360CDW series
 
 - MANUAL Create printers:
@@ -4883,6 +4853,38 @@ More configuration via `systemsettings5` | Printers:
 - For black & white printers:
 
   - Configure | Printer Options | Color | Print Color as Gray: On
+
+### Crashing printer filter issues
+
+MANUAL:
+
+- Work-around still required for Ubuntu 24.04.
+
+- Symptoms include being unable to print via command line, e.g.:
+
+      ls | lpr
+
+- Reference:
+  - "CUPS filter texttopdf aborts when 'Noto Color Emoji' font is present":
+    <https://github.com/apple/cups/issues/5787>
+
+- Reject the "Noto Color Emoji" font:
+
+      echod -o /etc/fonts/local.conf '
+        <?xml version="1.0"?>
+        <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+        <fontconfig>
+          <selectfont>
+            <rejectfont>
+              <glob>/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf</glob>
+            </rejectfont>
+          </selectfont>
+        </fontconfig>
+      '
+
+- Rebuild font cache:
+
+      fc-cache -f -v
 
 ## Printing Text from the Command Line
 
