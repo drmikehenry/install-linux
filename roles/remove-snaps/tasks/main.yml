@@ -1,9 +1,32 @@
 ---
+- name: Ensure `hunspell` is unmounted
+  shell:
+    cmd: systemctl stop 'var-snap-firefox-common-host\x2dhunspell.mount' || true
+
+- name: Remove each snap
+  shell:
+    cmd: snap remove --purge "{{ item }}" || true
+  loop:
+    - "firefox"
+    - "snap-store"
+    - "snapd-desktop-integration"
+    - "firmware-updater"
+    - "gtk-common-themes"
+    - "gnome-42-2204"
+    - "bare"
+    - "core22"
+    - "snapd"
+
 - name: Purge snapd
   apt:
     name: snapd
     state: absent
     purge: yes
+
+- name: Remove `snap/` from all home directories
+  shell:
+    cmd: rm -rf /root/snap /home/*/snap/
+
 - name: Prevent snapd reinstallation
   copy:
     dest: /etc/apt/preferences.d/nosnap.pref

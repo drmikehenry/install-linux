@@ -1511,11 +1511,29 @@ Rationale:
 
 - Snaps are slow to launch.
 
+- Snaps update outside of the user's control.
+
 ## UBUNTU Purge Snaps
+
+- Unmount spelling-related mount point for Firefox snap:
+
+      systemctl stop 'var-snap-firefox-common-host\x2dhunspell.mount'
+
+- Remove all snaps.  As of Ubuntu 24.04, this is achieved via:
+
+      snap remove --purge firefox
+      snap remove --purge snap-store
+      snap remove --purge snapd-desktop-integration
+      snap remove --purge firmware-updater
+      snap remove --purge gtk-common-themes
+      snap remove --purge gnome-42-2204
+      snap remove --purge bare
+      snap remove --purge core22
+      snap remove --purge snapd
 
 - Purge `snapd`:
 
-      apt-get purge snapd
+      apt purge -y snapd
 
 - Prevent `snapd` reinstallation:
 

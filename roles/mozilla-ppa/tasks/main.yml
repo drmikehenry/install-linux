@@ -3,13 +3,22 @@
   apt_repository:
     repo: ppa:mozillateam/ppa
 
-- name: Use Firefox from Mozilla PPA
+- name: Boost Firefox priority to ensure it comes from Mozilla PPA
   copy:
-    dest: /etc/apt/preferences.d/mozillateamppa
+    dest: /etc/apt/preferences.d/mozillateamppa-firefox
     content: |
       Package: firefox*
       Pin: release o=LP-PPA-mozillateam
       Pin-Priority: 501
+
+- name: Boost Thunderbird priority to ensure it comes from Mozilla PPA
+  copy:
+    dest: /etc/apt/preferences.d/mozillateamppa-thunderbird
+    content: |
+      Package: thunderbird*
+      Pin: release o=LP-PPA-mozillateam
+      Pin-Priority: 501
+
 - name: Install Firefox from Mozilla PPA
   apt:
     name: firefox
