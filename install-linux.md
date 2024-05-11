@@ -5098,7 +5098,10 @@ overriding the chosen relayhost.  **This must be manually fixed**.
     - Choose FQDN for System mail name (e.g., `mobi.drmikehenry.com`).
     - Choose `mailman.drmikehenry.com` for SMTP relay host.
     - Leave remaining questions (if any) at their defaults.
-  - Can also do `dpkg-reconfigure postfix` to answer these questions again.
+
+  - **If already installed**, reconfigure to ask the questions again:
+
+        dpkg-reconfigure postfix
 
 - To allow `/etc/hosts` to override `mailman.drmikehenry.com`, add this line to
   the postfix configuration and reload:
@@ -5108,8 +5111,6 @@ overriding the chosen relayhost.  **This must be manually fixed**.
         smtp_host_lookup = native
       '
 
-      systemctl restart postfix
-
 - **Fixup relayhost** to use square brackets, e.g.:
 
       sed -i -E 's/^\s*relayhost\s*=\s*[[]?([^][]+)[]]?/relayhost = [\1]/' \
@@ -5117,6 +5118,10 @@ overriding the chosen relayhost.  **This must be manually fixed**.
 
   *NOTE* This works for `hostname`, but note that `hostname:1234` should become
   `[hostname]:1234`.
+
+- Restart Postfix:
+
+      systemctl restart postfix
 
 ## exim4 for local-only mail delivery
 
