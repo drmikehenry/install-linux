@@ -137,6 +137,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   subversion \
   texi2html \
   texinfo \
+  thunderbird \
   tidy \
   tigervnc-standalone-server \
   tigervnc-viewer \

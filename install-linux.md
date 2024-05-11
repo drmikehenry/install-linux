@@ -2892,7 +2892,7 @@ MANUAL:
 
 ### Thunderbird Installation
 
-- Install:
+- Install `:role:home`:
 
       agi thunderbird
 

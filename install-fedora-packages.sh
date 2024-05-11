@@ -62,6 +62,7 @@ dnf install -y \
   subversion \
   texinfo \
   the_silver_searcher \
+  thunderbird \
   tidy \
   tmux \
   traceroute \
