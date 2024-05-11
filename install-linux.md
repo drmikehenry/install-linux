@@ -1233,15 +1233,13 @@ MANUAL:
 
 - Perform SSH server configuration:
 
-      vim /etc/ssh/sshd_config
+  - MANUAL Accept propagation of some useful environment variables (see SSH
+    client configuration steps for details):
 
-  Include lines to accept propagation of some useful environment variables (see
-  SSH client configuration steps for details):
-
-      AcceptEnv COLORFGBG
-      AcceptEnv COLORTERM
-
-  Also include any system-specific and/or network-specific configuration.
+        echod -o /etc/ssh/sshd_config.d/90-accept-env.conf '
+          AcceptEnv COLORFGBG
+          AcceptEnv COLORTERM
+        '
 
 - UBUNTU Configure ssh firewall:
 
