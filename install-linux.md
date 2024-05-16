@@ -233,27 +233,65 @@ See `install-linux-local.md` for any machine-specific setup.
 ## UBUNTU Initial Installation
 
 - Create partitions and volumes using desktop iso as shown above.
+
+### UBUNTU Desktop Initial Installation
+
 - Boot from Ubuntu Desktop Install DVD (use `UEFI` boot).
 - Choose "Try or Install Ubuntu" at Grub prompt.
-- In "Install" app, choose "Install Ubuntu".
-- Keyboard layout: English (US)
-- What apps: "Minimal installation"
-- Uncheck "Download updates while installing Ubuntu".
-- Check "Install third-party software...".
+- (In "Install" app.)
+- Choose your language: English
+- Accessibility in Ubuntu: use defaults
+- Select your keyboard layout: English (US)
+- Connect to the Internet: optional
+- What do you want to do: Install Ubuntu
+- Choose "Interactive installation".
+- What apps: "Default selection"
+- Uncheck "Install third-party software...".
+- Uncheck "Download and install support for additional media formats".
 - Installation type:
   - Choose "Erase disk and install Ubuntu":
-    - Advanced Features: Erase disk and use ZFS Alternatively, choose "Something
-      else" for custom partitioning.
-- Choose "Install now".
-- Where are you?: `New_York`
-- Who are you?:
+    - Advanced Features; choose one of:
+      - Erase disk and use ZFS
+      - Use LVM
+  - Alternatively, choose "Manual installation".
+- Create your account:
   - Your name: `Power User`
   - Your computer's name with FQDN: `ubuntu2204.domain.com` (for example;
     use no underscores; don't put `.` in hostname)
   - Username: `poweruser`
   - Password: `the_actual_password`
   - (Note: this user will have UID=1000.)
+- Location: New York City (timezone America/New York)
 - Wait for installation to complete.
+- Reboot into new system.
+
+### UBUNTU Server Initial Installation
+
+- Boot from Ubuntu Server Live DVD (use `UEFI` boot).
+- Choose your language: English
+- Select your keyboard:
+  - Layout: English (US)
+  - Variant: English (US)
+- Choose type of installation: "Ubuntu Server".
+- Network configuration:
+  - Choose wired Ethernet and/or Wi-Fi
+- Proxy configuration: leave blank
+- Ubuntu archive mirror configuration: use default
+- Guided storage configuration: choose "Custom storage layout"
+- Storage configuration:
+  - Choose pre-configured volumes to reformat and mount as desired.
+- Profile configuration:
+  - Your name: `Power User`
+  - Your computer's name: `ubuntu2404` (for example; use no underscores; won't
+    allow `.` anywhere)
+  - Username: `poweruser`
+  - Password: `the_actual_password`
+  - (Note: this user will have UID=1000.)
+- Update to Ubuntu Pro: Skip for now
+- SSH configuration: Install OpenSSH server
+- Featured server snaps: leave all unchecked
+- Installing system: wait while installation proceeds
+- At top, will see "Installation complete".
 - Reboot into new system.
 
 ## FEDORA Initial Installation
