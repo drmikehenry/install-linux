@@ -554,6 +554,35 @@ This runs `/var/lib/dpkg/info/PACKAGE.postinst configure` (so-called
 
       systemctl isolate graphical.target
 
+# SSD secure erase NVMe drive
+
+- Reference:
+  <https://askubuntu.com/questions/1310338/how-to-secure-erase-a-nvme-ssd>
+
+- Use Ubuntu desktop "Try Ubuntu".
+
+- Install `nvme` command:
+
+      apt install -y nvme-cli
+
+- List:
+
+      nvme list
+
+  Example output:
+
+      /dev/nvme0n1 ....
+
+  Has namespace(s).
+
+- Erase all namespaces
+
+      nvme format -s1 -n 0xffffffff /dev/nvme0n1
+
+  Note:
+  - `-s1` means erase mode `1`: User Data Erase.
+  - `-n 0xffffffff` means to format all the namespaces.
+
 # SSD secure erase
 
 - Use Ubuntu desktop "Try Ubuntu".
