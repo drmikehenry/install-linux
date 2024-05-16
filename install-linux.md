@@ -67,40 +67,72 @@ See `install-linux-local.md` for any machine-specific setup.
 
       for i in /dev/sd[ab]; do sgdisk --zap-all $i; done
 
+- Choose padding/overprovision size:
+
+  - Recommend 10% overprovision for SSDs.
+  - For ZFS, where it's important to make sure a new drive can have the exact
+    same ZFS volume, use a padding partition to leave space (perhaps 100MB).
+
+- Choose swap size:
+
+  - <https://help.ubuntu.com/community/SwapFaq>
+  - For hibernation, need at least as much swap as RAM.
+  - Some guides recommend RAM size + sqrt(RAM size) (using GiB); e.g., for 64
+    GiB RAM, need 64 + sqrt(64) = 72 GiB.
+  - Given overprovisioning, could have more swap.
+
 - Setup each drive as this table shows, using commands that follow:
 
-      ====  ====== ====   ============================================
+      ====  ====== ====   ==================================================
       Part  Size   Type   Purpose
-      ====  ====== ====   ============================================
-       1    1GiB   EF00   EFI System Partition (ESP)
-       2    4GiB   8200   swap
-       3    2GiB   --->   8300(ext4 /boot); BE00(ZFS boot)
+      ====  ====== ====   ==================================================
+       1    4GiB   EF00   EFI System Partition (ESP)
+       2    80GiB  8200   swap
+       3    4GiB   --->   8300(ext4 /boot); BE00(ZFS boot)
        4    (big)  --->   FD00(RAID); 8E00(LVM); BF00(ZFS)
-      ====  ====== ====   ============================================
+       9    (10%)  --->   padding/overprovision BF07(Solaris Reserved 1)
+      ====  ====== ====   ==================================================
 
 - Starting values of `0` means the start of the biggest unused area.
 
 - Allocate ESP:
 
-      sgdisk /dev/sda     -n 1:0:+1GiB -t 1:EF00
+      sgdisk /dev/sda     -n 1:0:+4GiB -t 1:EF00
 
 - Allocate swap:
 
-      sgdisk /dev/sda     -n 2:0:+4GiB -t 2:8200
+      sgdisk /dev/sda     -n 2:0:+80GiB -t 2:8200
 
-- Allocate ZFS boot volume:
+- Allocate boot volume:
 
-      sgdisk /dev/sda     -n 3:0:+2GiB -t 3:BE00
+      # ZFS boot:
+      sgdisk /dev/sda     -n 3:0:+4GiB -t 3:BE00
 
-- Allocate remainder of disk for ZFS root volume:
+      # ext4 boot:
+      sgdisk /dev/sda     -n 3:0:+4GiB -t 3:8300
 
+- Allocate padding/overprovision at the end of the disk. Use approximate value
+  (e.g., `100MB`) instead of instead of exact value (e.g., `100MiB`) to allow
+  `sgdisk` to round to good boundaries:
+
+      sgdisk /dev/sda     -n 9:-100MB:0 -t 9:BF07
+
+- Allocate remainder of disk for "big" volume:
+
+      # ZFS:
       sgdisk /dev/sda     -n 4:0:0 -t 4:BF00
+
+      # LVM:
+      sgdisk /dev/sda     -n 4:0:0 -t 4:8E00
+
+      # RAID:
+      sgdisk /dev/sda     -n 4:0:0 -t 4:FD00
 
 - Display final partitioning:
 
       sgdisk /dev/sda -p
 
-  With output:
+  With example output:
 
       Disk /dev/sda: 500118192 sectors, 238.5 GiB
       Logical sector size: 512 bytes
@@ -181,6 +213,9 @@ See `install-linux-local.md` for any machine-specific setup.
 
       # For a RAID system:
       pvcreate /dev/md/0
+
+      # For a single LVM physical volume on p4 of NVMe:
+      pvcreate /dev/nvme0n1p4
 
 - Create a volume group named after the machine:
 
