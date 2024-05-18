@@ -8779,8 +8779,6 @@ Record five seconds to a file, then play it back:
 
 ### Pulseaudio Tools
 
-MANUAL:
-
 - Note: distros are replacing pulseaudio with pipewire, so these are becoming
   obsolete.
 
