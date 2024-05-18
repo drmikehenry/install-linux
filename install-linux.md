@@ -7609,10 +7609,12 @@ MANUAL:
 
 - Also see instructions in <https://github.com/drmikehenry/pythonsource>.
 
-- Install dependencies, e.g.:
+- Install build dependencies, e.g.:
 
-      sudo apt-get build-dep python2.7
-      sudo apt-get build-dep python3.10
+      sudo apt-get build-dep -y python3.12
+
+      # Optional for Python2 support:
+      sudo apt-get build-dep -y python2.7
 
 - Clone repository to become `~/.pyenv`:
 
@@ -7641,7 +7643,7 @@ MANUAL:
 
 - Determine versions to support and squirrel into an environment variable:
 
-      pyversions='2.7.15 3.5.6 3.6.7 3.7.1'
+      pyversions='3.8.0 3.9.0 3.10.0 3.11.0 3.12.0'
 
   **NOTE** Older python versions (3.0 - 3.4, 2.x except newer 2.7.y) require
   libssl1.0-dev instead of libssl-dev. Build for those versions separately; see
