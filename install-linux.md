@@ -4207,6 +4207,8 @@ To bind a shortcut key to an arbitrary command:
 
 #### ... Keyboard
 
+MANUAL:
+
 - Delay: 250 ms
 - Rate: 32 repeats/sec
 
