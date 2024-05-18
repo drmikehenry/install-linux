@@ -3368,7 +3368,9 @@ MANUAL:
 
 MANUAL:
 
-- Change "When logging in" to "Start with an empty session".
+- Session Restore:
+
+  - "On login, launch apps that were open": "Start with an empty session"
 
 TODO: Automate this.  The setting appears to live in `~/.config/ksmserverrc`:
 
@@ -4218,6 +4220,7 @@ MANUAL:
   - Uncheck `Screen Brightness`.
   - Uncheck `Dim Screen`.
   - Uncheck `Screen Energy Saving`.
+  - Uncheck `Suspend session`.
   - Button events handling | When laptop lid closed | Lock screen.
 - MOBILE: Energy Saving | Adjust settings for `On Battery` to taste.
 
