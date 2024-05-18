@@ -2367,24 +2367,24 @@ MANUAL:
       # For casey:
       ln -s /home/m/sys/unison/casey-root ~/.unison
 
-      # For mobi:
-      ln -s /home/m/sys/unison/mobi-root ~/.unison
+      # For f16:
+      ln -s /home/m/sys/unison/f16-root ~/.unison
 
 ### Unison From Scratch
 
 - Create location for configuration:
 
-      mkdir -p /home/m/sys/unison/mobi-root
+      mkdir -p /home/m/sys/unison/f16-root
 
-- Symlink `/root/.unison` to `/home/m/sys/unison/mobi-root`:
+- Symlink `/root/.unison` to `/home/m/sys/unison/f16-root`:
 
       rm -rf /root/.unison
-      ln -s /home/m/sys/unison/mobi-root /root/.unison
+      ln -s /home/m/sys/unison/f16-root /root/.unison
 
 - Steal and modify `default.prf` from `/m/sys/unison/xxx`, placing into
   `/root/.unison/default.prf`, e.g.:
 
-      cp /m/sys/unison/mobi-root/default.prf /root/.unison/default.prf
+      cp /m/sys/unison/f16-root/default.prf /root/.unison/default.prf
       vim /root/.unison/default.prf
 
 - Have to pre-create sub-paths from `default.prf` above.
@@ -2424,12 +2424,10 @@ MANUAL:
   - Add the following to `/etc/crontab`:
 
         # min hour dom  mon dow  user  what
-        # Main machine (casey):
+        # Main Laptop (f16):
           30  2     *    *   *   root  /root/bin/unisonwrap -batch -terse
         # Laptop (farm):
           30  3     *    *   *   root  /root/bin/unisonwrap -batch -terse
-        # Laptop (mobi):
-          30  4     *    *   *   root  /root/bin/unisonwrap -batch -terse
 
 ## Firefox
 
@@ -5179,7 +5177,7 @@ overriding the chosen relayhost.  **This must be manually fixed**.
 
   - When installing, answer the configuration questions as:
     - Choose `satellite` email system.
-    - Choose FQDN for System mail name (e.g., `mobi.drmikehenry.com`).
+    - Choose FQDN for System mail name (e.g., `f16.drmikehenry.com`).
     - Choose `mailman.drmikehenry.com` for SMTP relay host.
     - Leave remaining questions (if any) at their defaults.
 
