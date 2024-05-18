@@ -2387,13 +2387,23 @@ MANUAL:
       cp /m/sys/unison/f16-root/default.prf /root/.unison/default.prf
       vim /root/.unison/default.prf
 
-- Have to pre-create sub-paths from `default.prf` above.
+- Have to pre-create sub-paths from `default.prf` above.  **Verify the paths
+  before doing this**. Check for `path = xxx` in `default.prf` and pre-create
+  these paths.
 
-  **Verify the paths before doing this**. Check for `path = xxx` in
-  `default.prf` and pre-create these paths:
+  E.g., given these:
+
+      path = beth/Documents
+      path = mike
+      path = shared/download
+      path = shared/music
+      path = sys/bin
+      path = sys/unison
+
+  Create as follows:
 
       cd /home/m
-      mkdir -p mike shared/{download,music} sys/{bin,unison}
+      mkdir -p beth/Documents mike shared/{download,music} sys/{bin,unison}
 
 - **Examine and remove any old Unison archive files** for previous
   synchronization attempts (**on both sides**, if using saved `/home/m`).
