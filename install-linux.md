@@ -4976,6 +4976,8 @@ MANUAL:
 
 ## UBUNTU Disable Dynamic motd
 
+- MOTD (Message Of The Day) is a feature for displaying messages at login.
+
 - Reference:
 
   - <https://raymii.org/s/tutorials/Disable_dynamic_motd_and_motd_news_spam_on_Ubuntu_18.04.html>
@@ -4985,6 +4987,7 @@ MANUAL:
       chmod -x /etc/update-motd.d/10-help-text
       chmod -x /etc/update-motd.d/50-motd-news
       chmod -x /etc/update-motd.d/90-updates-available
+      rm -f /etc/update-motd.d/50-landscape-sysinfo
 
   Ansible `:role:workstation`:
 
@@ -4997,6 +5000,14 @@ MANUAL:
       - "10-help-text"
       - "50-motd-news"
       - "90-updates-available"
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Remove symlinked motd files
+    file:
+      path: "/etc/update-motd.d/{{ item }}"
+      state: absent
+    loop:
+      - "50-landscape-sysinfo"
     when: ansible_distribution == 'Ubuntu'
   ```
 

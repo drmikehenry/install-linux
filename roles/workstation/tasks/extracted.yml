@@ -12,6 +12,14 @@
     - "50-motd-news"
     - "90-updates-available"
   when: ansible_distribution == 'Ubuntu'
+
+- name: Remove symlinked motd files
+  file:
+    path: "/etc/update-motd.d/{{ item }}"
+    state: absent
+  loop:
+    - "50-landscape-sysinfo"
+  when: ansible_distribution == 'Ubuntu'
 - name: pipxg Install findx
   command: pipxg install findx
   args:
