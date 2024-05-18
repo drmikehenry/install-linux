@@ -5402,7 +5402,7 @@ References:
 
   - Edit | Preferences:
     - Numbers/Date/Time | Date Format: ISO
-    - Register Defaults | Check "Double Line mode".
+    - Register Defaults | Check "Double Line view".
 
 ### (one-time) Save Reports
 
