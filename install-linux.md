@@ -8354,19 +8354,37 @@ MANUAL:
 
 - Update APT cache:
 
-      apt-get update
+      apt update
 
 - Install gcc-12 as a prerequisite for VirtualBox 7.0:
 
       agi gcc-12
 
-- Install virtualbox and extension pack:
+- Install virtualbox:
 
       agi virtualbox-7.0
 
-  **NOTE** virtualbox-ext-pack is apparently an Ubuntu-provided package that
-  should not be mixed with virtualbox installed directly from Oracle's
-  repository.
+  **NOTE** Do not install `virtualbox-ext-pack`; this is apparently an
+  Ubuntu-provided package that should not be mixed with virtualbox installed
+  directly from Oracle's repository.
+
+  **NOTE** If UEFI Secure Boot is enabled, a Machine-Owner Key (MOK) will be
+  automatically generated.  This must be enrolled with the system firmware.
+
+  For this purpose, choose a password when prompted by the dialog box during
+  installation of virtualbox; this password will be used at next boot for
+  confirmation in the "Enroll MOK" and "Change Secure Boot state" menus that
+  show up at next boot.
+  - Use normal login password.
+
+- **Reboot** to allow entry of the password and for the driver to be enabled.
+
+  At the menu during boot:
+
+  - Enroll MOK: Continue
+  - Enroll the key(s)?: Yes
+  - Password: `the chosen password above`
+  - Reboot.
 
 - For information on installing the extension pack:
 
