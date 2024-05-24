@@ -589,6 +589,26 @@ while args:
       systemctl disable apt-daily{,-upgrade}.{service,timer}
       systemctl stop apt-daily{,-upgrade}.{service,timer}
 
+## UBUNTU Server timezone setup
+
+- Ubuntu server defaults to UTC.  Examine current timezone via:
+
+      timedatectl
+
+                     Local time: Fri 2024-05-24 20:04:22 UTC
+                 Universal time: Fri 2024-05-24 20:04:22 UTC
+                       RTC time: Fri 2024-05-24 20:04:22
+                      Time zone: Etc/UTC (UTC, +0000)
+      System clock synchronized: yes
+                    NTP service: active
+                RTC in local TZ: no
+
+MANUAL:
+
+- Use `America-New_York` as the timezone:
+
+      timedatectl set-timezone America/New_York
+
 ## Base Firewall Setup
 
 ### Ubuntu
