@@ -488,6 +488,46 @@ while args:
 
       . ~/.bashrc
 
+## UBUNTU Server networkd timeout
+
+- By default, Ubuntu Server expects that networkd will be in charge of the
+  interfaces.  It sets up `systemd-networkd-wait-online` to wait for at least
+  one of the networkd-managed network interface to come online; if there are no
+  such interfaces defined (which is the default case when using NetworkManager),
+  it waits a full two minutes before giving up with the error:
+
+      Timeout occurred while waiting for network connectivity.
+
+- Demonstrate this at the command line after booting by running the below
+  command that enables debugging:
+
+      SYSTEMD_LOG_LEVEL=debug /usr/lib/systemd/systemd-networkd-wait-online
+
+  with output:
+
+      Found link lo(1)
+      Found link enx9cbf0d005c45(2)
+      Found link wlp1s0(3)
+      enx9cbf0d005c45: link is not managed by networkd.
+      wlp1s0: link is not managed by networkd.
+      lo: link is ignored
+
+- On Ubuntu Desktop installations, the service is disabled, e.g.::
+
+      systemctl status systemd-networkd-wait-online
+
+  with output:
+
+      ○ systemd-networkd-wait-online.service - Wait for Network to be Configured
+           Loaded: loaded (/usr/lib/systemd/system/systemd-networkd-wait-online.service; disabled; preset: enabled)
+           Active: inactive (dead)
+             Docs: man:systemd-networkd-wait-online.service(8)
+
+- MANUAL To match the Ubuntu Desktop configuration, disable the
+  `systemd-networkd-wait-online` service:
+
+      systemctl disable systemd-networkd-wait-online
+
 ## Base Network Customization
 
 - OPTIONAL: Use static IP address:
