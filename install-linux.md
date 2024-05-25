@@ -5020,27 +5020,32 @@ MANUAL:
       chmod -x /etc/update-motd.d/10-help-text
       chmod -x /etc/update-motd.d/50-motd-news
       chmod -x /etc/update-motd.d/90-updates-available
-      rm -f /etc/update-motd.d/50-landscape-sysinfo
+      chmod -x /usr/share/landscape/landscape-sysinfo.wrapper
+
+  Note that `/etc/update-motd.d/50-landscape-sysinfo` is a symlink to
+  `/usr/share/landscape/landscape-sysinfo.wrapper` (counter to the documented
+  philosophy in `man update-motd`:
+
+  > Packages should add scripts directly into `/etc/update-motd.d`, rather than
+  > symlinks to other scripts, such that administrators can modify or remove
+  > these scripts and upgrades will not wipe the local changes.
+
+  Because the post-install script will re-create the symlink at every system
+  update, the underlying wrapper script's execute permission is removed for a
+  permanent change.
 
   Ansible `:role:workstation`:
 
   ```yaml
   - name: Disable execution for motd files
     file:
-      path: "/etc/update-motd.d/{{ item }}"
+      path: "{{ item }}"
       mode: -x
     loop:
-      - "10-help-text"
-      - "50-motd-news"
-      - "90-updates-available"
-    when: ansible_distribution == 'Ubuntu'
-
-  - name: Remove symlinked motd files
-    file:
-      path: "/etc/update-motd.d/{{ item }}"
-      state: absent
-    loop:
-      - "50-landscape-sysinfo"
+      - "/etc/update-motd.d/10-help-text"
+      - "/etc/update-motd.d/50-motd-news"
+      - "/etc/update-motd.d/90-updates-available"
+      - "/usr/share/landscape/landscape-sysinfo.wrapper"
     when: ansible_distribution == 'Ubuntu'
   ```
 
