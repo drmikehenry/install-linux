@@ -3906,7 +3906,7 @@ To bind a shortcut key to an arbitrary command:
         Exec=activate firefox navigator.firefox
   ```
 
-  Ansible `:role:user-plasma`:
+  Ansible `:role:home-user-plasma`:
 
   ```yaml
   - name: Shortcut for 'activate-firefox.desktop'
@@ -3928,8 +3928,19 @@ To bind a shortcut key to an arbitrary command:
       content: |
         [Desktop Entry]
         Type=Application
-        Name=Activate or Launch chrome
-        Exec=activate chrome navigator.chrome
+        Name=Activate or Launch Chrome
+        Exec=activate chrome chrome
+  ```
+
+  Ansible `:role:home-user-plasma`:
+
+  ```yaml
+  - name: Shortcut for 'activate-chrome.desktop'
+    kconfig:
+      file: kglobalshortcutsrc
+      group: "activate-chrome.desktop"
+      key: "_launch"
+      value: "Ctrl+Alt+C,none,Activate or Launch Chrome"
   ```
 
 - `activate-thunderbird` shortcut:
@@ -3956,32 +3967,6 @@ To bind a shortcut key to an arbitrary command:
       group: "activate-thunderbird.desktop"
       key: "_launch"
       value: "Ctrl+Alt+T,none,Activate or Launch Thunderbird"
-  ```
-
-- `activate-chrome` shortcut:
-
-  Ansible `:role:home-user-plasma`:
-
-  ```yaml
-  - name: Create 'activate-chrome.desktop'
-    copy:
-      dest: .local/share/applications/activate-chrome.desktop
-      content: |
-        [Desktop Entry]
-        Type=Application
-        Name=Activate or Launch Chrome
-        Exec=activate chrome chrome
-  ```
-
-  Ansible `:role:home-user-plasma`:
-
-  ```yaml
-  - name: Shortcut for 'activate-chrome.desktop'
-    kconfig:
-      file: kglobalshortcutsrc
-      group: "activate-chrome.desktop"
-      key: "_launch"
-      value: "Ctrl+Alt+C,none,Activate or Launch Chrome"
   ```
 
 - `activate-nvim0` shortcut:
@@ -4022,18 +4007,7 @@ To bind a shortcut key to an arbitrary command:
         [Desktop Entry]
         Type=Application
         Name=Activate or Launch Nvim)
-        Exec=sh -c 'activate "nvim-qt --name NVIM) -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM)" "NVIM).nvim-qt"'
-  ```
-
-  Ansible `:role:user-plasma`:
-
-  ```yaml
-  - name: Shortcut for 'activate-nvim).desktop'
-    kconfig:
-      file: kglobalshortcutsrc
-      group: "activate-nvim).desktop"
-      key: "_launch"
-      value: "Ctrl+Alt+),none,Activate or Launch Nvim)"
+        Exec=sh -c 'wmctrl -a NVIM1 || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM1 &'
   ```
 
 - `activate-gvim0` shortcut:
@@ -4049,17 +4023,6 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Gvim0
         Exec=activate "gvim --servername GVIM0 --name GVIM0" "GVIM0.Gvim"
-  ```
-
-  Ansible `:role:user-plasma`:
-
-  ```yaml
-  - name: Shortcut for 'activate-gvim0.desktop'
-    kconfig:
-      file: kglobalshortcutsrc
-      group: "activate-gvim0.desktop"
-      key: "_launch"
-      value: "Ctrl+Alt+9,none,Activate or Launch Gvim0"
   ```
 
 - `activate-gvim)` shortcut:
@@ -4085,7 +4048,7 @@ To bind a shortcut key to an arbitrary command:
       file: kglobalshortcutsrc
       group: "activate-gvim).desktop"
       key: "_launch"
-      value: "Ctrl+Alt+(,none,Activate or Launch Gvim)"
+      value: "Ctrl+Alt+),none,Activate or Launch Gvim)"
   ```
 
 - `activate-gvim-email` shortcut:

@@ -224,20 +224,14 @@
       Type=Application
       Name=Activate or Launch Firefox
       Exec=activate firefox navigator.firefox
-- name: Shortcut for 'activate-firefox.desktop'
-  kconfig:
-    file: kglobalshortcutsrc
-    group: "activate-firefox.desktop"
-    key: "_launch"
-    value: "Ctrl+Alt+F,none,Activate or Launch Firefox"
 - name: Create 'activate-chrome.desktop'
   copy:
     dest: .local/share/applications/activate-chrome.desktop
     content: |
       [Desktop Entry]
       Type=Application
-      Name=Activate or Launch chrome
-      Exec=activate chrome navigator.chrome
+      Name=Activate or Launch Chrome
+      Exec=activate chrome chrome
 - name: Create 'activate-nvim0.desktop'
   copy:
     dest: .local/share/applications/activate-nvim0.desktop
@@ -259,13 +253,7 @@
       [Desktop Entry]
       Type=Application
       Name=Activate or Launch Nvim)
-      Exec=sh -c 'activate "nvim-qt --name NVIM) -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM)" "NVIM).nvim-qt"'
-- name: Shortcut for 'activate-nvim).desktop'
-  kconfig:
-    file: kglobalshortcutsrc
-    group: "activate-nvim).desktop"
-    key: "_launch"
-    value: "Ctrl+Alt+),none,Activate or Launch Nvim)"
+      Exec=sh -c 'wmctrl -a NVIM1 || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM1 &'
 - name: Create 'activate-gvim0.desktop'
   copy:
     dest: .local/share/applications/activate-gvim0.desktop
@@ -274,12 +262,6 @@
       Type=Application
       Name=Activate or Launch Gvim0
       Exec=activate "gvim --servername GVIM0 --name GVIM0" "GVIM0.Gvim"
-- name: Shortcut for 'activate-gvim0.desktop'
-  kconfig:
-    file: kglobalshortcutsrc
-    group: "activate-gvim0.desktop"
-    key: "_launch"
-    value: "Ctrl+Alt+9,none,Activate or Launch Gvim0"
 - name: Create 'activate-gvim).desktop'
   copy:
     dest: .local/share/applications/activate-gvim).desktop
@@ -293,7 +275,7 @@
     file: kglobalshortcutsrc
     group: "activate-gvim).desktop"
     key: "_launch"
-    value: "Ctrl+Alt+(,none,Activate or Launch Gvim)"
+    value: "Ctrl+Alt+),none,Activate or Launch Gvim)"
 - name: Shortcut for Launch Konsole
   kconfig:
     file: kglobalshortcutsrc
