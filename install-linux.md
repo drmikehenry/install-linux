@@ -3865,7 +3865,7 @@ To bind a shortcut key to an arbitrary command:
       state: directory
   ```
 
-- `copysel` shortcut: Meta+Ctrl+C
+- `copysel` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -3878,6 +3878,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=copysel
         Exec=copysel
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'copysel.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -3886,7 +3891,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Meta+Ctrl+C,none,Copy Primary X Selection to Clipboard"
   ```
 
-- `activate-firefox` shortcut: Ctrl+Alt+F
+- `activate-firefox` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -3899,6 +3904,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Firefox
         Exec=activate firefox navigator.firefox
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-firefox.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -3907,7 +3917,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+F,none,Activate or Launch Firefox"
   ```
 
-- `activate-chrome` shortcut: (alternate for Ctrl+Alt+F)
+- `activate-chrome` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -3922,7 +3932,7 @@ To bind a shortcut key to an arbitrary command:
         Exec=activate chrome navigator.chrome
   ```
 
-- `activate-thunderbird` shortcut: Ctrl+Alt+T
+- `activate-thunderbird` shortcut:
 
   Ansible `:role:home-user-plasma`:
 
@@ -3935,6 +3945,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Thunderbird
         Exec=activate thunderbird Mail.Thunderbird
+  ```
+
+  Ansible `:role:home-user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-thunderbird.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -3943,7 +3958,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+T,none,Activate or Launch Thunderbird"
   ```
 
-- `activate-chrome` shortcut: Ctrl+Alt+C
+- `activate-chrome` shortcut:
 
   Ansible `:role:home-user-plasma`:
 
@@ -3956,6 +3971,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Chrome
         Exec=activate chrome chrome
+  ```
+
+  Ansible `:role:home-user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-chrome.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -3964,7 +3984,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+C,none,Activate or Launch Chrome"
   ```
 
-- `activate-nvim0` shortcut: Ctrl+Alt+0
+- `activate-nvim0` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -3977,6 +3997,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Nvim0
         Exec=sh -c 'wmctrl -a NVIM0 || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM0 &'
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-nvim0.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -3985,7 +4010,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+0,none,Activate or Launch Nvim0"
   ```
 
-- `activate-nvim)` shortcut: Ctrl+Alt+)
+- `activate-nvim)` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -3998,6 +4023,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Nvim)
         Exec=sh -c 'activate "nvim-qt --name NVIM) -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM)" "NVIM).nvim-qt"'
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-nvim).desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -4006,7 +4036,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+),none,Activate or Launch Nvim)"
   ```
 
-- `activate-gvim0` shortcut: Ctrl+Alt+9
+- `activate-gvim0` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -4019,6 +4049,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Gvim0
         Exec=activate "gvim --servername GVIM0 --name GVIM0" "GVIM0.Gvim"
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-gvim0.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -4027,7 +4062,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+9,none,Activate or Launch Gvim0"
   ```
 
-- `activate-gvim)` shortcut: Ctrl+Alt+(
+- `activate-gvim)` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -4040,6 +4075,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Gvim)
         Exec=activate "gvim --servername GVIM) --name GVIM)" "GVIM).Gvim"
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-gvim).desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -4048,7 +4088,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+(,none,Activate or Launch Gvim)"
   ```
 
-- `activate-gvim-email` shortcut: Ctrl+Alt+o
+- `activate-gvim-email` shortcut:
 
   Ansible `:role:home-user-plasma`:
 
@@ -4061,6 +4101,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Gvim-Email
         Exec=activate "gvim --servername GVIMo --name GVIMo tmp/email.eml" "GVIMo.Gvim"
+  ```
+
+  Ansible `:role:home-user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-gvim-email.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -4069,7 +4114,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+o,none,Activate or Launch Gvim-Email"
   ```
 
-- Launch Konsole shortcut: Ctrl+Alt+4
+- Launch Konsole shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -4082,7 +4127,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+4,none,Launch Konsole"
   ```
 
-- `activate-konsole1` shortcut: Ctrl+Alt+1
+- `activate-konsole1` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -4095,6 +4140,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole1
         Exec=activate "konsole --name konsole-1" "konsole-1.Konsole"
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-konsole1.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -4103,7 +4153,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+1,none,Activate or Launch Konsole1"
   ```
 
-- `activate-konsole2` shortcut: Ctrl+Alt+2
+- `activate-konsole2` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -4116,6 +4166,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole2
         Exec=activate "konsole --name konsole-2" "konsole-2.Konsole"
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-konsole2.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -4124,7 +4179,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+2,none,Activate or Launch Konsole2"
   ```
 
-- `activate-konsole3` shortcut: Ctrl+Alt+3
+- `activate-konsole3` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -4137,6 +4192,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole3
         Exec=activate "konsole --name konsole-3" "konsole-3.Konsole"
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-konsole3.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -4145,7 +4205,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+3,none,Activate or Launch Konsole3"
   ```
 
-- `activate-konsole8` shortcut: Ctrl+Alt+8
+- `activate-konsole8` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -4158,6 +4218,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole8
         Exec=activate "konsole --name konsole-8" "konsole-8.Konsole"
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-konsole8.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -4166,7 +4231,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+8,none,Activate or Launch Konsole8"
   ```
 
-- `activate-konsole9` shortcut: Ctrl+Alt+9
+- `activate-konsole9` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -4179,6 +4244,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole9
         Exec=activate "konsole --name konsole-9" "konsole-9.Konsole"
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-konsole9.desktop'
     kconfig:
       file: kglobalshortcutsrc
@@ -4187,7 +4257,7 @@ To bind a shortcut key to an arbitrary command:
       value: "Ctrl+Alt+9,none,Activate or Launch Konsole9"
   ```
 
-- `activate-speedcrunch` shortcut: Ctrl+Alt+=
+- `activate-speedcrunch` shortcut:
 
   Ansible `:role:user-plasma`:
 
@@ -4200,6 +4270,11 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Speedcrunch
         Exec=activate speedcrunch speedcrunch
+  ```
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
   - name: Shortcut for 'activate-speedcrunch.desktop'
     kconfig:
       file: kglobalshortcutsrc
