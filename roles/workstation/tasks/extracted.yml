@@ -75,10 +75,6 @@
   command: pipxg install pyupgrade
   args:
     creates: /usr/local/bin/pyupgrade
-- name: pipxg Install sphinx
-  command: pipxg install sphinx
-  args:
-    creates: /usr/local/bin/sphinx
 - name: pipxg Install rstcheck
   command: pipxg install rstcheck
   args:

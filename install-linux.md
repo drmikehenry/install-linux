@@ -8061,9 +8061,11 @@ necessary to install `rust-analyzer` separately.  Instead, use:
 
 ## reStructuredText
 
-### docutils
+### sphinx
 
-- Install `:role:workstation`:
+AUTOMATED:
+
+- Install:
 
       pipxg install sphinx
 
@@ -8071,7 +8073,7 @@ necessary to install `rust-analyzer` separately.  Instead, use:
 
       sphinx-quickstart
 
-### sphinx with pygments
+### docutils with pygments
 
 AUTOMATED:
 
