@@ -4722,6 +4722,11 @@ In Konsole, choose Settings | Configure Konsole, then continue.
   - Uncheck "Main Toolbar".
   - Uncheck "Session Toolbar".
 
+- MANUAL: Move Tab Bar back to the bottom:
+
+  - Settings | Configure Konsole | Tab Bar / Splitters | Appearance:
+    - Position: "Below terminal area"
+
 ## XTerm
 
 - References:
