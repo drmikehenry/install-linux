@@ -2288,7 +2288,7 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
         mkdir -p ~/.config/plasma-workspace/env
         echod -o ~/.config/plasma-workspace/env/ssh-agent-startup.sh '
-          [ -n "$SSH_AGENT_PID" ] || eval "$(ssh-agent -s)"
+          [ -n "$SSH_AUTH_SOCK" ] || eval "$(ssh-agent -s)"
         '
 
   - HOMEGIT Create script to enumerate SSH identities:
