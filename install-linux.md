@@ -4016,7 +4016,7 @@ To bind a shortcut key to an arbitrary command:
         [Desktop Entry]
         Type=Application
         Name=Activate or Launch Nvim)
-        Exec=sh -c 'wmctrl -a NVIM1 || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM1 &'
+        Exec=sh -c 'wmctrl -a NVIM) || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM) &'
   ```
 
 - `activate-gvim0` shortcut:

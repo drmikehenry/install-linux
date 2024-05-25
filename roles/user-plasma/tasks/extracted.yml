@@ -253,7 +253,7 @@
       [Desktop Entry]
       Type=Application
       Name=Activate or Launch Nvim)
-      Exec=sh -c 'wmctrl -a NVIM1 || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM1 &'
+      Exec=sh -c 'wmctrl -a NVIM) || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM) &'
 - name: Create 'activate-gvim0.desktop'
   copy:
     dest: .local/share/applications/activate-gvim0.desktop
