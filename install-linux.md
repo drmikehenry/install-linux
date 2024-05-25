@@ -3976,7 +3976,7 @@ To bind a shortcut key to an arbitrary command:
         [Desktop Entry]
         Type=Application
         Name=Activate or Launch Nvim0
-        Exec=sh -c 'activate "nvim-qt --name NVIM0 -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM0" "NVIM0.nvim-qt"'
+        Exec=sh -c 'wmctrl -a NVIM0 || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM0 &'
   - name: Shortcut for 'activate-nvim0.desktop'
     kconfig:
       file: kglobalshortcutsrc
