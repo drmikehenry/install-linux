@@ -8536,6 +8536,17 @@ MANUAL:
 
 MANUAL:
 
+- VirtualBox after 7.0.14 has a buggy OHCI driver that causes Windows VMs to be
+  unable to save state or take snapshots:
+  - <https://forums.virtualbox.org/viewtopic.php?t=111508>
+  - <https://www.virtualbox.org/ticket/22059>
+  
+- The VirtualBox ticket (22059) above gives a work-around of using USB 3.0.
+  This does appear to work.  No testing on Windows 8.1 yet to see if USB 3.0 is
+  OK.
+
+MANUAL:
+
 - Add user(s) to vboxusers group:
 
       sudo gpasswd -a mike vboxusers
