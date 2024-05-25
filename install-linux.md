@@ -2307,6 +2307,8 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
 ## cron
 
+MANUAL:
+
 - Adjust root's crontab as follows:
 
       vim /etc/crontab
