@@ -78,4 +78,4 @@
     pipxg install docutils &&
       pipxg inject docutils pygments
   args:
-    creates: /usr/local/bin/rst2html.py
+    creates: /usr/local/bin/rst2html

@@ -8082,7 +8082,7 @@ AUTOMATED:
 
 - Use:
 
-      rst2html.py
+      rst2html
 
 ### rstcheck Linter
 
