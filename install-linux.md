@@ -1314,6 +1314,13 @@ AUTOMATED:
   Note: the `config` file is not in homegit (yet) because of the need for proper
   permissions on `~/.ssh`.
 
+- MANUAL Store ssh key in ssh-agent on first use:
+
+    echod -o ~/.ssh/config.d/10-add-keys-to-agent.conf '
+      AddKeysToAgent yes
+    '
+    chmod go-w ~/.ssh/config.d/10-add-keys-to-agent.conf
+
 ### SSH Server Setup
 
 MANUAL:
