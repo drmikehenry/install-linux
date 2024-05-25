@@ -2550,13 +2550,13 @@ entire profile.
 
   See <https://kb.mozillazine.org/Default_browser> for details.
 
-- UBUNTU Setup `x-www-browser` alternative to be Firefox:
+- MANUAL UBUNTU Setup `x-www-browser` alternative to be Firefox:
 
       sudo update-alternatives --config x-www-browser
 
-- To configure Firefox to be the default browser using the command line (which
-  shouldn't be necessary if it was already done via the GUI, but it seems to be
-  needed anyway in some cases):
+- MANUAL Configure Firefox to be the default browser using the command line.
+  (This shouldn't be necessary if it was already done via the GUI, but it seems
+  to be needed anyway in some cases.):
 
       xdg-settings set default-web-browser firefox.desktop
 
