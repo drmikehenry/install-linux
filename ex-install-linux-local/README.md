@@ -142,3 +142,10 @@ See `install-linux/README.md` for overview.
         -u $ANSIBLE_USER \
         -l $ANSIBLE_HOST \
         user-plasma.yml
+
+## Install Linux manual steps
+
+Proceed with any manual instructions in:
+
+- `install-linux/install-linux.md`
+- `install-linux-local/install-linux-local.md`
