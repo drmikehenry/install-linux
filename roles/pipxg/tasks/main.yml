@@ -63,10 +63,13 @@
 
     # Do not install ``all`` options, because that installs Pylint.
 - name: Install python-language-server
-  command: pipxg install
-    python-language-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]
+  script: |
+      pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]' &&
+        pipx inject python-lsp-server python-lsp-black &&
+        pipx inject python-lsp-server pylsp-mypy &&
+        pipx inject python-lsp-server python-lsp-ruff
   args:
-    creates: /usr/local/bin/pyls
+    creates: /usr/local/bin/pylsp
 
 - name: Install sphinx
   command: pipxg install sphinx

@@ -7689,13 +7689,10 @@ AUTOMATED:
 
 - Install:
 
-      pipxg install 'python-language-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]'
-
-  Note: Not recommended yet; `pyls-mypy` doesn't seem to handle local imports
-  correctly:
-
-      # Not recommended yet:
-      # pipxg inject python-language-server pyls-mypy
+      pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]'
+      pipx inject python-lsp-server python-lsp-black
+      pipx inject python-lsp-server pylsp-mypy
+      pipx inject python-lsp-server python-lsp-ruff
 
 ### Python Hatch
 
