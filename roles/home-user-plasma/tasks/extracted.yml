@@ -19,6 +19,7 @@
       Type=Application
       Name=Activate or Launch Thunderbird
       Exec=activate thunderbird Mail.Thunderbird
+      StartupNotify=false
 - name: Shortcut for 'activate-thunderbird.desktop'
   kconfig:
     file: kglobalshortcutsrc
@@ -33,6 +34,7 @@
       Type=Application
       Name=Activate or Launch Gvim-Email
       Exec=activate "gvim --servername GVIMo --name GVIMo tmp/email.eml" "GVIMo.Gvim"
+      StartupNotify=false
 - name: Shortcut for 'activate-gvim-email.desktop'
   kconfig:
     file: kglobalshortcutsrc

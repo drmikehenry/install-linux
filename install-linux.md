@@ -3881,6 +3881,7 @@ To bind a shortcut key to an arbitrary command:
       Type=Application
       Name=hello
       Exec=echo "hello, this is Mike!"
+      StartupNotify=false
 
   More details on the `Exec=` key are found at:
   <https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables>
@@ -3927,6 +3928,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=copysel
         Exec=copysel
+        StartupNotify=false
   ```
 
   Ansible `:role:user-plasma`:
@@ -3953,6 +3955,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Firefox
         Exec=activate firefox navigator.firefox
+        StartupNotify=false
   ```
 
   Ansible `:role:home-user-plasma`:
@@ -3979,6 +3982,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Chrome
         Exec=activate chrome chrome
+        StartupNotify=false
   ```
 
   Ansible `:role:home-user-plasma`:
@@ -4005,6 +4009,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Thunderbird
         Exec=activate thunderbird Mail.Thunderbird
+        StartupNotify=false
   ```
 
   Ansible `:role:home-user-plasma`:
@@ -4031,6 +4036,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Nvim0
         Exec=sh -c 'wmctrl -a NVIM0 || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM0 &'
+        StartupNotify=false
   ```
 
   Ansible `:role:user-plasma`:
@@ -4057,6 +4063,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Nvim)
         Exec=sh -c 'wmctrl -a NVIM) || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM) &'
+        StartupNotify=false
   ```
 
 - `activate-gvim0` shortcut:
@@ -4072,6 +4079,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Gvim0
         Exec=activate "gvim --servername GVIM0 --name GVIM0" "GVIM0.Gvim"
+        StartupNotify=false
   ```
 
 - `activate-gvim)` shortcut:
@@ -4087,6 +4095,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Gvim)
         Exec=activate "gvim --servername GVIM) --name GVIM)" "GVIM).Gvim"
+        StartupNotify=false
   ```
 
   Ansible `:role:user-plasma`:
@@ -4113,6 +4122,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Gvim-Email
         Exec=activate "gvim --servername GVIMo --name GVIMo tmp/email.eml" "GVIMo.Gvim"
+        StartupNotify=false
   ```
 
   Ansible `:role:home-user-plasma`:
@@ -4152,6 +4162,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole1
         Exec=activate "konsole --name konsole-1" "konsole-1.Konsole"
+        StartupNotify=false
   ```
 
   Ansible `:role:user-plasma`:
@@ -4178,6 +4189,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole2
         Exec=activate "konsole --name konsole-2" "konsole-2.Konsole"
+        StartupNotify=false
   ```
 
   Ansible `:role:user-plasma`:
@@ -4204,6 +4216,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole3
         Exec=activate "konsole --name konsole-3" "konsole-3.Konsole"
+        StartupNotify=false
   ```
 
   Ansible `:role:user-plasma`:
@@ -4230,6 +4243,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole8
         Exec=activate "konsole --name konsole-8" "konsole-8.Konsole"
+        StartupNotify=false
   ```
 
   Ansible `:role:user-plasma`:
@@ -4256,6 +4270,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Konsole9
         Exec=activate "konsole --name konsole-9" "konsole-9.Konsole"
+        StartupNotify=false
   ```
 
   Ansible `:role:user-plasma`:
@@ -4282,6 +4297,7 @@ To bind a shortcut key to an arbitrary command:
         Type=Application
         Name=Activate or Launch Speedcrunch
         Exec=activate speedcrunch speedcrunch
+        StartupNotify=false
   ```
 
   Ansible `:role:user-plasma`:

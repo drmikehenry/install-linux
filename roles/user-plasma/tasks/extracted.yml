@@ -210,6 +210,7 @@
       Type=Application
       Name=copysel
       Exec=copysel
+      StartupNotify=false
 - name: Shortcut for 'copysel.desktop'
   kconfig:
     file: kglobalshortcutsrc
@@ -224,6 +225,7 @@
       Type=Application
       Name=Activate or Launch Firefox
       Exec=activate firefox navigator.firefox
+      StartupNotify=false
 - name: Create 'activate-chrome.desktop'
   copy:
     dest: .local/share/applications/activate-chrome.desktop
@@ -232,6 +234,7 @@
       Type=Application
       Name=Activate or Launch Chrome
       Exec=activate chrome chrome
+      StartupNotify=false
 - name: Create 'activate-nvim0.desktop'
   copy:
     dest: .local/share/applications/activate-nvim0.desktop
@@ -240,6 +243,7 @@
       Type=Application
       Name=Activate or Launch Nvim0
       Exec=sh -c 'wmctrl -a NVIM0 || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM0 &'
+      StartupNotify=false
 - name: Shortcut for 'activate-nvim0.desktop'
   kconfig:
     file: kglobalshortcutsrc
@@ -254,6 +258,7 @@
       Type=Application
       Name=Activate or Launch Nvim)
       Exec=sh -c 'wmctrl -a NVIM) || nvim-qt -- --listen ${XDG_RUNTIME_DIR:-/tmp/user-$(id -u)}/NVIM) &'
+      StartupNotify=false
 - name: Create 'activate-gvim0.desktop'
   copy:
     dest: .local/share/applications/activate-gvim0.desktop
@@ -262,6 +267,7 @@
       Type=Application
       Name=Activate or Launch Gvim0
       Exec=activate "gvim --servername GVIM0 --name GVIM0" "GVIM0.Gvim"
+      StartupNotify=false
 - name: Create 'activate-gvim).desktop'
   copy:
     dest: .local/share/applications/activate-gvim).desktop
@@ -270,6 +276,7 @@
       Type=Application
       Name=Activate or Launch Gvim)
       Exec=activate "gvim --servername GVIM) --name GVIM)" "GVIM).Gvim"
+      StartupNotify=false
 - name: Shortcut for 'activate-gvim).desktop'
   kconfig:
     file: kglobalshortcutsrc
@@ -290,6 +297,7 @@
       Type=Application
       Name=Activate or Launch Konsole1
       Exec=activate "konsole --name konsole-1" "konsole-1.Konsole"
+      StartupNotify=false
 - name: Shortcut for 'activate-konsole1.desktop'
   kconfig:
     file: kglobalshortcutsrc
@@ -304,6 +312,7 @@
       Type=Application
       Name=Activate or Launch Konsole2
       Exec=activate "konsole --name konsole-2" "konsole-2.Konsole"
+      StartupNotify=false
 - name: Shortcut for 'activate-konsole2.desktop'
   kconfig:
     file: kglobalshortcutsrc
@@ -318,6 +327,7 @@
       Type=Application
       Name=Activate or Launch Konsole3
       Exec=activate "konsole --name konsole-3" "konsole-3.Konsole"
+      StartupNotify=false
 - name: Shortcut for 'activate-konsole3.desktop'
   kconfig:
     file: kglobalshortcutsrc
@@ -332,6 +342,7 @@
       Type=Application
       Name=Activate or Launch Konsole8
       Exec=activate "konsole --name konsole-8" "konsole-8.Konsole"
+      StartupNotify=false
 - name: Shortcut for 'activate-konsole8.desktop'
   kconfig:
     file: kglobalshortcutsrc
@@ -346,6 +357,7 @@
       Type=Application
       Name=Activate or Launch Konsole9
       Exec=activate "konsole --name konsole-9" "konsole-9.Konsole"
+      StartupNotify=false
 - name: Shortcut for 'activate-konsole9.desktop'
   kconfig:
     file: kglobalshortcutsrc
@@ -360,6 +372,7 @@
       Type=Application
       Name=Activate or Launch Speedcrunch
       Exec=activate speedcrunch speedcrunch
+      StartupNotify=false
 - name: Shortcut for 'activate-speedcrunch.desktop'
   kconfig:
     file: kglobalshortcutsrc
