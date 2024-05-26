@@ -6085,6 +6085,15 @@ MANUAL:
 
 ## Search Tools
 
+### fd
+
+The `fd` command (https://github.com/sharkdp/fd) is a fast alternative to the
+Unix `find` command.
+
+- Install `:role:workstation`:
+
+      agi fd-find
+
 ### findx/ffg
 
 - Install `:role:workstation`:
@@ -8580,7 +8589,7 @@ MANUAL:
   unable to save state or take snapshots:
   - <https://forums.virtualbox.org/viewtopic.php?t=111508>
   - <https://www.virtualbox.org/ticket/22059>
-  
+
 - The VirtualBox ticket (22059) above gives a work-around of using USB 3.0.
   This does appear to work.  No testing on Windows 8.1 yet to see if USB 3.0 is
   OK.

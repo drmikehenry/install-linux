@@ -28,6 +28,7 @@
     - doxygen-doc
     - evince
     - exiftool
+    - fd-find
     - fonts-dejavu
     - fonts-hack-ttf
     - fonts-inconsolata

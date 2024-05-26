@@ -32,6 +32,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   doxygen-doc \
   evince \
   exiftool \
+  fd-find \
   ffmpeg \
   fonts-dejavu \
   fonts-hack-ttf \
