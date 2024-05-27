@@ -7706,9 +7706,9 @@ AUTOMATED:
 - Install:
 
       pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]'
-      pipx inject python-lsp-server python-lsp-black
-      pipx inject python-lsp-server pylsp-mypy
-      pipx inject python-lsp-server python-lsp-ruff
+      pipxg inject python-lsp-server python-lsp-black
+      pipxg inject python-lsp-server pylsp-mypy
+      pipxg inject python-lsp-server python-lsp-ruff
 
 ### Python Hatch
 
