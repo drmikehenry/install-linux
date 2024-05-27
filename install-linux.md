@@ -7761,12 +7761,44 @@ MANUAL:
 
 - Also see instructions in <https://github.com/drmikehenry/pythonsource>.
 
+- From <https://github.com/pyenv/pyenv/wiki#suggested-build-environment>, Ubuntu
+  build dependencies are:
+
+      build-essential
+      libssl-dev
+      zlib1g-dev
+      libbz2-dev
+      libreadline-dev
+      libsqlite3-dev
+      curl
+      git
+      libncursesw5-dev
+      xz-utils
+      tk-dev
+      libxml2-dev
+      libxmlsec1-dev
+      libffi-dev
+      liblzma-dev
+
 - Install build dependencies, e.g.:
 
       sudo apt-get build-dep -y python3.12
 
       # Optional for Python2 support:
       sudo apt-get build-dep -y python2.7
+
+  Also install build dependencies for `python3-tk` for tkinter support (this is
+  primarily for `tk-dev`):
+
+      sudo apt-get build-dep -y python3-tk
+
+  Additionally, must install the below libraries:
+
+      sudo apt-get install -y libncursesw5-dev libxmlsec1-dev
+
+  On Ubuntu 24.04, `libncursesw5-dev` is a virtual package pointing to
+  `libncursesw5-dev` (a.k.a. `libncursesw6-dev`).  This is insufficient to
+  install early Python 3.6.x versions, but it works for Python 3.6.15.
 
 - Clone repository to become `~/.pyenv`:
 
