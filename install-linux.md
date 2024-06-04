@@ -4792,6 +4792,10 @@ In Konsole, choose Settings | Configure Konsole, then continue.
 
 ## XTerm
 
+- Install `:role:workstation`:
+
+      agi xterm
+
 - References:
 
   - <https://unix.stackexchange.com/questions/219370/larger-xterm-fonts-on-hidpi-displays>
