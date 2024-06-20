@@ -2030,8 +2030,6 @@ MANUAL:
 
 ## Update grub
 
-MANUAL:
-
 - Update grub configuration to display boot-time messages and append any
   hardware-specific options.
 
@@ -2045,6 +2043,31 @@ MANUAL:
   Then update grub to regenerate `/boot/grub/grub.cfg` and the initramfs:
 
       update-grub
+
+  Ansible `:role:base`:
+
+  ```yaml
+  - name: Do not hide Grub
+    lineinfile:
+      dest: /etc/default/grub
+      regexp: '^GRUB_TIMEOUT_STYLE'
+      line: '#GRUB_TIMEOUT_STYLE'
+    register: ubuntu_grub_configuration1
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Adjust Grub timeout
+    lineinfile:
+      dest: /etc/default/grub
+      regexp: '^GRUB_TIMEOUT=.*'
+      line: 'GRUB_TIMEOUT=2'
+    register: ubuntu_grub_configuration2
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Update grub for new configuration
+    command:
+      update-grub
+    when: ubuntu_grub_configuration1 is changed or ubuntu_grub_configuration2 is changed
+  ```
 
 - FEDORA CENTOS: Update grub kernel command line options:
 
