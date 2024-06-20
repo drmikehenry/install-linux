@@ -2096,16 +2096,16 @@ MANUAL:
 - `https://static.rust-lang.org` is the default server for Rust toolchains and
   tools like `rustup`.
 
-- AUTOMATED Acquire `rustup`:
+- AUTOMATED (`user-rust`) Acquire `rustup`:
 
       curl -o /tmp/rustup-init \
         https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
 
-- AUTOMATED Make `rustup-init` executable:
+- AUTOMATED (`user-rust`) Make `rustup-init` executable:
 
       chmod +x /tmp/rustup-init
 
-- AUTOMATED Invoke `rustup-init` to install `rustup`:
+- AUTOMATED (`user-rust`) Invoke `rustup-init` to install `rustup`:
 
       /tmp/rustup-init -q -y --no-modify-path
 
@@ -2128,7 +2128,7 @@ MANUAL:
       rust-lldb
       rustup
 
-- MANUAL Install additional components if desired:
+- AUTOMATED (`user-rust`) Install additional components if desired:
 
       rustup component add rust-src rust-analyzer
 
@@ -2136,7 +2136,7 @@ MANUAL:
 
       rustup component list
 
-- MANUAL Install nightly toolchain for a given date:
+- Install nightly toolchain for a given date:
 
       rustup install nightly-2022-05-30
 
@@ -2162,7 +2162,7 @@ MANUAL:
 
         agi musl-dev musl-tools
 
-  - MANUAL: Add the target:
+  - AUTOMATED (`user-rust`) Add the target:
 
         rustup target add x86_64-unknown-linux-musl
 
@@ -2176,7 +2176,7 @@ MANUAL:
 
         agi gcc-mingw-w64-x86-64
 
-  - MANUAL: Add the target:
+  - AUTOMATED (`user-rust`) Add the target:
 
         rustup target add x86_64-pc-windows-gnu
 

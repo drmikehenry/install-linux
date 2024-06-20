@@ -16,3 +16,18 @@
       /tmp/rustup-init -q -y --no-modify-path
   args:
     creates: "{{ ansible_user_registered.home }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo"
+
+- name: Install additional rustup components
+  shell: |
+    "{{ ansible_user_registered.home }}/.cargo/bin/rustup" component add rust-src rust-analyzer
+  args:
+    creates: "{{ ansible_user_registered.home }}/.cargo/bin/rust-analyzer"
+
+- name: "Install rustup targets"
+  shell: |
+    "{{ ansible_user_registered.home }}/.cargo/bin/rustup" target add "{{ item }}"
+  args:
+    creates: "{{ ansible_user_registered.home }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/{{ item }}"
+  loop:
+    - x86_64-unknown-linux-musl
+    - x86_64-pc-windows-gnu
