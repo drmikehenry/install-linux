@@ -2269,6 +2269,7 @@ MANUAL:
 - MANUAL Run KeePassXC, then setup via Tools | Settings:
 
   - General | uncheck "Load previous databases on startup".
+  - Security | Timeouts | Clear clipboard after: 60 sec
 
 - Use `~/bin2/kee` script to maintain mirror/backup.
 
