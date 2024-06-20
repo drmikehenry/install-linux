@@ -680,12 +680,22 @@ AUTOMATED (install-linux-local):
 
 ### Block multicast DNS of UDP 5355
 
-MANUAL:
-
 UDP port 5355 is for multicast DNS for Windows.  Windows machines leave lots of
 noise in the logs.  To fix this, block the port explicitly:
 
     ufw deny 5355/udp
+
+  Ansible `:role:base`:
+
+  ```yaml
+  - name: ufw deny 5355/udp (multicast DNS for Windows)
+    ufw:
+      rule: deny
+      proto: udp
+      port: '5355'
+      comment: Block Windows multicast DNS
+    when: ansible_distribution == 'Ubuntu'
+  ```
 
 ## Static Hosts
 

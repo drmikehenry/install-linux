@@ -5,6 +5,13 @@
     state: stopped
     enabled: no
   when: ansible_distribution == 'Ubuntu'
+- name: ufw deny 5355/udp (multicast DNS for Windows)
+  ufw:
+    rule: deny
+    proto: udp
+    port: '5355'
+    comment: Block Windows multicast DNS
+  when: ansible_distribution == 'Ubuntu'
 - name: Enable Ubuntu 24+ source repositories
   lineinfile:
     dest: /etc/apt/sources.list.d/ubuntu.sources
