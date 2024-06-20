@@ -1380,13 +1380,27 @@ AUTOMATED:
         mode: "u=rw,go=r"
     ```
 
-  - MANUAL: Disable X11 forwarding for Github:
+  - Disable X11 forwarding for Github
+    `:extract-echod:roles/base/files/ssh_config.d-10-github.conf`:
 
         echod -o /etc/ssh/ssh_config.d/10-github.conf '
           Host github.com
               ForwardX11 no
         '
+
+    Adjust permissions:
+
         chmod go-w /etc/ssh/ssh_config.d/10-github.conf
+
+    Ansible `:role:base`:
+
+    ```yaml
+    - name: Disable X11 forwarding for Github
+      copy:
+        dest: /etc/ssh/ssh_config.d/10-github.conf
+        src: ssh_config.d-10-github.conf
+        mode: "u=rw,go=r"
+    ```
 
   - Example: setup a host-specific configuration file:
 

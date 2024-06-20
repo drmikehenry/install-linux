@@ -29,3 +29,8 @@
     dest: /etc/ssh/ssh_config.d/90-general.conf
     src: ssh_config.d-90-general.conf
     mode: "u=rw,go=r"
+- name: Disable X11 forwarding for Github
+  copy:
+    dest: /etc/ssh/ssh_config.d/10-github.conf
+    src: ssh_config.d-10-github.conf
+    mode: "u=rw,go=r"
