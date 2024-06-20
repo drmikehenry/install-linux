@@ -1,4 +1,10 @@
 ---
+- name: Disable systemd-networkd-wait-online
+  service:
+    name: systemd-networkd-wait-online
+    state: stopped
+    enabled: no
+  when: ansible_distribution == 'Ubuntu'
 - name: Enable Ubuntu 24+ source repositories
   lineinfile:
     dest: /etc/apt/sources.list.d/ubuntu.sources

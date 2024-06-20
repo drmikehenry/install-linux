@@ -523,10 +523,21 @@ while args:
            Active: inactive (dead)
              Docs: man:systemd-networkd-wait-online.service(8)
 
-- MANUAL To match the Ubuntu Desktop configuration, disable the
+- To match the Ubuntu Desktop configuration, disable the
   `systemd-networkd-wait-online` service:
 
       systemctl disable systemd-networkd-wait-online
+
+  Ansible `:role:base`:
+
+  ```yaml
+  - name: Disable systemd-networkd-wait-online
+    service:
+      name: systemd-networkd-wait-online
+      state: stopped
+      enabled: no
+    when: ansible_distribution == 'Ubuntu'
+  ```
 
 ## Base Network Customization
 
