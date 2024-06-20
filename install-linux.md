@@ -1003,12 +1003,13 @@ in `/home`.
       dest: /etc/apt/sources.list.d/ubuntu.sources
       regexp: '^Types: deb$'
       line: 'Types: deb deb-src'
+    register: ubuntu_sources
     when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 24
 
   - name: Update APT cache for deb-src
     apt:
       update_cache: yes
-    when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 24
+    when: ubuntu_sources is changed
   ```
 
 ### UBUNTU Source Repositories (before 24.04)
