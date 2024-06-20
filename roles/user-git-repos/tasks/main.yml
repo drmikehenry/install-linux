@@ -11,6 +11,13 @@
 - import_role:
     name: ansible-user-register
 
+- name: "Create ~/.ssh with correct permissions for user {{ user }}"
+  become: "{{ become_root }}"
+  file:
+    path: "{{ home }}/.ssh"
+    state: directory
+    mode: '0700'
+
 - name: "Setup home.git for {{ user }}"
   become: "{{ become_root }}"
   shell: |

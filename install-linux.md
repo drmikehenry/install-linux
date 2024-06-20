@@ -1410,7 +1410,7 @@ AUTOMATED:
         '
         chmod go-w /etc/ssh/ssh_config.d/10-host1.conf
 
-- MANUAL Create `~/.ssh/config.d` directory concept:
+- HOMEGIT Create `~/.ssh/config.d` directory concept:
 
       mkdir ~/.ssh/config.d
       echod -o ~/.ssh/config '
@@ -1420,12 +1420,11 @@ AUTOMATED:
   Note: the `config` file is not in homegit (yet) because of the need for proper
   permissions on `~/.ssh`.
 
-- MANUAL Store ssh key in ssh-agent on first use:
+- HOMEGIT Store ssh key in ssh-agent on first use:
 
     echod -o ~/.ssh/config.d/10-add-keys-to-agent.conf '
       AddKeysToAgent yes
     '
-    chmod go-w ~/.ssh/config.d/10-add-keys-to-agent.conf
 
 ### SSH Server Setup
 
