@@ -905,7 +905,7 @@ in `/home`.
       #Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
       Defaults    secure_path = /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-- MANUAL Create passwordless sudo access for a single user like `mike`:
+- Create passwordless sudo access for a single user like `mike`:
 
       echod -o /etc/sudoers.d/mike '
         mike ALL=(ALL)  NOPASSWD: ALL
@@ -2128,7 +2128,7 @@ MANUAL:
 
 ## Remapping keys
 
-- MANUAL Make Capslock be both Control and Escape (experimental):
+- Make Capslock be both Control and Escape (experimental):
 
       setxkbmap -option 'caps:ctrl_modifier'
       xcape -e 'Caps_Lock=Escape' -t 100
@@ -5054,13 +5054,13 @@ printer-specific driver support will be done via separate applications.
 
 ### HP Color LaserJet M553n
 
-- MANUAL Install hplip:
+- Install hplip:
 
       agi hplip
 
       yi hplip
 
-- MANUAL Create printers:
+- Create printers:
 
       # UBUNTU
       for p in {crayon,pencil}; do
@@ -5071,7 +5071,7 @@ printer-specific driver support will be done via separate applications.
           -L 'Computer room'
       done
 
-- MANUAL Configure printers:
+- Configure printers:
 
       lpadmin -p pencil  -D 'Black & White printer'
       lpadmin -p crayon  -D 'Color printer'
@@ -6342,7 +6342,7 @@ Unix `find` command.
 
 Starship is a cross-shell prompt hook.
 
-- MANUAL: Install:
+- Install:
 
       cargo install starship
 
@@ -6684,8 +6684,6 @@ Progress monitoring for files.
       yi words
 
 ### UBUNTU Language support
-
-MANUAL:
 
 - The notification "Language Support is Incomplete" indicates that some language
   packages are not installed.  To report the list of missing packages:
@@ -8347,7 +8345,7 @@ MANUAL:
 
       yi pandoc
 
-- MANUAL: Get latest version from Github releases page, e.g.:
+- Get latest version from Github releases page, e.g.:
   <https://github.com/jgm/pandoc/releases/tag/3.0.1/>
 
   Get amd64 version:
@@ -9069,8 +9067,6 @@ Record five seconds to a file, then play it back:
 
 ### timidity MIDI Playback
 
-MANUAL:
-
 - Reference:
   - <https://help.ubuntu.com/community/Midi/SoftwareSynthesisHowTo>
   - <https://wiki.winehq.org/MIDI#Selecting_the_Output_-_the_MIDI_mapper>
@@ -9564,7 +9560,7 @@ Takes pictures and other things with webcam.
 
       agi libsane-common libsane-dev libsane1 sane-utils
 
-- MANUAL Look for scanner:
+- Look for scanner:
 
       sane-find-scanner
       scanimage -L
