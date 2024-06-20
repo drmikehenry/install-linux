@@ -3,6 +3,7 @@
   package:
     name:
     - autofs
+    - bzip2
     - cifs-utils
     - curl
     - gdisk

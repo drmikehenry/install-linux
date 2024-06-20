@@ -6543,6 +6543,12 @@ Display computer block diagram graphically.
 
 ## Compression/archiving utilities
 
+### bzip2
+
+- Install `:role:base`:
+
+      agi bzip2
+
 ### pigz (Parallel Implementation of GZip)
 
 - During compression, uses all cores for substantial speedups while being gzip

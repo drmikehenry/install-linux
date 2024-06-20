@@ -15,6 +15,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   bmake \
   brasero \
   build-essential \
+  bzip2 \
   cdecl \
   cifs-utils \
   clang \
