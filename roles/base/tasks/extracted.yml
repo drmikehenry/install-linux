@@ -1,0 +1,12 @@
+---
+- name: Enable Ubuntu 24+ source repositories
+  lineinfile:
+    dest: /etc/apt/sources.list.d/ubuntu.sources
+    regexp: '^Types: deb$'
+    line: 'Types: deb deb-src'
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 24
+
+- name: Update APT cache for deb-src
+  apt:
+    update_cache: yes
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 24

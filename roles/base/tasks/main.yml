@@ -39,3 +39,5 @@
     name: systemd-journald
     state: restarted
   when: journald_conf is changed
+
+- import_tasks: tasks/extracted.yml

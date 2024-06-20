@@ -657,7 +657,7 @@ MANUAL:
 
 ### Base Firewall Setup for SSH and enable
 
-AUTOMATED:
+AUTOMATED (install-linux-local):
 
 - Setup to allow ssh, "deny" by default, then enable firewall:
 
@@ -678,7 +678,7 @@ noise in the logs.  To fix this, block the port explicitly:
 
 ## Static Hosts
 
-AUTOMATED:
+AUTOMATED (install-linux-local):
 
 - Setup `/etc/hosts` as necessary for static hosts, e.g.:
 
@@ -949,9 +949,7 @@ in `/home`.
 
 ### UBUNTU Source Repositories
 
-TODO: Ansible
-
-MANUAL:
+### UBUNTU Source Repositories (24.04 and later)
 
 - Ubuntu 24.04 brings a new format ("deb822") for repository sources.  Instead
   of `/etc/apt/sources.list`, there is now
@@ -969,15 +967,33 @@ MANUAL:
       Components: main restricted universe multiverse
       Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 
-  The `deb` type is for the binary packages, and `deb-src` is for source
+- The `deb` type is for the binary packages, and `deb-src` is for source
   packages.  Adjust each `Types: deb` line to be `Types: deb deb-src` to include
   source repositories for everything.  This may be done via:
 
       sed -i 's/^Types: deb$/Types: deb deb-src/' \
         /etc/apt/sources.list.d/ubuntu.sources
 
-- For Ubuntu 22.04 and earlier, edit `/etc/apt/sources.list` and uncomment all
-  desired `deb-src` lines, e.g.:
+  Ansible `:role:base`:
+
+  ```yaml
+  - name: Enable Ubuntu 24+ source repositories
+    lineinfile:
+      dest: /etc/apt/sources.list.d/ubuntu.sources
+      regexp: '^Types: deb$'
+      line: 'Types: deb deb-src'
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 24
+
+  - name: Update APT cache for deb-src
+    apt:
+      update_cache: yes
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 24
+  ```
+
+### UBUNTU Source Repositories (before 24.04)
+
+- Edit `/etc/apt/sources.list` and uncomment all desired `deb-src` lines,
+  e.g.:
 
       deb-src http://us.archive.ubuntu.com/ubuntu/ jammy main restricted
 
