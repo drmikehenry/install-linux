@@ -34,3 +34,8 @@
     dest: /etc/ssh/ssh_config.d/10-github.conf
     src: ssh_config.d-10-github.conf
     mode: "u=rw,go=r"
+- name: Setup ssh server environment variable propagation
+  copy:
+    dest: /etc/ssh/sshd_config.d/90-accept-env.conf
+    src: sshd_config.d-90-accept-env.conf
+    mode: "u=rw,go=r"

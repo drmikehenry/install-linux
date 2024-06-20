@@ -1428,8 +1428,6 @@ AUTOMATED:
 
 ### SSH Server Setup
 
-MANUAL:
-
 - References:
   - SSH PasswordAuthentication vs ChallengeResponseAuthentication:
     <https://blog.tankywoo.com/linux/2013/09/14/ssh-passwordauthentication-vs-challengeresponseauthentication.html>
@@ -1438,13 +1436,24 @@ MANUAL:
 
 - Perform SSH server configuration:
 
-  - MANUAL Accept propagation of some useful environment variables (see SSH
-    client configuration steps for details):
+  - Accept propagation of some useful environment variables (see SSH
+    client configuration steps for details)
+    `:extract-echod:roles/base/files/sshd_config.d-90-accept-env.conf`:
 
         echod -o /etc/ssh/sshd_config.d/90-accept-env.conf '
           AcceptEnv COLORFGBG
           AcceptEnv COLORTERM
         '
+
+    Ansible `:role:base`:
+
+    ```yaml
+    - name: Setup ssh server environment variable propagation
+      copy:
+        dest: /etc/ssh/sshd_config.d/90-accept-env.conf
+        src: sshd_config.d-90-accept-env.conf
+        mode: "u=rw,go=r"
+    ```
 
 - UBUNTU Configure ssh firewall:
 
