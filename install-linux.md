@@ -1354,7 +1354,8 @@ AUTOMATED:
     SSH server allows these environment variables to be propagated over the SSH
     connection.
 
-  - MANUAL Setup general settings for all hosts:
+  - Setup general settings for all hosts:
+    `:extract-echod:roles/base/files/ssh_config.d-90-general.conf`:
 
         echod -o /etc/ssh/ssh_config.d/90-general.conf '
           # General settings:
@@ -1364,7 +1365,20 @@ AUTOMATED:
               SendEnv COLORFGBG
               SendEnv COLORTERM
         '
+
+    Adjust permissions:
+
         chmod go-w /etc/ssh/ssh_config.d/90-general.conf
+
+    Ansible `:role:base`:
+
+    ```yaml
+    - name: Setup ssh config defaults
+      copy:
+        dest: /etc/ssh/ssh_config.d/90-general.conf
+        src: ssh_config.d-90-general.conf
+        mode: "u=rw,go=r"
+    ```
 
   - MANUAL: Disable X11 forwarding for Github:
 

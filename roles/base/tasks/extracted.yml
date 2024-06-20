@@ -24,3 +24,8 @@
   apt:
     update_cache: yes
   when: ubuntu_sources is changed
+- name: Setup ssh config defaults
+  copy:
+    dest: /etc/ssh/ssh_config.d/90-general.conf
+    src: ssh_config.d-90-general.conf
+    mode: "u=rw,go=r"
