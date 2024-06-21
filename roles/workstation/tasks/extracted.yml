@@ -11,8 +11,11 @@
     - "/etc/update-motd.d/10-help-text"
     - "/etc/update-motd.d/50-motd-news"
     - "/etc/update-motd.d/90-updates-available"
-    - "/usr/share/landscape/landscape-sysinfo.wrapper"
   when: ansible_distribution == 'Ubuntu'
+- name: Uninstall landscape-common
+  apt:
+    name: landscape-common
+    state: absent
 - name: pipxg Install findx
   command: pipxg install findx
   args:

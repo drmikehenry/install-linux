@@ -5230,19 +5230,6 @@ MANUAL:
       chmod -x /etc/update-motd.d/10-help-text
       chmod -x /etc/update-motd.d/50-motd-news
       chmod -x /etc/update-motd.d/90-updates-available
-      chmod -x /usr/share/landscape/landscape-sysinfo.wrapper
-
-  Note that `/etc/update-motd.d/50-landscape-sysinfo` is a symlink to
-  `/usr/share/landscape/landscape-sysinfo.wrapper` (counter to the documented
-  philosophy in `man update-motd`:
-
-  > Packages should add scripts directly into `/etc/update-motd.d`, rather than
-  > symlinks to other scripts, such that administrators can modify or remove
-  > these scripts and upgrades will not wipe the local changes.
-
-  Because the post-install script will re-create the symlink at every system
-  update, the underlying wrapper script's execute permission is removed for a
-  permanent change.
 
   Ansible `:role:workstation`:
 
@@ -5255,8 +5242,36 @@ MANUAL:
       - "/etc/update-motd.d/10-help-text"
       - "/etc/update-motd.d/50-motd-news"
       - "/etc/update-motd.d/90-updates-available"
-      - "/usr/share/landscape/landscape-sysinfo.wrapper"
     when: ansible_distribution == 'Ubuntu'
+  ```
+
+## UBUNTU Server: Remove `landscape-common`
+
+- Ubuntu Server installs `lanscape-common` by default.  This creates a hook into
+  the dynamic MOTD mechanism. Note `lanscape-common` creates
+  `/etc/update-motd.d/50-landscape-sysinfo` as a symlink to
+  `/usr/share/landscape/landscape-sysinfo.wrapper` (counter to the documented
+  philosophy in `man update-motd`:
+
+  > Packages should add scripts directly into `/etc/update-motd.d`, rather than
+  > symlinks to other scripts, such that administrators can modify or remove
+  > these scripts and upgrades will not wipe the local changes.
+
+  Because the post-install script will re-create the symlink at every system
+  update, removing the symlink is insufficient to make a permanent change.
+  Also, `lanscape-common` is not installed by default for desktop installations.
+
+- The simplest solution is to uninstall `landscape-common`:
+
+      apt-get purge landscape-common
+
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Uninstall landscape-common
+    apt:
+      name: landscape-common
+      state: absent
   ```
 
 ## UBUNTU cron Schedule
