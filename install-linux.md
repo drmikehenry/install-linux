@@ -1968,11 +1968,6 @@ Rationale:
 
 ## UBUNTU Add Mozilla PPA
 
-AUTOMATED:
-
-TODO: automated method uses Ansible `apt_repository` which still uses the old
-method via`apt-key`.  Consider alternate method that does the below work.
-
 - Use `ppa:mozillateam` for `.deb`-based Firefox.  This provides packages for
   Thunderbird as well.
 
@@ -1999,6 +1994,22 @@ method via`apt-key`.  Consider alternate method that does the below work.
         --keyring /etc/apt/keyrings/mozillateam.gpg \
         0AB215679C571D1C8325275B9BDB3D89CE49EC21
 
+  Ansible `:role:mozilla-ppa`:
+
+  ```yaml
+  - name: Acquire mozillateam PPA key
+    shell: |
+      gpg \
+        --homedir /tmp \
+        --no-default-keyring \
+        --keyserver keyserver.ubuntu.com \
+        --recv-keys \
+        --keyring /etc/apt/keyrings/mozillateam.gpg \
+        0AB215679C571D1C8325275B9BDB3D89CE49EC21
+    args:
+      creates: /etc/apt/keyrings/mozillateam.gpg
+  ```
+
 - Create a `.sources` file for `mozillateam`:
 
       echod -o /etc/apt/sources.list.d/mozillateam.sources "
@@ -2010,13 +2021,86 @@ method via`apt-key`.  Consider alternate method that does the below work.
         Signed-By: /etc/apt/keyrings/mozillateam.gpg
       "
 
+  Ansible `:role:mozilla-ppa`:
+
+  ```yaml
+  - name: Create mozillateam.sources
+    shell: |
+        printf "%s\n" \
+          "Types: deb" \
+          "URIs: https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu/" \
+          "Suites: $(lsb_release -cs)" \
+          "Components: main" \
+          "Architectures: $(dpkg --print-architecture)" \
+          "Signed-By: /etc/apt/keyrings/mozillateam.gpg" \
+          > /etc/apt/sources.list.d/mozillateam.sources
+    args:
+      creates: /etc/apt/sources.list.d/mozillateam.sources
+  ```
+
 - Update APT cache:
 
       apt update
 
-- Install Firefox as `.deb`:
+  Ansible `:role:mozilla-ppa`:
+
+  ```yaml
+  - name: Update APT cache
+    apt:
+      update_cache: yes
+  ```
+
+- Boost Firefox priority to ensure it comes from Mozilla PPA:
+
+      echod -o /etc/apt/preferences.d/mozillateamppa-firefox '
+        Package: firefox*
+        Pin: release o=LP-PPA-mozillateam
+        Pin-Priority: 501
+      '
+
+  Ansible `:role:mozilla-ppa`:
+
+  ```yaml
+  - name: Boost Firefox priority to ensure it comes from Mozilla PPA
+    copy:
+      dest: /etc/apt/preferences.d/mozillateamppa-firefox
+      content: |
+        Package: firefox*
+        Pin: release o=LP-PPA-mozillateam
+        Pin-Priority: 501
+  ```
+
+- Boost Thunderbird priority to ensure it comes from Mozilla PPA:
+
+      echod -o /etc/apt/preferences.d/mozillateamppa-thunderbird '
+        Package: thunderbird*
+        Pin: release o=LP-PPA-mozillateam
+        Pin-Priority: 501
+      '
+
+  Ansible `:role:mozilla-ppa`:
+
+  ```yaml
+  - name: Boost Thunderbird priority to ensure it comes from Mozilla PPA
+    copy:
+      dest: /etc/apt/preferences.d/mozillateamppa-thunderbird
+      content: |
+        Package: thunderbird*
+        Pin: release o=LP-PPA-mozillateam
+        Pin-Priority: 501
+  ```
+
+- Install Firefox from Mozilla PPA:
 
       agi firefox
+
+  Ansible `:role:mozilla-ppa`:
+
+  ```yaml
+  - name: Install Firefox from Mozilla PPA
+    apt:
+      name: firefox
+  ```
 
   This restores Firefox (because the snap version was likely purged).
 
