@@ -7664,19 +7664,38 @@ needed.
       # 5.8.0 is the newest version that works with Python2.
       pipsig2 install ipython==5.8.0
 
-- MANUAL Create default configuration (shared for Python 2, Python 3):
+- Create default configuration (shared for Python 2, Python 3) and backup the
+  default configuration:
 
       ipython profile create
-
-- Backup configuration:
-
       cp ~/.ipython/profile_default/ipython_config.py{,.dist}
 
-- MANUAL Edit configuration:
+  Ansible `:role:user-workstation`:
+
+  ```yaml
+  - name: Create and backup default ipython profile
+    shell: |
+      ipython profile create
+      cp "{{ ansible_user_registered.home }}/.ipython/profile_default/ipython_config.py" "{{ ansible_user_registered.home }}/.ipython/profile_default/ipython_config.py.dist"
+    args:
+      creates: "{{ ansible_user_registered.home }}/.ipython/profile_default/ipython_config.py"
+  ```
+
+- Edit configuration and disable `confirm_exit`:
 
       vim ~/.ipython/profile_default/ipython_config.py
 
       c.TerminalInteractiveShell.confirm_exit = False
+
+  Ansible `:role:user-workstation`:
+
+  ```yaml
+  - name: Disable ipython confirm_exit
+    lineinfile:
+      dest: "{{ ansible_user_registered.home }}/.ipython/profile_default/ipython_config.py"
+      regexp: '^#?\s*c\.TerminalInteractiveShell\.confirm_exit\b.*'
+      line: 'c.TerminalInteractiveShell.confirm_exit = False'
+  ```
 
 ### Python Development versions
 

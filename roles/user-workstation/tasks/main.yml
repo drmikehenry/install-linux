@@ -1,0 +1,5 @@
+---
+- import_role:
+    name: ansible-user-register
+
+- import_tasks: tasks/extracted.yml
