@@ -5,6 +5,8 @@
     state: stopped
     enabled: no
   when: ansible_distribution == 'Ubuntu'
+- name: Set timezone
+  command: timedatectl set-timezone America/New_York
 - name: ufw deny 5355/udp (multicast DNS for Windows)
   ufw:
     rule: deny

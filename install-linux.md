@@ -666,11 +666,16 @@ Ansible `:role:workstation`:
                     NTP service: active
                 RTC in local TZ: no
 
-MANUAL:
-
 - Use `America-New_York` as the timezone:
 
       timedatectl set-timezone America/New_York
+
+  Ansible `:role:base`:
+
+  ```yaml
+  - name: Set timezone
+    command: timedatectl set-timezone America/New_York
+  ```
 
 ## Base Firewall Setup
 
