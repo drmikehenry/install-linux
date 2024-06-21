@@ -68,6 +68,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   hdparm \
   help2man \
   html2text \
+  httpdirfs \
   imagemagick \
   inotify-tools \
   k3b \

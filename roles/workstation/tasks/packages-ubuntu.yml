@@ -52,6 +52,7 @@
     - hdparm
     - help2man
     - html2text
+    - httpdirfs
     - imagemagick
     - inotify-tools
     - kate

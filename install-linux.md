@@ -6502,6 +6502,22 @@ MANUAL:
         # For user SomeUser who's a member of SomeGroup:
         https://some.host/path/to/webdav_share  /webdav/SomeUser/webdav_share davfs noauto,user,uid=SomeUser,gid=SomeGroup 0 0
 
+## httpdirfs
+
+- Install `:role:workstation`:
+
+      agi httpdirfs
+
+- Mount an HTTP server as a filesystem, e.g.:
+
+      mkdir pytmp
+      httpdirfs https://www.python.org/downloads/ pytmp
+      ls pytmp
+
+  Unmount:
+
+      fusermount -u pytmp
+
 ## jmtpfs
 
 - Fuse-based MTP (Media Transfer Protocol) filesystem. Useful for phone picture
