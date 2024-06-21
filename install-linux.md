@@ -2781,11 +2781,11 @@ entire profile.
 
   See <https://kb.mozillazine.org/Default_browser> for details.
 
-- MANUAL UBUNTU Setup `x-www-browser` alternative to be Firefox:
+- UBUNTU Setup `x-www-browser` alternative to be Firefox:
 
       sudo update-alternatives --config x-www-browser
 
-- MANUAL Configure Firefox to be the default browser using the command line.
+- Configure Firefox to be the default browser using the command line.
   (This shouldn't be necessary if it was already done via the GUI, but it seems
   to be needed anyway in some cases.):
 
@@ -3477,7 +3477,7 @@ Tracker can sap performance.  To disable on a per-user basis:
 
 - Reference: <https://askubuntu.com/questions/1344050/how-to-disable-tracker-on-ubuntu-20-04>
 
-- MANUAL Disable Tracker-related services for the current user (invoke as
+- Disable Tracker-related services for the current user (invoke as
   regular user):
 
       systemctl --user unmask \
@@ -3639,15 +3639,23 @@ or via `systemsettings5`.
 
 ### System Settings | Appearance | Global Theme
 
-MANUAL:
+- MANUAL: Colors | Breeze Classic (this has better highlighting for the active
+  window's title bar).
+
+- Cursors | Configure Launch Feedback: Stop animation after 1 second
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
+  - name: "Configure Launch Feedback: Stop animation after 1 second"
+    kconfig:
+      file: klaunchrc
+      group: "BusyCursorSettings"
+      key: "Timeout"
+      value: "1"
+  ```
 
 - (Ubuntu 22.04) Launch Feedback: Stop animation after 1 second
-
-- Colors | Breeze Classic (this has better highlighting for the active window's
-  title bar).
-
-- (Ubuntu 24.04) Cursors | Configure Launch Feedback: Stop animation after 1
-  second
 
 ### System Settings | Workspace | Startup and Shutdown | Desktop Session
 

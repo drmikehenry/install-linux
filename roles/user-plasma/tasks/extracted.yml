@@ -1,4 +1,10 @@
 ---
+- name: "Configure Launch Feedback: Stop animation after 1 second"
+  kconfig:
+    file: klaunchrc
+    group: "BusyCursorSettings"
+    key: "Timeout"
+    value: "1"
 - name: Disable "Present windows on top-left screen corner"
   kconfig:
     file: kwinrc
