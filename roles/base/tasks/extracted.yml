@@ -1,4 +1,11 @@
 ---
+- name: Install echod
+  copy:
+    src: echod
+    dest: /usr/local/bin/echod
+    owner: root
+    group: root
+    mode: 0755
 - name: Disable systemd-networkd-wait-online
   service:
     name: systemd-networkd-wait-online

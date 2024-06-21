@@ -1,11 +1,4 @@
 ---
-- name: Install echod
-  copy:
-    src: echod
-    dest: /usr/local/bin/echod
-    owner: root
-    group: root
-    mode: 0755
 - name: Make python3 symlink
   file:
     src: /usr/bin/python3

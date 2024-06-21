@@ -469,7 +469,7 @@ Make script executable:
 
     chmod +x /usr/local/bin/echod
 
-Ansible `:role:workstation`:
+Ansible `:role:base`:
 
 ```yaml
 - name: Install echod
