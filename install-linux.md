@@ -1555,8 +1555,6 @@ Supported use cases:
 
 ### Python Base Support
 
-AUTOMATED:
-
 - Install venv + pip `:role:workstation`:
 
       agi python3-venv python3-pip
@@ -1566,11 +1564,27 @@ AUTOMATED:
       ln -s /usr/bin/python3 /usr/local/bin/python
       ln -s /usr/bin/pip3 /usr/local/bin/pip
 
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Make python3 symlink
+    file:
+      src: /usr/bin/python3
+      dest: /usr/local/bin/python
+      state: link
+
+  - name: Make pip3 symlink
+    file:
+      src: /usr/bin/pip3
+      dest: /usr/local/bin/pip
+      state: link
+  ```
+
 - The pipx home directory will be `/usr/local/lib/pipx`, and binaries will live
   in `/usr/local/bin`.
 
 - Create `pipxg` wrapper for global use
-  `:extract-echod:roles/pipxg/files/pipxg`:
+  `:extract-echod:roles/workstation/files/pipxg`:
 
       echod -o /usr/local/bin/pipxg '
         #!/bin/sh
@@ -1587,17 +1601,41 @@ AUTOMATED:
 
       chmod +x /usr/local/bin/pipxg
 
-- Install a temporary `pipx` into a venv:
+  Ansible `:role:workstation`:
 
-      python3 -m venv pipxtmp && pipxtmp/bin/pip install pipx
+  ```yaml
+  - name: Install pipxg script
+    copy:
+      src: pipxg
+      dest: /usr/local/bin/pipxg
+      owner: root
+      group: root
+      mode: 0755
+  ```
 
-- Bootstrap `pipx` into the global pipx area:
+- Install a temporary `pipx` into a venv, bootstrap `pipx` into the global pipx
+  area, then remove the temporary user area:
 
-      PATH=$PWD/pipxtmp/bin:$PATH pipxg install pipx
+      rm -rf /tmp/pipxtmp &&
+        python3 -m venv /tmp/pipxtmp &&
+        /tmp/pipxtmp/bin/pip install pipx &&
+        PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx &&
+        rm -rf /tmp/pipxtmp
 
-- Remove the temporary user area:
+  Ansible `:role:workstation`:
 
-      rm -rf pipxtmp
+  ```yaml
+  - name: Install pipx
+    shell:
+      cmd: |
+        rm -rf /tmp/pipxtmp &&
+        python3 -m venv /tmp/pipxtmp &&
+        /tmp/pipxtmp/bin/pip install pipx &&
+        PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx &&
+        rm -rf /tmp/pipxtmp
+    args:
+      creates: /usr/local/bin/pipx
+  ```
 
 - Verify global installation of `pipx` using `pipxg`:
 
@@ -1614,6 +1652,15 @@ AUTOMATED:
 
       pipxg install virtualenvwrapper
 
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Install virtualenvwrapper
+    command: pipxg install virtualenvwrapper
+    args:
+      creates: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
+  ```
+
   For some reason, two of the binaries must be manually symlinked:
 
       ln -s /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv \
@@ -1622,7 +1669,22 @@ AUTOMATED:
       ln -s /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone \
         /usr/local/bin
 
-- Configure per-user python3-based virtualenvwrapper based on
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Create virtualenv symlinks
+    file:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      state: link
+    loop:
+      - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
+        dest: /usr/local/bin/virtualenv
+      - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone
+        dest: /usr/local/bin/virtualenv-clone
+  ```
+
+- HOMEGIT Configure per-user python3-based virtualenvwrapper based on
   <https://virtualenvwrapper.readthedocs.org/en/latest/> (all users):
 
       echod -a ~/.profile '
@@ -1642,7 +1704,7 @@ AUTOMATED:
         fi
       '
 
-- Create area for envs and tell Git to ignore it:
+- HOMEGIT Create area for envs and tell Git to ignore it:
 
       mkdir -p ~/envs
       echo envs >> ~/.gitignore
@@ -7709,20 +7771,33 @@ needed.
 
 ### Python Poetry
 
-AUTOMATED:
-
 - Install:
 
-      pipxg install poetry
+      pipxg install poetry &&
+        pipxg inject poetry poetry-plugin-export
 
-      pipxg inject poetry poetry-plugin-export
+  Ansible `:role:workstation`:
 
-MANUAL:
+  ```yaml
+  - name: Install poetry
+    script: |
+      pipxg install poetry &&
+        pipxg inject poetry poetry-plugin-export
+    args:
+      creates: /usr/local/bin/poetry
+  ```
 
 - Sadly, even after explicitly installing the `poetry-plugin-export` plugin,
   poetry still warns about it.  Disable the warning as an unprivileged user via:
 
       poetry config warnings.export false
+
+  Ansible `:role:user-workstation`:
+
+  ```yaml
+  - name: Disable poetry warning for poetry-plugin-export
+    command: poetry config warnings.export false
+  ```
 
 ### Python GUIs
 
@@ -7813,15 +7888,25 @@ HOMEGIT Ruff per-user configuration:
 
 - Python 3-based flake8:
 
-  AUTOMATED:
+      pipxg install flake8 &&
+        pipxg inject flake8 flake8-quotes pep8-naming
 
-      pipxg install flake8
-      # Now install add-ons into flake8 virtualenv:
-      pipxg inject flake8 flake8-quotes pep8-naming
+  Ansible `:role:workstation`:
 
-  Configure flake8-quotes to match the style enforced by the black formatter:
+  ```yaml
+  - name: Install flake8
+    script: |
+      pipxg install flake8 &&
+        pipxg inject flake8 flake8-quotes pep8-naming
+    args:
+      creates: /usr/local/bin/flake8
+  ```
 
-      echod -o ~/.config/flake8 '
+- Configure flake8-quotes to match the style enforced by the black formatter.
+  Note: this must be done on a per-project basis; the `~/.config/flake8` file is
+  no longer honored:
+
+      echod -o .flake8 '
         [flake8]
         inline-quotes = double
         ignore = E203
@@ -7854,22 +7939,32 @@ HOMEGIT Ruff per-user configuration:
 
 #### Python isort
 
-MANUAL:
-
 - Install:
 
       pipxg install isort
 
 #### Python Language Server
 
-AUTOMATED:
+- Install with selection options (do not install ``all`` options, because that
+  installs Pylint):
 
-- Install:
+      pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]' &&
+        pipxg inject python-lsp-server python-lsp-black
+        pipxg inject python-lsp-server pylsp-mypy
+        pipxg inject python-lsp-server python-lsp-ruff
 
-      pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]'
-      pipxg inject python-lsp-server python-lsp-black
-      pipxg inject python-lsp-server pylsp-mypy
-      pipxg inject python-lsp-server python-lsp-ruff
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Install python-language-server
+    script: |
+        pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]' &&
+          pipxg inject python-lsp-server python-lsp-black &&
+          pipxg inject python-lsp-server pylsp-mypy &&
+          pipxg inject python-lsp-server python-lsp-ruff
+    args:
+      creates: /usr/local/bin/pylsp
+  ```
 
 ### Python Hatch
 
@@ -8370,11 +8465,18 @@ necessary to install `rust-analyzer` separately.  Instead, use:
 
 ### sphinx
 
-AUTOMATED:
-
 - Install:
 
       pipxg install sphinx
+
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Install sphinx
+    command: pipxg install sphinx
+    args:
+      creates: /usr/local/bin/sphinx-quickstart
+  ```
 
 - Use:
 
@@ -8382,12 +8484,21 @@ AUTOMATED:
 
 ### docutils with pygments
 
-AUTOMATED:
-
 - Install:
 
       pipxg install docutils &&
         pipxg inject docutils pygments
+
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Install docutils
+    script: |
+      pipxg install docutils &&
+        pipxg inject docutils pygments
+    args:
+      creates: /usr/local/bin/rst2html
+  ```
 
 - Use:
 

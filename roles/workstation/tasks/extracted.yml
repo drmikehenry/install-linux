@@ -1,4 +1,46 @@
 ---
+- name: Make python3 symlink
+  file:
+    src: /usr/bin/python3
+    dest: /usr/local/bin/python
+    state: link
+
+- name: Make pip3 symlink
+  file:
+    src: /usr/bin/pip3
+    dest: /usr/local/bin/pip
+    state: link
+- name: Install pipxg script
+  copy:
+    src: pipxg
+    dest: /usr/local/bin/pipxg
+    owner: root
+    group: root
+    mode: 0755
+- name: Install pipx
+  shell:
+    cmd: |
+      rm -rf /tmp/pipxtmp &&
+      python3 -m venv /tmp/pipxtmp &&
+      /tmp/pipxtmp/bin/pip install pipx &&
+      PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx &&
+      rm -rf /tmp/pipxtmp
+  args:
+    creates: /usr/local/bin/pipx
+- name: Install virtualenvwrapper
+  command: pipxg install virtualenvwrapper
+  args:
+    creates: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
+- name: Create virtualenv symlinks
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  loop:
+    - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
+      dest: /usr/local/bin/virtualenv
+    - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone
+      dest: /usr/local/bin/virtualenv-clone
 - name: pipxg Install ansible
   command: pipxg install --include-deps ansible
   args:
@@ -59,6 +101,12 @@
   command: pipxg install ipython
   args:
     creates: /usr/local/bin/ipython
+- name: Install poetry
+  script: |
+    pipxg install poetry &&
+      pipxg inject poetry poetry-plugin-export
+  args:
+    creates: /usr/local/bin/poetry
 - name: pipxg Install pytest
   command: pipxg install pytest
   args:
@@ -75,14 +123,38 @@
   command: pipxg install flake8-to-ruff
   args:
     creates: /usr/local/bin/flake8-to-ruff
+- name: Install flake8
+  script: |
+    pipxg install flake8 &&
+      pipxg inject flake8 flake8-quotes pep8-naming
+  args:
+    creates: /usr/local/bin/flake8
 - name: pipxg Install black
   command: pipxg install black
   args:
     creates: /usr/local/bin/black
+- name: Install python-language-server
+  script: |
+      pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]' &&
+        pipxg inject python-lsp-server python-lsp-black &&
+        pipxg inject python-lsp-server pylsp-mypy &&
+        pipxg inject python-lsp-server python-lsp-ruff
+  args:
+    creates: /usr/local/bin/pylsp
 - name: pipxg Install pyupgrade
   command: pipxg install pyupgrade
   args:
     creates: /usr/local/bin/pyupgrade
+- name: Install sphinx
+  command: pipxg install sphinx
+  args:
+    creates: /usr/local/bin/sphinx-quickstart
+- name: Install docutils
+  script: |
+    pipxg install docutils &&
+      pipxg inject docutils pygments
+  args:
+    creates: /usr/local/bin/rst2html
 - name: pipxg Install rstcheck
   command: pipxg install rstcheck
   args:

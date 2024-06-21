@@ -24,7 +24,4 @@
       - apt-rdepends
   when: ansible_distribution == 'Ubuntu'
 
-- import_role:
-    name: pipxg
-
 - import_tasks: tasks/extracted.yml

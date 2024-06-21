@@ -10,3 +10,5 @@
     dest: "{{ ansible_user_registered.home }}/.ipython/profile_default/ipython_config.py"
     regexp: '^#?\s*c\.TerminalInteractiveShell\.confirm_exit\b.*'
     line: 'c.TerminalInteractiveShell.confirm_exit = False'
+- name: Disable poetry warning for poetry-plugin-export
+  command: poetry config warnings.export false
