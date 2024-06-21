@@ -1,0 +1,19 @@
+---
+- name: Setup rustup
+  shell: |
+    rm -rf "{{ ansible_user_registered.home }}/.cargo"
+    export RUSTUP_DIST_SERVER="{{ RUSTUP_DIST_SERVER }}"
+    export RUSTUP_UPDATE_ROOT="{{ RUSTUP_UPDATE_ROOT }}"
+    rm -f /tmp/rustup-init
+    curl -o /tmp/rustup-init \
+      ${RUSTUP_DIST_SERVER}/rustup/dist/x86_64-unknown-linux-gnu/rustup-init &&
+      chmod +x /tmp/rustup-init &&
+      /tmp/rustup-init -q -y --no-modify-path &&
+      rm -f /tmp/rustup-init
+  args:
+    creates: "{{ ansible_user_registered.home }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo"
+- name: Install additional rustup components
+  shell: |
+    "{{ ansible_user_registered.home }}/.cargo/bin/rustup" component add rust-src rust-analyzer
+  args:
+    creates: "{{ ansible_user_registered.home }}/.cargo/bin/rust-analyzer"

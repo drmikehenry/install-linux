@@ -2175,41 +2175,71 @@ MANUAL:
 - `https://static.rust-lang.org` is the default server for Rust toolchains and
   tools like `rustup`.
 
-- AUTOMATED (`user-rust`) Acquire `rustup`:
+- Install `rustup`:
 
+  - Acquire `rustup`:
+
+        curl -o /tmp/rustup-init \
+          https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+
+  - Make `rustup-init` executable:
+
+        chmod +x /tmp/rustup-init
+
+  - Invoke `rustup-init` to install `rustup`:
+
+        /tmp/rustup-init -q -y --no-modify-path
+
+  - Use `--no-modify-path` because HOMEGIT has version-controlled settings for
+    `PATH` that include `~/.cargo/bin`.
+
+  - Note that `rustup-init` installs a toolchain and various tools in
+    `~/.cargo/bin`, e.g.:
+
+        cargo
+        cargo-clippy
+        cargo-fmt
+        cargo-miri
+        clippy-driver
+        rls
+        rustc
+        rustdoc
+        rustfmt
+        rust-gdb
+        rust-lldb
+        rustup
+
+  Ansible `:role:user-rust`:
+
+  ```yaml
+  - name: Setup rustup
+    shell: |
+      rm -rf "{{ ansible_user_registered.home }}/.cargo"
+      export RUSTUP_DIST_SERVER="{{ RUSTUP_DIST_SERVER }}"
+      export RUSTUP_UPDATE_ROOT="{{ RUSTUP_UPDATE_ROOT }}"
+      rm -f /tmp/rustup-init
       curl -o /tmp/rustup-init \
-        https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+        ${RUSTUP_DIST_SERVER}/rustup/dist/x86_64-unknown-linux-gnu/rustup-init &&
+        chmod +x /tmp/rustup-init &&
+        /tmp/rustup-init -q -y --no-modify-path &&
+        rm -f /tmp/rustup-init
+    args:
+      creates: "{{ ansible_user_registered.home }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo"
+  ```
 
-- AUTOMATED (`user-rust`) Make `rustup-init` executable:
-
-      chmod +x /tmp/rustup-init
-
-- AUTOMATED (`user-rust`) Invoke `rustup-init` to install `rustup`:
-
-      /tmp/rustup-init -q -y --no-modify-path
-
-  Use `--no-modify-path` because HOMEGIT has version-controlled settings for
-  `PATH` that include `~/.cargo/bin`.
-
-  Note that `rustup-init` installs a toolchain and various tools in
-  `~/.cargo/bin`, e.g.:
-
-      cargo
-      cargo-clippy
-      cargo-fmt
-      cargo-miri
-      clippy-driver
-      rls
-      rustc
-      rustdoc
-      rustfmt
-      rust-gdb
-      rust-lldb
-      rustup
-
-- AUTOMATED (`user-rust`) Install additional components if desired:
+- Install additional components if desired:
 
       rustup component add rust-src rust-analyzer
+
+  Ansible `:role:user-rust`:
+
+  ```yaml
+  - name: Install additional rustup components
+    shell: |
+      "{{ ansible_user_registered.home }}/.cargo/bin/rustup" component add rust-src rust-analyzer
+    args:
+      creates: "{{ ansible_user_registered.home }}/.cargo/bin/rust-analyzer"
+  ```
 
 - View components (installed and available):
 
@@ -2235,33 +2265,36 @@ MANUAL:
         max_width = 100
       '
 
-- To support the target `x86_64-unknown-linux-musl`:
+- Add some extra build targets:
 
-  - Install `:role:workstation`:
+  - Install deps for target `x86_64-unknown-linux-musl` `:role:workstation`:
 
         agi musl-dev musl-tools
 
-  - AUTOMATED (`user-rust`) Add the target:
-
-        rustup target add x86_64-unknown-linux-musl
-
-  - Build via:
-
-        cargo build --target x86_64-unknown-linux-musl
-
-- To cross-compile to the target `x86_64-pc-windows-gnu`:
-
-  - Install `:role:workstation`:
+  - Install deps for target `gcc-mingw-w64-x86-64` `:role:workstation`:
 
         agi gcc-mingw-w64-x86-64
 
-  - AUTOMATED (`user-rust`) Add the target:
+  - Add the target `x86_64-unknown-linux-musl`:
+
+        rustup target add x86_64-unknown-linux-musl
+
+  - Add the target `x86_64-pc-windows-gnu`:
 
         rustup target add x86_64-pc-windows-gnu
 
-  - Build via:
+  Ansible `:role:user-rust`:
 
-        cargo build --target x86_64-pc-windows-gnu
+  ```yaml
+- name: "Install rustup targets"
+  shell: |
+    "{{ ansible_user_registered.home }}/.cargo/bin/rustup" target add "{{ item }}"
+  args:
+    creates: "{{ ansible_user_registered.home }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/{{ item }}"
+  loop:
+    - x86_64-unknown-linux-musl
+    - x86_64-pc-windows-gnu
+  ```
 
 # Graphical Environment
 
