@@ -1255,29 +1255,45 @@ Needed for Windows network shares.
 
 #### Setup autofs
 
-AUTOMATED:
-
 - Install `:role:base`:
 
       agi autofs
 
       yi autofs
 
-- UBUNTU Enable /net:
-
-      mkdir /net
-
-  Uncomment this line in `/etc/auto.master`:
+- Uncomment this line in `/etc/auto.master`:
 
       vim /etc/auto.master
 
       /net -hosts
+
+  Ansible `:role:base`:
+
+  ```yaml
+  - name: Setup autofs /net
+    lineinfile:
+      dest: /etc/auto.master
+      regexp: '^#?\s*/net\b'
+      line: '/net -hosts'
+    register: etc_auto_master
+  ```
 
 - Enable autofs service (restarting because Ubuntu starts the daemon running
   before `/etc/auto.master` can be edited):
 
       systemctl enable autofs
       systemctl restart autofs
+
+  Ansible `:role:base`:
+
+  ```yaml
+  - name: Enable and restart autofs
+    service:
+      name: autofs
+      enabled: yes
+      state: restarted
+    when: etc_auto_master is changed
+  ```
 
 ## Create Users
 

@@ -33,6 +33,18 @@
   apt:
     update_cache: yes
   when: ubuntu_sources is changed
+- name: Setup autofs /net
+  lineinfile:
+    dest: /etc/auto.master
+    regexp: '^#?\s*/net\b'
+    line: '/net -hosts'
+  register: etc_auto_master
+- name: Enable and restart autofs
+  service:
+    name: autofs
+    enabled: yes
+    state: restarted
+  when: etc_auto_master is changed
 - name: Setup ssh config defaults
   copy:
     dest: /etc/ssh/ssh_config.d/90-general.conf

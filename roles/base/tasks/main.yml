@@ -7,18 +7,6 @@
   import_tasks: tasks/packages-fedora.yml
   when: ansible_distribution == 'Fedora'
 
-- name: Setup autofs /net
-  lineinfile:
-    dest: /etc/auto.master
-    regexp: '^#?\s*/net\b'
-    line: '/net -hosts'
-
-- name: Enable and restart autofs
-  service:
-    name: autofs
-    enabled: yes
-    state: restarted
-
 - name: Setup persistent journal storage
   lineinfile:
     dest: /etc/systemd/journald.conf
