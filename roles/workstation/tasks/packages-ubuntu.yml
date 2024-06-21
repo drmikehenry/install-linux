@@ -59,6 +59,8 @@
     - kubuntu-restricted-extras
     - libboost-all-dev
     - liblz4-tool
+    - libreoffice
+    - libreoffice-math
     - linux-headers-generic
     - linux-tools-generic
     - lshw

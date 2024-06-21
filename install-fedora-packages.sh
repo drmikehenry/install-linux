@@ -34,6 +34,7 @@ dnf install -y \
   konqueror \
   konversation \
   levien-inconsolata-fonts \
+  libreoffice \
   lshw \
   lshw-gui \
   Maelstrom \

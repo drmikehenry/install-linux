@@ -79,6 +79,8 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   kubuntu-restricted-extras \
   libboost-all-dev \
   liblz4-tool \
+  libreoffice \
+  libreoffice-math \
   libsane1 \
   libsane-common \
   libsane-dev \

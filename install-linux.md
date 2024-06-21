@@ -5569,8 +5569,6 @@ Note: Ubuntu 16.04 uses mailutils now for the `mail` command.
 
 ## LibreOffice
 
-MANUAL:
-
 - OPTIONAL: Use latest version from PPA:
 
   - Reference: <https://launchpad.net/~libreoffice/+archive/ubuntu/ppa>
@@ -5579,7 +5577,7 @@ MANUAL:
 
         add-apt-repository -y --update ppa:libreoffice/ppa
 
-- Install:
+- Install `:role:workstation`:
 
       agi libreoffice libreoffice-math
 
@@ -5589,7 +5587,7 @@ MANUAL:
 
       agi mdbtools
 
-- Configure:
+- MANUAL Configure:
 
   - Tools | Options | LibreOffice | General:
     - Check "Use LibreOffice dialogs"
