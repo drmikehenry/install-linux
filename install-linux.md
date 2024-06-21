@@ -8529,21 +8529,6 @@ necessary to install `rust-analyzer` separately.  Instead, use:
         /usr/local/bin/rust-analyzer-x86_64-unknown-linux-gnu \
         /usr/local/bin/rust-analyzer
 
-### Rust cross-compilation for Windows
-
-- Ensure `gcc-mingw-w64-x86-64` is installed (providing gcc for linking Windows
-  executables).
-
-- Add Windows target to the Rust toolchain:
-
-  MANUAL:
-
-      rustup target add x86_64-pc-windows-gnu
-
-- Build for Windows:
-
-      cargo build --target x86_64-pc-windows-gnu
-
 ## MIT-scheme
 
 - Useful for "Structure and Interpretation of Computer Programs" (SICP).
