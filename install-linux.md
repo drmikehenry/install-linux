@@ -712,7 +712,7 @@ Ansible `:role:base`:
 
 ### Base Firewall Setup for SSH and enable
 
-AUTOMATED (install-linux-local role `bootstrap`):
+AUTOMATED in install-linux-local role `bootstrap`.
 
 - Setup to allow ssh, "deny" by default, then enable firewall:
 
@@ -743,7 +743,7 @@ noise in the logs.  To fix this, block the port explicitly:
 
 ## Static Hosts
 
-AUTOMATED (install-linux-local role `workstation-mounts`):
+AUTOMATED in install-linux-local role `workstation-mounts`.
 
 - Setup `/etc/hosts` as necessary for static hosts, e.g.:
 
@@ -790,33 +790,35 @@ MANUAL:
 NOTE: Currently, snap-based Firefox fails when home directories aren't located
 in `/home`.
 
-- AUTOMATED Install support for `luseradd`:
+AUTOMATED in role `localhome`.
+
+- Install support for `luseradd`:
 
       agi libuser
 
-- AUTOMATED Install support for `cron` and `semanage`:
+- Install support for `cron` and `semanage`:
 
       yi cronie cronie-anacron policycoreutils-python-utils
 
-- AUTOMATED FEDORA Setup SELinux context for `/localhome`:
+- FEDORA Setup SELinux context for `/localhome`:
 
       semanage fcontext -a -e /home /localhome
 
-- AUTOMATED Create `/localhome`:
+- Create `/localhome`:
 
       mkdir /localhome
 
-- AUTOMATED UBUNTU Use `/localhome` for new users' home directory for
+- UBUNTU Use `/localhome` for new users' home directory for
   `adduser` command.  In `/etc/adduser.conf`, change `DHOME=` line to:
 
       DHOME=/localhome
 
-- AUTOMATED Use `/localhome` for new users' home directory for `useradd`
+- Use `/localhome` for new users' home directory for `useradd`
   command.  In `/etc/default/useradd`, set `HOME=` to:
 
       HOME=/localhome
 
-- AUTOMATED UBUNTU Configure Apparmor for `/localhome`:
+- UBUNTU Configure Apparmor for `/localhome`:
 
       echod -o /etc/apparmor.d/tunables/home.d/my_local.net '
         @{HOMEDIRS}+=/localhome/
@@ -833,7 +835,7 @@ in `/home`.
 
 - Create `/root/localhome-migrate.sh` script
 
-  AUTOMATED `:extract:roles/localhome/files/localhome-migrate.sh`:
+  `:extract:roles/localhome/files/localhome-migrate.sh`:
 
   ```bash
   #!/bin/bash
@@ -877,15 +879,15 @@ in `/home`.
   echo "$(date) localhome-migrate.sh ending"
   ```
 
-- AUTOMATED Make the script executable:
+- Make the script executable:
 
       chmod +x /root/localhome-migrate.sh
 
-- AUTOMATED Reboot to perform `/localhome` migration:
+- Reboot to perform `/localhome` migration:
 
       reboot
 
-- AUTOMATED Examine log of migration results:
+- Examine log of migration results:
 
       cat /root/localhome-migrate.log
 
@@ -2150,7 +2152,7 @@ get the latest version:
 
 ## Clone home.git, home2.git
 
-AUTOMATED:
+AUTOMATED in role `user-git-repos`:
 
 - Bring over `.home.git` and `.home2.git`:
 
@@ -2191,7 +2193,7 @@ AUTOMATED:
 
 - Clone vimfiles, vimfiles-local:
 
-  AUTOMATED:
+  AUTOMATED in role `user-git-repos`:
 
       git clone ssh://server/srv/git/vimfiles.git ~/.vim
       git clone ssh://server/srv/git/vimfiles-local.git ~/.vimlocal
@@ -2210,7 +2212,7 @@ AUTOMATED:
 
 - Clone vimfiles, vimfiles-local for root:
 
-  AUTOMATED:
+  AUTOMATED in role `user-git-repos`:
 
       git clone ~mike/.vim ~/.vim
       git clone ~mike/.vimlocal ~/.vimlocal
@@ -2648,8 +2650,6 @@ Use Blowfish encryption with KDE wallet instead of GPG.
   - Choose blowfish encryption instead of GPG (too hard to figure out GPG).
 
 ## Keychain
-
-AUTOMATED:
 
 Gentoo keychain is a small script that sets up ssh-agent at first login. The
 agent thereafter will maintain the keys in memory for passwordless usage of ssh.
@@ -4823,7 +4823,7 @@ MANUAL Disable Klipper entirely (interacts badly with Gvim on Ubuntu 22.04):
 
 Right-click on Klipper, choose "Configure Clipboard":
 
-- AUTOMATED Disable "Save clipboard contents on exit":
+- Disable "Save clipboard contents on exit":
   Uncheck "Save clipboard contents on exit".
 
   Ansible `:role:user-plasma`:
@@ -4837,7 +4837,7 @@ Right-click on Klipper, choose "Configure Clipboard":
       value: "false"
   ```
 
-- AUTOMATED Disable "Prevent empty clipboard":
+- Disable "Prevent empty clipboard":
   Uncheck "Prevent empty clipboard".
 
   Ansible `:role:user-plasma`:
@@ -4851,7 +4851,7 @@ Right-click on Klipper, choose "Configure Clipboard":
       value: "false"
   ```
 
-- AUTOMATED Enable "Ignore selection":
+- Enable "Ignore selection":
   Check "Ignore selection".
 
   Ansible `:role:user-plasma`:
@@ -4868,7 +4868,7 @@ Right-click on Klipper, choose "Configure Clipboard":
   This fixes a crash with GVim on Plasma when selecting large amounts of text
   (<https://github.com/vim/vim/issues/1023>).
 
-- AUTOMATED Set "Clipboard history size":
+- Set "Clipboard history size":
   Set "Clipboard history size" to "1 entry".
 
   Ansible `:role:user-plasma`:
