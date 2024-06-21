@@ -643,14 +643,41 @@ Ansible `:role:base`:
 
 ## UBUNTU Disable `apt-daily`
 
-- AUTOMATED Uninstall unattended-upgrades:
+- Uninstall unattended-upgrades:
 
       apt-get remove unattended-upgrades
 
-- AUTOMATED Disable apt-daily-related services:
+  Ansible `:role:disable-apt-daily`:
+
+  ```yaml
+  - name: Uninstall unattended-upgrades
+    apt:
+      name: unattended-upgrades
+      state: absent
+  ```
+
+- Disable apt-daily-related services:
 
       systemctl disable apt-daily{,-upgrade}.{service,timer}
       systemctl stop apt-daily{,-upgrade}.{service,timer}
+
+  Ansible `:role:disable-apt-daily`:
+
+  ```yaml
+  - name: Disable apt-daily-related services
+    # Essentially, this is::
+    #   systemctl disable apt-daily{,-upgrade}.{service,timer}
+    #   systemctl stop apt-daily{,-upgrade}.{service,timer}
+    service:
+      name: "{{ item }}"
+      enabled: no
+      state: stopped
+    loop:
+      - apt-daily.service
+      - apt-daily.timer
+      - apt-daily-upgrade.service
+      - apt-daily-upgrade.timer
+  ```
 
 ## UBUNTU Server timezone setup
 
