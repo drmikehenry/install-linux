@@ -50,10 +50,6 @@
   command: pipxg install ipython
   args:
     creates: /usr/local/bin/ipython
-- name: pipxg Install tox
-  command: pipxg install tox
-  args:
-    creates: /usr/local/bin/tox
 - name: pipxg Install pytest
   command: pipxg install pytest
   args:

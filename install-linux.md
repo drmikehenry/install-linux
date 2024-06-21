@@ -7722,7 +7722,7 @@ MANUAL:
 
 ### Python tox
 
-- Install `:role:workstation`:
+- Install:
 
       pipxg install tox
 
