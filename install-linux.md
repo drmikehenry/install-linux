@@ -3659,16 +3659,20 @@ or via `systemsettings5`.
 
 ### System Settings | Workspace | Startup and Shutdown | Desktop Session
 
-MANUAL:
-
 - Session Restore:
 
   - "On login, launch apps that were open": "Start with an empty session"
 
-TODO: Automate this.  The setting appears to live in `~/.config/ksmserverrc`:
+    Ansible `:role:user-plasma`:
 
-    [General]
-    loginMode=emptySession
+    ```yaml
+    - name: "Configure to start with an empty session"
+      kconfig:
+        file: ksmserverrc
+        group: "General"
+        key: "loginMode"
+        value: "emptySession"
+    ```
 
 ### System Settings | Workspace | Workspace Behavior
 

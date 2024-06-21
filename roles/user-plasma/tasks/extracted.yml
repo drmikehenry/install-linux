@@ -5,6 +5,12 @@
     group: "BusyCursorSettings"
     key: "Timeout"
     value: "1"
+- name: "Configure to start with an empty session"
+  kconfig:
+    file: ksmserverrc
+    group: "General"
+    key: "loginMode"
+    value: "emptySession"
 - name: Disable "Present windows on top-left screen corner"
   kconfig:
     file: kwinrc
