@@ -4996,8 +4996,9 @@ In Konsole, choose Settings | Configure Konsole, then continue.
 - Settings | Configure Konsole | Tab Bar / Splitters | Appearance:
 
   - Check "Show: Always".
-  - Check "Use user-defined stylesheet".
-  - Browse for `~/.config/konsole.css`.
+  - Position: "Below terminal area"
+  - Check "Use user-defined stylesheet":
+    - Browse for `~/.config/konsole.css`.
 
   Ansible `:role:user-plasma`:
 
@@ -5008,6 +5009,12 @@ In Konsole, choose Settings | Configure Konsole, then continue.
       group: "TabBar"
       key: "TabBarVisibility"
       value: "AlwaysShowTabBar"
+  - name: Show Konsole Tab Bar at bottom
+    kconfig:
+      file: konsolerc
+      group: "TabBar"
+      key: "TabBarPosition"
+      value: "Bottom"
   - name: Konsole Use Style Sheet
     kconfig:
       file: konsolerc
@@ -5022,16 +5029,11 @@ In Konsole, choose Settings | Configure Konsole, then continue.
       value: "file:.config/konsole.css"
   ```
 
-- MANUAL: Disable toolbars:
+- Disable toolbars (already the default in Ubuntu 24.04):
 
   - Right-click next to the "Help" menu.
   - Uncheck "Main Toolbar".
   - Uncheck "Session Toolbar".
-
-- MANUAL: Move Tab Bar back to the bottom:
-
-  - Settings | Configure Konsole | Tab Bar / Splitters | Appearance:
-    - Position: "Below terminal area"
 
 ## XTerm
 

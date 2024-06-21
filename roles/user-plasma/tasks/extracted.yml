@@ -481,6 +481,12 @@
     group: "TabBar"
     key: "TabBarVisibility"
     value: "AlwaysShowTabBar"
+- name: Show Konsole Tab Bar at bottom
+  kconfig:
+    file: konsolerc
+    group: "TabBar"
+    key: "TabBarPosition"
+    value: "Bottom"
 - name: Konsole Use Style Sheet
   kconfig:
     file: konsolerc
