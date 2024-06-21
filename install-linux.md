@@ -2531,8 +2531,6 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
 
 ## cron
 
-MANUAL:
-
 - Adjust root's crontab as follows:
 
       vim /etc/crontab
@@ -2541,6 +2539,22 @@ MANUAL:
 
       SHELL=/bin/bash
       MAILTO=root
+
+  Ansible `:role:base`:
+
+  ```yaml
+  - name: Setup SHELL in /etc/crontab
+    lineinfile:
+      path: /etc/crontab
+      regexp: '^SHELL=.*'
+      line: 'SHELL=/bin/bash'
+  - name: Setup MAILTO in /etc/crontab
+    lineinfile:
+      path: /etc/crontab
+      regexp: '^MAILTO=.*'
+      insertbefore: '^SHELL=.*'
+      line: 'MAILTO=root'
+  ```
 
 ## anacron
 

@@ -61,3 +61,14 @@
   command:
     update-grub
   when: ubuntu_grub_configuration1 is changed or ubuntu_grub_configuration2 is changed
+- name: Setup SHELL in /etc/crontab
+  lineinfile:
+    path: /etc/crontab
+    regexp: '^SHELL=.*'
+    line: 'SHELL=/bin/bash'
+- name: Setup MAILTO in /etc/crontab
+  lineinfile:
+    path: /etc/crontab
+    regexp: '^MAILTO=.*'
+    insertbefore: '^SHELL=.*'
+    line: 'MAILTO=root'
