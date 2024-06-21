@@ -7,21 +7,4 @@
   import_tasks: tasks/packages-fedora.yml
   when: ansible_distribution == 'Fedora'
 
-- name: Install apt-file
-  package:
-    name:
-      - apt-file
-  register: apt_file
-  when: ansible_distribution == 'Ubuntu'
-
-- name: Update apt-file
-  command: apt-file update
-  when: ansible_distribution == 'Ubuntu' and apt_file is changed
-
-- name: Install apt-rdepends
-  package:
-    name:
-      - apt-rdepends
-  when: ansible_distribution == 'Ubuntu'
-
 - import_tasks: tasks/extracted.yml

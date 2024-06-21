@@ -1,4 +1,19 @@
 ---
+- name: Install apt-file
+  package:
+    name:
+      - apt-file
+  register: apt_file
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Update apt-file
+  command: apt-file update
+  when: ansible_distribution == 'Ubuntu' and apt_file is changed
+- name: Install apt-rdepends
+  package:
+    name:
+      - apt-rdepends
+  when: ansible_distribution == 'Ubuntu'
 - name: Make python3 symlink
   file:
     src: /usr/bin/python3

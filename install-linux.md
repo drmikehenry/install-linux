@@ -712,7 +712,7 @@ Ansible `:role:base`:
 
 ### Base Firewall Setup for SSH and enable
 
-AUTOMATED (install-linux-local):
+AUTOMATED (install-linux-local role `bootstrap`):
 
 - Setup to allow ssh, "deny" by default, then enable firewall:
 
@@ -743,7 +743,7 @@ noise in the logs.  To fix this, block the port explicitly:
 
 ## Static Hosts
 
-AUTOMATED (install-linux-local):
+AUTOMATED (install-linux-local role `workstation-mounts`):
 
 - Setup `/etc/hosts` as necessary for static hosts, e.g.:
 
@@ -980,19 +980,44 @@ in `/home`.
 
       agi apt-doc apt-show-source apt-show-versions apt-utils
 
-- Setup apt-file:
-
-  AUTOMATED:
-
-  - Install and update:
+- Install and update `apt-file`:
 
         agi apt-file
-
         sudo apt-file update
+
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Install apt-file
+    package:
+      name:
+        - apt-file
+    register: apt_file
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Update apt-file
+    command: apt-file update
+    when: ansible_distribution == 'Ubuntu' and apt_file is changed
+  ```
 
   Example usage:
 
       apt-file search maelstrom
+
+- Install and update `apt-rdepends`:
+
+        agi apt-file
+        sudo apt-file update
+
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Install apt-rdepends
+    package:
+      name:
+        - apt-rdepends
+    when: ansible_distribution == 'Ubuntu'
+  ```
 
 - `wajig` is a wrapper around a pile of tools:
 
