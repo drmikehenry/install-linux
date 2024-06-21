@@ -6103,8 +6103,6 @@ MANUAL:
 
 ### ALL wdfs
 
-MANUAL:
-
 - Optional test server: <https://webdavserver.com/>
 
   **NOTE** First, visit above link; this will redirect to a custom URL
