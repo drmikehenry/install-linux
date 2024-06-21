@@ -8435,7 +8435,7 @@ For the "Go" programming language.
         fi
       '
 
-- MANUAL Pre-create `~/go/bin` so that it will be added to `PATH` at next
+- (optional) Pre-create `~/go/bin` so that it will be added to `PATH` at next
   login:
 
       mkdir -p ~/go/bin
