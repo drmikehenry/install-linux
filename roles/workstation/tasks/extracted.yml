@@ -3,6 +3,15 @@
   command: pipxg install --include-deps ansible
   args:
     creates: /usr/local/bin/ansible
+- name: Create Firefox policies directory
+  file:
+    path: /etc/firefox/policies/policies.json
+    state: directory
+    mode: 0755
+- name: Disable automatic Firefox updates
+  copy:
+    dest: /etc/firefox/policies/policies.json
+    src: firefox-policies.json
 - name: Disable execution for motd files
   file:
     path: "{{ item }}"

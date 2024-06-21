@@ -3011,14 +3011,39 @@ Policies are defined in
 Article for setting up policies to avoid automatic updates:
 <https://linuxreviews.org/HOWTO_Make_Mozilla_Firefox_Stop_Nagging_You_About_Updates_And_Other_Annoying_Idiocy>
 
-- MANUAL Create `/etc/firefox/policies/policies.json` with the below contents to
-  avoid automatic Firefox updates:
+- Create Firefox policies directory:
 
-      {
-          "policies": {
-              "ManualAppUpdateOnly": true
-          }
-      }
+      mkdir -p /etc/firefox/policies/policies.json
+
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Create Firefox policies directory
+    file:
+      path: /etc/firefox/policies/policies.json
+      state: directory
+      mode: 0755
+  ```
+
+- Set policy to avoid automatic Firefox updates:
+  `:extract-echod:roles/workstation/files/firefox-policies.json`:
+
+      echod -o /etc/firefox/policies/policies.json '
+        {
+            "policies": {
+                "ManualAppUpdateOnly": true
+            }
+        }
+      '
+
+  Ansible `:role:workstation`:
+
+  ```yaml
+  - name: Disable automatic Firefox updates
+    copy:
+      dest: /etc/firefox/policies/policies.json
+      src: firefox-policies.json
+  ```
 
 ### Firefox Add-ons
 
