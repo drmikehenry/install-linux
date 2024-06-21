@@ -1297,9 +1297,7 @@ Needed for Windows network shares.
 
 ## Create Users
 
-AUTOMATED:
-
-- See `install-linux-local/local-accounts.yml`.
+AUTOMATED in `install-linux-local/local-accounts.yml`.
 
 - If there are pre-existing home directories, generally it's best to rename them
   out of the way before creating the new users. That way, the old configuration
