@@ -5566,7 +5566,7 @@ MANUAL:
 
 - Install:
 
-      agi libreoffice libreoffice-math libreoffice-pdfimport
+      agi libreoffice libreoffice-math
 
       yi libreoffice
 
