@@ -136,6 +136,13 @@ See `install-linux/README.md` for overview.
         -l $ANSIBLE_HOST \
         home.yml
 
+- user-workstation:
+
+      ansible-playbook \
+        -u $ANSIBLE_USER \
+        -l $ANSIBLE_HOST \
+        user-workstation.yml
+
 - user-plasma:
 
       ansible-playbook \

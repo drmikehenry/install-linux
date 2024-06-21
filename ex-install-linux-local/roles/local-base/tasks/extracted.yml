@@ -1,0 +1,11 @@
+---
+- name: Disable X11 forwarding for dewalt
+  copy:
+    dest: /etc/ssh/ssh_config.d/10-dewalt.conf
+    src: ssh_config.d-10-dewalt.conf
+    mode: "u=rw,go=r"
+- name: Disable X11 forwarding for dewaltguest
+  copy:
+    dest: /etc/ssh/ssh_config.d/10-dewaltguest.conf
+    src: ssh_config.d-10-dewaltguest.conf
+    mode: "u=rw,go=r"

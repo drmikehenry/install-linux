@@ -20,3 +20,6 @@
 
     - import_role:
         name: base
+
+    - import_role:
+        name: local-base

@@ -28,3 +28,13 @@
       force: yes
       # Don't attempt to set fs attributes:
       follow: false
+
+  - name: Make /nfshome symlink
+    file:
+      src: /net/bolt.drmikehenry.com/home
+      dest: /nfshome
+      state: link
+        # Don't complain if "src" appears to be missing:
+      force: yes
+      # Don't attempt to set fs attributes:
+      follow: false
