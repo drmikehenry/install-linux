@@ -8071,52 +8071,56 @@ The following work-arounds mentioned in the tickets avoid this issue:
     CCFLAGS=-O2 pyenv install 3.6.14
     CC=clang pyenv install 3.6.14
 
-MANUAL:
-
 - `pyenv` tools: <https://github.com/pyenv/pyenv>
 
 - Also see instructions in <https://github.com/drmikehenry/pythonsource>.
 
-- From <https://github.com/pyenv/pyenv/wiki#suggested-build-environment>, Ubuntu
-  build dependencies are:
+- Determine Ubuntu build dependencies from:
+  <https://github.com/pyenv/pyenv/wiki#suggested-build-environment>
 
-      build-essential
-      libssl-dev
-      zlib1g-dev
-      libbz2-dev
-      libreadline-dev
-      libsqlite3-dev
-      curl
-      git
-      libncursesw5-dev
-      xz-utils
-      tk-dev
-      libxml2-dev
-      libxmlsec1-dev
-      libffi-dev
-      liblzma-dev
+- Install build dependencies `:role:workstation`:
 
-- Install build dependencies, e.g.:
+      agi \
+        build-essential \
+        libssl-dev \
+        zlib1g-dev \
+        libbz2-dev \
+        libreadline-dev \
+        libsqlite3-dev \
+        curl \
+        git \
+        libncursesw5-dev \
+        xz-utils \
+        tk-dev \
+        libxml2-dev \
+        libxmlsec1-dev \
+        libffi-dev \
+        liblzma-dev
 
-      sudo apt-get build-dep -y python3.12
+  (alternative) Install build dependencies using `apt-get build-dep` and a few
+  extras:
 
-      # Optional for Python2 support:
-      sudo apt-get build-dep -y python2.7
+  - Install build dependencies for python:
 
-  Also install build dependencies for `python3-tk` for tkinter support (this is
-  primarily for `tk-dev`):
+        sudo apt-get build-dep -y python3.12
 
-      sudo apt-get build-dep -y python3-tk
+        # Optional for Python2 support:
+        sudo apt-get build-dep -y python2.7
 
-  Additionally, must install the below libraries:
+  - Also install build dependencies for `python3-tk` for tkinter support (this
+    is primarily for `tk-dev`):
 
-      sudo apt-get install -y libncursesw5-dev libxmlsec1-dev
+        sudo apt-get build-dep -y python3-tk
 
-  On Ubuntu 24.04, `libncursesw5-dev` is a virtual package pointing to
-  `libncursesw5-dev` (a.k.a. `libncursesw6-dev`).  This is insufficient to
-  install early Python 3.6.x versions, but it works for Python 3.6.15.
+  - Additionally, must install the below libraries:
 
-- Clone repository to become `~/.pyenv`:
+        sudo apt-get install -y libncursesw5-dev libxmlsec1-dev
+
+    On Ubuntu 24.04, `libncursesw5-dev` is a virtual package pointing to
+    `libncursesw5-dev` (a.k.a. `libncursesw6-dev`).  This is insufficient to
+    install early Python 3.6.x versions, but it works for Python 3.6.15.
+
+- MANUAL Clone repository to become `~/.pyenv`:
 
       git clone https://github.com/pyenv/pyenv ~/.pyenv
 

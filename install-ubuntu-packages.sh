@@ -27,6 +27,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   cmake \
   colordiff \
   curl \
+  curl \
   ddd \
   devede \
   doxygen \
@@ -47,6 +48,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   gdisk \
   geeqie \
   gimp \
+  git \
   git \
   git-doc \
   git-gui \
@@ -78,12 +80,21 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   kubuntu-desktop \
   kubuntu-restricted-extras \
   libboost-all-dev \
+  libbz2-dev \
+  libffi-dev \
   liblz4-tool \
+  liblzma-dev \
+  libncursesw5-dev \
+  libreadline-dev \
   libreoffice \
   libreoffice-math \
   libsane1 \
   libsane-common \
   libsane-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  libxml2-dev \
+  libxmlsec1-dev \
   linux-headers-generic \
   linux-tools-generic \
   lshw \
@@ -145,6 +156,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   tidy \
   tigervnc-standalone-server \
   tigervnc-viewer \
+  tk-dev \
   tmux \
   tofrodos \
   traceroute \
@@ -163,5 +175,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   xdotool \
   xsel \
   xterm \
+  xz-utils \
+  zlib1g-dev \
   zstd \
 
