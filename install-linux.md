@@ -441,18 +441,18 @@ login as root.
 
 ## echod
 
-AUTOMATED:
+Create simple `echod` utility:
 
-- Create simple `echod` utility:
+    vi /usr/local/bin/echod
 
-      vi /usr/local/bin/echod
-
-  With contents:
+With contents `:extract:roles/base/files/echod`:
 
 ```python
 #!/usr/bin/env python3
 
-import textwrap, sys
+import sys
+import textwrap
+
 args = sys.argv[1:]
 out = sys.stdout
 while args:
@@ -465,9 +465,21 @@ while args:
         out.write(textwrap.dedent(arg).strip() + "\n")
 ```
 
-- Make script executable:
+Make script executable:
 
-      chmod +x /usr/local/bin/echod
+    chmod +x /usr/local/bin/echod
+
+Ansible `:role:workstation`:
+
+```yaml
+- name: Install echod
+  copy:
+    src: echod
+    dest: /usr/local/bin/echod
+    owner: root
+    group: root
+    mode: 0755
+```
 
 ## Base Aliases
 

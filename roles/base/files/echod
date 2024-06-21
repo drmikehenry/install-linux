@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# *** Managed by ansible ***
 
 import sys
 import textwrap
