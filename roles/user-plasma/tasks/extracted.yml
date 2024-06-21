@@ -391,6 +391,18 @@
     group: "activate-speedcrunch.desktop"
     key: "_launch"
     value: "Ctrl+Alt+=,none,Activate or Launch Speedcrunch"
+- name: "Configure keyboard repeat delay"
+  kconfig:
+    file: kcminputrc
+    group: "Keyboard"
+    key: "RepeatDelay"
+    value: "250"
+- name: "Configure keyboard repeat rate"
+  kconfig:
+    file: kcminputrc
+    group: "Keyboard"
+    key: "RepeatRate"
+    value: "32"
 - name: Disable "Save clipboard contents on exit"
   kconfig:
     file: klipperrc

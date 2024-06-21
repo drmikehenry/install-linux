@@ -4558,10 +4558,25 @@ To bind a shortcut key to an arbitrary command:
 
 #### ... Keyboard
 
-MANUAL:
-
 - Delay: 250 ms
 - Rate: 32 repeats/sec
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
+  - name: "Configure keyboard repeat delay"
+    kconfig:
+      file: kcminputrc
+      group: "Keyboard"
+      key: "RepeatDelay"
+      value: "250"
+  - name: "Configure keyboard repeat rate"
+    kconfig:
+      file: kcminputrc
+      group: "Keyboard"
+      key: "RepeatRate"
+      value: "32"
+  ```
 
 ### System Settings | Hardware | Power Management
 
