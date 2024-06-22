@@ -1699,28 +1699,14 @@ Supported use cases:
   ```
 
 - Install a temporary `pipx` into a venv, bootstrap `pipx` into the global pipx
-  area, then remove the temporary user area:
+  area, then remove the temporary user area `:role:workstation`
+  `:creates:/usr/local/bin/pipx`:
 
       rm -rf /tmp/pipxtmp &&
         python3 -m venv /tmp/pipxtmp &&
         /tmp/pipxtmp/bin/pip install pipx &&
         PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx &&
         rm -rf /tmp/pipxtmp
-
-  Ansible `:role:workstation`:
-
-  ```yaml
-  - name: Install pipx
-    shell:
-      cmd: |
-        rm -rf /tmp/pipxtmp &&
-        python3 -m venv /tmp/pipxtmp &&
-        /tmp/pipxtmp/bin/pip install pipx &&
-        PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx &&
-        rm -rf /tmp/pipxtmp
-    args:
-      creates: /usr/local/bin/pipx
-  ```
 
 - Verify global installation of `pipx` using `pipxg`:
 
@@ -1733,18 +1719,10 @@ Supported use cases:
          package pipx 0.13.1.1, Python 3.6.7
           - pipx
 
-- Install virtualenvwrapper:
+- Install virtualenvwrapper `:role:workstation`
+  `:creates:/usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv`:
 
       pipxg install virtualenvwrapper
-
-  Ansible `:role:workstation`:
-
-  ```yaml
-  - name: Install virtualenvwrapper
-    command: pipxg install virtualenvwrapper
-    args:
-      creates: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
-  ```
 
   For some reason, two of the binaries must be manually symlinked:
 
@@ -8030,21 +8008,10 @@ needed.
 
 ### Python Poetry
 
-- Install:
+- Install `:role:workstation`:
 
       pipxg install poetry &&
         pipxg inject poetry poetry-plugin-export
-
-  Ansible `:role:workstation`:
-
-  ```yaml
-  - name: Install poetry
-    script: |
-      pipxg install poetry &&
-        pipxg inject poetry poetry-plugin-export
-    args:
-      creates: /usr/local/bin/poetry
-  ```
 
 - Sadly, even after explicitly installing the `poetry-plugin-export` plugin,
   poetry still warns about it.  Disable the warning as an unprivileged user via:
@@ -8145,21 +8112,10 @@ HOMEGIT Ruff per-user configuration:
 
 #### Python flake8
 
-- Python 3-based flake8:
+- Install flake8 `:role:workstation`:
 
       pipxg install flake8 &&
         pipxg inject flake8 flake8-quotes pep8-naming
-
-  Ansible `:role:workstation`:
-
-  ```yaml
-  - name: Install flake8
-    script: |
-      pipxg install flake8 &&
-        pipxg inject flake8 flake8-quotes pep8-naming
-    args:
-      creates: /usr/local/bin/flake8
-  ```
 
 - Configure flake8-quotes to match the style enforced by the black formatter.
   Note: this must be done on a per-project basis; the `~/.config/flake8` file is
@@ -8205,25 +8161,12 @@ HOMEGIT Ruff per-user configuration:
 #### Python Language Server
 
 - Install with selection options (do not install ``all`` options, because that
-  installs Pylint):
+  installs Pylint) `:role:workstation` `:creates:/usr/local/bin/pylsp`:
 
       pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]' &&
-        pipxg inject python-lsp-server python-lsp-black
-        pipxg inject python-lsp-server pylsp-mypy
+        pipxg inject python-lsp-server python-lsp-black &&
+        pipxg inject python-lsp-server pylsp-mypy &&
         pipxg inject python-lsp-server python-lsp-ruff
-
-  Ansible `:role:workstation`:
-
-  ```yaml
-  - name: Install python-language-server
-    script: |
-        pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]' &&
-          pipxg inject python-lsp-server python-lsp-black &&
-          pipxg inject python-lsp-server pylsp-mypy &&
-          pipxg inject python-lsp-server python-lsp-ruff
-    args:
-      creates: /usr/local/bin/pylsp
-  ```
 
 ### Python Hatch
 
@@ -8713,18 +8656,9 @@ necessary to install `rust-analyzer` separately.  Instead, use:
 
 ### sphinx
 
-- Install:
+- Install `:role:workstation` `:creates:/usr/local/bin/sphinx-quickstart`:
 
       pipxg install sphinx
-
-  Ansible `:role:workstation`:
-
-  ```yaml
-  - name: Install sphinx
-    command: pipxg install sphinx
-    args:
-      creates: /usr/local/bin/sphinx-quickstart
-  ```
 
 - Use:
 
@@ -8732,21 +8666,10 @@ necessary to install `rust-analyzer` separately.  Instead, use:
 
 ### docutils with pygments
 
-- Install:
+- Install `:role:workstation` `:creates:/usr/local/bin/rst2html`:
 
       pipxg install docutils &&
         pipxg inject docutils pygments
-
-  Ansible `:role:workstation`:
-
-  ```yaml
-  - name: Install docutils
-    script: |
-      pipxg install docutils &&
-        pipxg inject docutils pygments
-    args:
-      creates: /usr/local/bin/rst2html
-  ```
 
 - Use:
 

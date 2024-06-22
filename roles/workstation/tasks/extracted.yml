@@ -32,18 +32,13 @@
     owner: root
     group: root
     mode: 0755
-- name: Install pipx
-  shell:
-    cmd: |
-      rm -rf /tmp/pipxtmp &&
-      python3 -m venv /tmp/pipxtmp &&
-      /tmp/pipxtmp/bin/pip install pipx &&
-      PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx &&
-      rm -rf /tmp/pipxtmp
+- name: Create /usr/local/bin/pipx
+  shell: rm -rf /tmp/pipxtmp && python3 -m venv /tmp/pipxtmp && /tmp/pipxtmp/bin/pip
+    install pipx && PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx && rm -rf /tmp/pipxtmp
   args:
     creates: /usr/local/bin/pipx
-- name: Install virtualenvwrapper
-  command: pipxg install virtualenvwrapper
+- name: pipxg Install virtualenvwrapper
+  shell: pipxg install virtualenvwrapper
   args:
     creates: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
 - name: Create virtualenv symlinks
@@ -57,7 +52,7 @@
     - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone
       dest: /usr/local/bin/virtualenv-clone
 - name: pipxg Install ansible
-  command: pipxg install --include-deps ansible
+  shell: pipxg install --include-deps ansible
   args:
     creates: /usr/local/bin/ansible
 - name: Create Firefox policies directory
@@ -83,11 +78,11 @@
     name: landscape-common
     state: absent
 - name: pipxg Install findx
-  command: pipxg install findx
+  shell: pipxg install findx
   args:
     creates: /usr/local/bin/findx
 - name: pipxg Install ptee
-  command: pipxg install ptee
+  shell: pipxg install ptee
   args:
     creates: /usr/local/bin/ptee
 - name: Make symlinks for `unix2dos`/`dos2unix`
@@ -101,76 +96,68 @@
     - src_name: fromdos
       dest_name: dos2unix
 - name: pipxg Install cookiecutter
-  command: pipxg install cookiecutter
+  shell: pipxg install cookiecutter
   args:
     creates: /usr/local/bin/cookiecutter
 - name: pipxg Install svnwrap
-  command: pipxg install svnwrap
+  shell: pipxg install svnwrap
   args:
     creates: /usr/local/bin/svnwrap
 - name: pipxg Install compiledb
-  command: pipxg install compiledb
+  shell: pipxg install compiledb
   args:
     creates: /usr/local/bin/compiledb
 - name: pipxg Install ipython
-  command: pipxg install ipython
+  shell: pipxg install ipython
   args:
     creates: /usr/local/bin/ipython
-- name: Install poetry
-  script: |
-    pipxg install poetry &&
-      pipxg inject poetry poetry-plugin-export
+- name: pipxg Install poetry
+  shell: pipxg install poetry && pipxg inject poetry poetry-plugin-export
   args:
     creates: /usr/local/bin/poetry
 - name: pipxg Install pytest
-  command: pipxg install pytest
+  shell: pipxg install pytest
   args:
     creates: /usr/local/bin/pytest
 - name: pipxg Install mypy
-  command: pipxg install mypy
+  shell: pipxg install mypy
   args:
     creates: /usr/local/bin/mypy
 - name: pipxg Install ruff
-  command: pipxg install ruff
+  shell: pipxg install ruff
   args:
     creates: /usr/local/bin/ruff
 - name: pipxg Install flake8-to-ruff
-  command: pipxg install flake8-to-ruff
+  shell: pipxg install flake8-to-ruff
   args:
     creates: /usr/local/bin/flake8-to-ruff
-- name: Install flake8
-  script: |
-    pipxg install flake8 &&
-      pipxg inject flake8 flake8-quotes pep8-naming
+- name: pipxg Install flake8
+  shell: pipxg install flake8 && pipxg inject flake8 flake8-quotes pep8-naming
   args:
     creates: /usr/local/bin/flake8
 - name: pipxg Install black
-  command: pipxg install black
+  shell: pipxg install black
   args:
     creates: /usr/local/bin/black
-- name: Install python-language-server
-  script: |
-      pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]' &&
-        pipxg inject python-lsp-server python-lsp-black &&
-        pipxg inject python-lsp-server pylsp-mypy &&
-        pipxg inject python-lsp-server python-lsp-ruff
+- name: pipxg Install python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]
+  shell: pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]'
+    && pipxg inject python-lsp-server python-lsp-black && pipxg inject python-lsp-server
+    pylsp-mypy && pipxg inject python-lsp-server python-lsp-ruff
   args:
     creates: /usr/local/bin/pylsp
 - name: pipxg Install pyupgrade
-  command: pipxg install pyupgrade
+  shell: pipxg install pyupgrade
   args:
     creates: /usr/local/bin/pyupgrade
-- name: Install sphinx
-  command: pipxg install sphinx
+- name: pipxg Install sphinx
+  shell: pipxg install sphinx
   args:
     creates: /usr/local/bin/sphinx-quickstart
-- name: Install docutils
-  script: |
-    pipxg install docutils &&
-      pipxg inject docutils pygments
+- name: pipxg Install docutils
+  shell: pipxg install docutils && pipxg inject docutils pygments
   args:
     creates: /usr/local/bin/rst2html
 - name: pipxg Install rstcheck
-  command: pipxg install rstcheck
+  shell: pipxg install rstcheck
   args:
     creates: /usr/local/bin/rstcheck

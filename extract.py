@@ -48,8 +48,12 @@ def backslash_newline(s: str) -> str:
     return re.sub(r"\\\s*\n\s*", " ", s)
 
 
+def and_and_newline(s: str) -> str:
+    return re.sub(r"&&\n\s*", "&& ", s)
+
+
 def raw_text_lines(raw_text: str) -> T.List[str]:
-    lines = stripped(backslash_newline(raw_text).splitlines())
+    lines = stripped(and_and_newline(backslash_newline(raw_text)).splitlines())
     return lines
 
 
@@ -209,18 +213,23 @@ def walk(tree: marko.block.Element, indent="") -> None:
 
 
 def extract_install_pipxg(
+    line: str,
     cmd_args: T.List[str],
     roles: T.List[str],
     role_yaml_parts: T.DefaultDict[str, T.List[str]],
+    creates: str,
 ) -> None:
-    if len(cmd_args) >= 3 and cmd_args[:2] == "pipxg install".split():
-        name = cmd_args[-1]
+    words = [a for a in cmd_args if not a.startswith("-")]
+    if len(words) >= 3 and words[:2] == "pipxg install".split():
+        name = words[2]
+        if creates == "":
+            creates = f"/usr/local/bin/{name}"
         yaml_part = yaml_dump(
             [
                 dict(
                     name=f"pipxg Install {name}",
-                    command=" ".join(shlex.quote(arg) for arg in cmd_args),
-                    args=dict(creates=f"/usr/local/bin/{name}"),
+                    shell=line,
+                    args=dict(creates=creates),
                 )
             ],
             explicit_start=False,
@@ -235,18 +244,22 @@ def extract_install(
     roles: T.List[str],
     role_yaml_parts: T.DefaultDict[str, T.List[str]],
     dist_role_packages: T.Dict[str, T.DefaultDict[str, T.Set[str]]],
+    creates: str,
 ) -> None:
     if not isinstance(code, marko.block.CodeBlock):
         logger.warning("Install missing code block (try --verbose)")
         return
 
     for line in raw_text_lines(code_text(code)):
-        if not line.strip():
+        line = line.strip()
+        if not line:
             continue
         cmd_args = shlex.split(line)
         cmd, *args = cmd_args
         if cmd == "pipxg":
-            extract_install_pipxg(cmd_args, roles, role_yaml_parts)
+            extract_install_pipxg(
+                line, cmd_args, roles, role_yaml_parts, creates
+            )
         elif cmd in ("agi", "yi"):
             packages = args
             if not packages:
@@ -260,8 +273,24 @@ def extract_install(
                     assert False
                 for role in roles:
                     dist_role_packages[dist][role].update(packages)
+        elif creates == "":
+            logger.warning(
+                "Missing `:creates:` for 'Install' line "
+                f"{line!r} (try --verbose)"
+            )
         else:
-            logger.warning(f"Unknown 'Install' line {line!r} (try --verbose)")
+            yaml_part = yaml_dump(
+                [
+                    dict(
+                        name=f"Create {creates}",
+                        shell=line,
+                        args=dict(creates=creates),
+                    )
+                ],
+                explicit_start=False,
+            )
+            for role in roles:
+                role_yaml_parts[role].append(yaml_part)
 
 
 def extract_ansible(
@@ -296,11 +325,14 @@ def extract_general(doc: marko.block.Element) -> None:
         if "Ansible" in keywords:
             extract_ansible(code, roles, role_yaml_parts)
         elif "Install" in keywords:
+            creates_list = tag_map.get(":creates:", [])
+            creates = creates_list[0] if creates_list else ""
             extract_install(
                 code,
                 roles,
                 role_yaml_parts,
                 dist_role_packages,
+                creates,
             )
         else:
             logger.warning(f"extract_general: bad keywords {keywords}")
