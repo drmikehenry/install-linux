@@ -1963,8 +1963,9 @@ Rationale:
 
       0AB215679C571D1C8325275B9BDB3D89CE49EC21
 
-- Download the key based on the fingerprint and store in `/etc/apt/keyrings`
-  (adjusting the `--keyring` and fingerprint at the end of the command):
+- Install the key based on the fingerprint and store in `/etc/apt/keyrings`
+  (adjusting the `--keyring` and fingerprint at the end of the command)
+  `:role:mozilla-ppa` `:creates:/etc/apt/keyrings/mozillateam.gpg`:
 
       gpg \
         --homedir /tmp \
@@ -1974,49 +1975,17 @@ Rationale:
         --keyring /etc/apt/keyrings/mozillateam.gpg \
         0AB215679C571D1C8325275B9BDB3D89CE49EC21
 
-  Ansible `:role:mozilla-ppa`:
+- Install a `.sources` file for `mozillateam` `:role:mozilla-ppa`
+  `:creates:/etc/apt/sources.list.d/mozillateam.sources`:
 
-  ```yaml
-  - name: Acquire mozillateam PPA key
-    shell: |
-      gpg \
-        --homedir /tmp \
-        --no-default-keyring \
-        --keyserver keyserver.ubuntu.com \
-        --recv-keys \
-        --keyring /etc/apt/keyrings/mozillateam.gpg \
-        0AB215679C571D1C8325275B9BDB3D89CE49EC21
-    args:
-      creates: /etc/apt/keyrings/mozillateam.gpg
-  ```
-
-- Create a `.sources` file for `mozillateam`:
-
-      echod -o /etc/apt/sources.list.d/mozillateam.sources "
-        Types: deb
-        URIs: https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu/
-        Suites: $(lsb_release -cs)
-        Components: main
-        Architectures: $(dpkg --print-architecture)
-        Signed-By: /etc/apt/keyrings/mozillateam.gpg
-      "
-
-  Ansible `:role:mozilla-ppa`:
-
-  ```yaml
-  - name: Create mozillateam.sources
-    shell: |
-        printf "%s\n" \
-          "Types: deb" \
-          "URIs: https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu/" \
-          "Suites: $(lsb_release -cs)" \
-          "Components: main" \
-          "Architectures: $(dpkg --print-architecture)" \
-          "Signed-By: /etc/apt/keyrings/mozillateam.gpg" \
-          > /etc/apt/sources.list.d/mozillateam.sources
-    args:
-      creates: /etc/apt/sources.list.d/mozillateam.sources
-  ```
+      printf "%s\n" \
+        "Types: deb" \
+        "URIs: https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu/" \
+        "Suites: $(lsb_release -cs)" \
+        "Components: main" \
+        "Architectures: $(dpkg --print-architecture)" \
+        "Signed-By: /etc/apt/keyrings/mozillateam.gpg" \
+        > /etc/apt/sources.list.d/mozillateam.sources
 
 - Update APT cache:
 
