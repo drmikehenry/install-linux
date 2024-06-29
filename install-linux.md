@@ -9218,40 +9218,118 @@ MANUAL:
   - "Containers from Scratch", Liz Rice, GOTO 2018:
     <https://youtu.be/8fi7uSYlOdc>
 
-MANUAL:
+- The `docker` role is expected to be used from `install-linux-local`.
+
+- Variables:
+
+  - `DOCKER_KEY_URL`: URL to the Docker key:
+
+        # Default value.
+        DOCKER_KEY_URL=https://download.docker.com/linux/ubuntu/gpg
+
+  - `DOCKER_REPO_URL`: URL to the Docker repo:
+
+        # Default value.
+        DOCKER_REPO_URL=https://download.docker.com/linux/ubuntu
+
+  - `DOCKER_USER`: User to add to the `docker` group:
+
+        # No default.
+        DOCKER_USER=mike
 
 - Install key:
 
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg |
-        sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+      curl -fsSL $DOCKER_KEY_URL |
+        gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
-- Add repository:
+  Ansible `:role:docker`:
 
-      echod -o /etc/apt/sources.list.d/docker.sources "
-        Types: deb
-        URIs: https://download.docker.com/linux/ubuntu
-        Suites: $(lsb_release -cs)
-        Components: stable
-        Architectures: $(dpkg --print-architecture)
-        Signed-By: /etc/apt/keyrings/docker.gpg
-      "
+  ```yaml
+  - name: Install Docker signing key
+    shell: |
+      curl -fsSL "{{ DOCKER_KEY_URL }}" |
+        gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    args:
+      creates: /etc/apt/keyrings/docker.gpg
+    when: ansible_distribution == 'Ubuntu'
+  ```
+
+- Install a `docker.sources` and update the APT cache:
+
+      printf "%s\n" \
+        "Types: deb" \
+        "URIs: $DOCKER_REPO_URL" \
+        "Suites: $(lsb_release -cs)" \
+        "Components: stable" \
+        "Architectures: $(dpkg --print-architecture)" \
+        "Signed-By: /etc/apt/keyrings/docker.gpg" \
+        > /etc/apt/sources.list.d/docker.sources
 
       apt update
 
-- Install Docker components:
+  Ansible `:role:docker`:
+
+  ```yaml
+  - name: Install `docker.sources`
+    shell: |
+      printf "%s\n" \
+        "Types: deb" \
+        "URIs: {{ DOCKER_REPO_URL }}" \
+        "Suites: $(lsb_release -cs)" \
+        "Components: stable" \
+        "Architectures: $(dpkg --print-architecture)" \
+        "Signed-By: /etc/apt/keyrings/docker.gpg" \
+        > /etc/apt/sources.list.d/docker.sources
+    args:
+      creates: /etc/apt/sources.list.d/docker.sources
+    register: docker_sources
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Update APT cache
+    apt:
+      update_cache: yes
+    when: docker_sources is changed and ansible_distribution == 'Ubuntu'
+  ```
+
+- Update and install Docker components:
 
       agi \
         docker-ce \
         docker-ce-cli \
         containerd.io \
-        docker-compose-plugin \
-        docker-buildx-plugin
+        docker-buildx-plugin \
+        docker-compose-plugin
+
+  Ansible `:role:docker`:
+
+  ```yaml
+  - name: Install Docker packages
+    package:
+      name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    when: ansible_distribution == 'Ubuntu'
+  ```
 
 - Add user to `docker` group:
 
-      usermod -aG docker mike
+      usermod -aG docker $DOCKER_USER
 
-- Logout and login `mike` user (or use `newgrp docker`).
+  Ansible `:role:docker`:
+
+  ```yaml
+  - name: Add "{{ DOCKER_USER }}" to `docker` group
+    user:
+      name: "{{ DOCKER_USER }}"
+      groups:
+        - docker
+      append: yes
+  ```
+
+- Logout and login DOCKER_USER (or use `newgrp docker`).
 
 - Configure:
 

@@ -1,0 +1,2 @@
+DOCKER_KEY_URL: "https://download.docker.com/linux/ubuntu/gpg"
+DOCKER_REPO_URL: "https://download.docker.com/linux/ubuntu"

@@ -1,0 +1,42 @@
+---
+- name: Install Docker signing key
+  shell: |
+    curl -fsSL "{{ DOCKER_KEY_URL }}" |
+      gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  args:
+    creates: /etc/apt/keyrings/docker.gpg
+  when: ansible_distribution == 'Ubuntu'
+- name: Install `docker.sources`
+  shell: |
+    printf "%s\n" \
+      "Types: deb" \
+      "URIs: {{ DOCKER_REPO_URL }}" \
+      "Suites: $(lsb_release -cs)" \
+      "Components: stable" \
+      "Architectures: $(dpkg --print-architecture)" \
+      "Signed-By: /etc/apt/keyrings/docker.gpg" \
+      > /etc/apt/sources.list.d/docker.sources
+  args:
+    creates: /etc/apt/sources.list.d/docker.sources
+  register: docker_sources
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+  when: docker_sources is changed and ansible_distribution == 'Ubuntu'
+- name: Install Docker packages
+  package:
+    name:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+  when: ansible_distribution == 'Ubuntu'
+- name: Add "{{ DOCKER_USER }}" to `docker` group
+  user:
+    name: "{{ DOCKER_USER }}"
+    groups:
+      - docker
+    append: yes
