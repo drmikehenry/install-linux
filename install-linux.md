@@ -4105,7 +4105,7 @@ or via `systemsettings5`.
 
   ```
 
-#### ... Shortcuts | System Services | KWin
+#### ... Shortcuts | System Settings | KWin
 
 - Lower Window: Alt+2
 
@@ -4222,6 +4222,21 @@ or via `systemsettings5`.
       group: "kwin"
       key: "Window Operations Menu"
       value: "Alt+Space,Alt+F3,Window Operations Menu"
+  ```
+
+#### ... Shortcuts | System Settings | Session Management
+
+- Lock Session: Ctrl+Alt+L
+
+  Ansible `:role:user-plasma`:
+
+  ```yaml
+  - name: Shortcut for "Lock Session"
+    kconfig:
+      file: kglobalshortcutsrc
+      group: "ksmserver"
+      key: "Lock Session"
+      value: "Ctrl+Alt+L\tScreensaver\tMeta+L,Meta+L\tScreensaver,Lock Session"
   ```
 
 #### ... Custom Shortcuts
