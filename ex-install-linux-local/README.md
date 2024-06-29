@@ -27,30 +27,6 @@ See `install-linux/README.md` for overview.
         -l $ANSIBLE_HOST \
         bootstrap.yml
 
-- OPTIONAL UBUNTU Remove snaps:
-
-      ansible-playbook \
-        -u root \
-        -l $ANSIBLE_HOST \
-        remove-snaps.yml
-
-- OPTIONAL UBUNTU Use Mozilla PPA for Firefox, Thunderbird:
-
-      ansible-playbook \
-        -u root \
-        -l $ANSIBLE_HOST \
-        mozilla-ppa.yml
-
-  Note: this also reinstalls Firefox from the PPA because the snap version was
-  likely purged (and Firefox is installed by default).
-
-- OPTIONAL UBUNTU Use Firefox tarball:
-
-      ansible-playbook \
-        -u root \
-        -l $ANSIBLE_HOST \
-        firefox-tarball.yml
-
 - OPTIONAL Setup `/localhome`-based home directories:
 
       ansible-playbook \
@@ -74,6 +50,30 @@ See `install-linux/README.md` for overview.
         -u root \
         -l $ANSIBLE_HOST \
         workstation-mounts.yml
+
+- OPTIONAL UBUNTU Remove snaps:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        remove-snaps.yml
+
+- OPTIONAL UBUNTU Use Mozilla PPA for Firefox, Thunderbird:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        mozilla-ppa.yml
+
+  Note: this also reinstalls Firefox from the PPA because the snap version was
+  likely purged (and Firefox is installed by default).
+
+- OPTIONAL UBUNTU Use Firefox tarball:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        firefox-tarball.yml
 
 - accounts:
 
