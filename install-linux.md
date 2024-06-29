@@ -4739,11 +4739,20 @@ MANUAL:
   Manager` (instead of the now-default "icons only" variant).
 
 - Right-click on the task bar, choose `Configure Task Manager`:
+  - Appearance:
+    - General | Maximum rows: 2
   - Behavior:
     - Set `Group` to `Do Not Group`.
     - Set `Sort` to `Manually`.
     - Check `Show only tasks from current desktop`.
     - Check `Show only tasks from current activity`.
+
+- Unpin Task Manager icons: Right-click on each of the below applications on the
+  left of Task Manager, choose "Unpin from Task Manager":
+
+  - System Settings
+  - Discover Software Center
+  - Dolphin File Manager
 
 - Right-click on taskbar, choose `Enter Edit Mode`.  Increase "panel height"
   until date and time are comfortable to read.
