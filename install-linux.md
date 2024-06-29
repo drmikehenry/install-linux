@@ -4506,7 +4506,7 @@ To bind a shortcut key to an arbitrary command:
       file: kglobalshortcutsrc
       group: "activate-gvim-email.desktop"
       key: "_launch"
-      value: "Ctrl+Alt+o,none,Activate or Launch Gvim-Email"
+      value: "Ctrl+Alt+O,none,Activate or Launch Gvim-Email"
   ```
 
 - Launch Konsole shortcut:
