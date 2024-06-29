@@ -44,6 +44,7 @@ dnf install -y \
   mscgen \
   mutt \
   myrepos \
+  neovim-qt \
   nfs-utils \
   nmap \
   okular \

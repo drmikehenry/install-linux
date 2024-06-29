@@ -1,0 +1,5 @@
+---
+- name: Install fedora `:role:neovim` packages
+  package:
+    name:
+    - neovim-qt

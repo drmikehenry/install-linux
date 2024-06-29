@@ -7837,7 +7837,77 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
   - <https://github.com/neovim/neovim/wiki/Installing-Neovim>
 
-- Ubuntu PPA exists as `ppa:neovim-ppa/stable`, pointing to:
+#### Neovim from tarball
+
+- Neovim releases are at <https://github.com/neovim/neovim/releases/>.
+
+- Variables:
+
+  - `VERSION`: Version of Neovim to install, e.g.:
+
+        VERSION=0.10.0
+
+  - `DOWNLOAD_DIR`: Directory of downloaded Neovim installers by version, e.g.:
+
+        DOWNLOAD_DIR=/m/shared/download/programming/neovim
+
+- The tarball `nvim-linux64.tar.gz` should be downloaded for the desired version
+  into the `DOWNLOAD_DIR` for `VERSION`, e.g.:
+
+      mkdir -p $DOWNLOAD_DIR/$VERSION
+      cd $DOWNLOAD_DIR/$VERSION
+      curl -LO https://github.com/neovim/neovim/releases/download/v$VERSION/nvim-linux64.tar.gz
+
+- Copy the installer to the host `/tmp/` directory:
+
+      scp $DOWNLOAD_DIR/$VERSION/nvim-linux64.tar.gz $ANSIBLE_HOST:/tmp
+
+  Ansible `:role:neovim`:
+
+  ```yaml
+  - name: "Copy Neovim tarball"
+    copy:
+      src: "{{ DOWNLOAD_DIR }}/{{ VERSION }}/nvim-linux64.tar.gz"
+      dest: /tmp/nvim-linux64.tar.gz
+  ```
+
+- Install below `/opt` and symlink into `/usr/local/bin`
+  `:creates:/usr/local/bin/nvim` `:role:neovim`:
+
+      tar -C /opt -zxf /tmp/nvim-linux64.tar.gz &&
+        ln -s /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
+
+- Remove the installer from the host `/tmp/` directory:
+
+      ssh $ANSIBLE_HOST rm -f /tmp/nvim-linux64.tar.gz
+
+  Ansible `:role:neovim`:
+
+  ```yaml
+  - name: "Cleanup Neovim tarball"
+    file:
+      path: /tmp/nvim-linux64.tar.gz
+      state: absent
+  ```
+
+- Install `pynvim` for Python support in Neovim (following the Vimfiles default
+  location for `g:python3_host_prog` = `/opt/pynvim/env/bin/python`)
+  `:creates:/opt/pynvim/env/bin/python` `:role:neovim`:
+
+      python3 -m venv /opt/pynvim &&
+        /opt/pynvim/bin/python -m pip install pynvim
+
+- Install `neovim-qt` for GUI support.  Invoke as `nvim-qt`; the first `nvim`
+  binary in `PATH` will be used `:role:neovim`:
+
+      agi neovim-qt
+
+      yi neovim-qt
+
+#### Neovim using PPA
+
+- As an alternative, an Ubuntu PPA exists as `ppa:neovim-ppa/stable`, pointing
+  to:
 
   <https://launchpad.net/~neovim-ppa/+archive/ubuntu/stable>
 

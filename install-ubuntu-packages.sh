@@ -116,6 +116,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   mutt \
   myrepos \
   nautilus \
+  neovim-qt \
   nfs-common \
   nmap \
   okular \
