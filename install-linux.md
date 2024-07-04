@@ -2101,6 +2101,41 @@ get the latest version:
 
 AUTOMATED in role `user-git-repos`:
 
+- `homegit` (from `~/.home.git`) holds content common to all locations. The main
+  `~/.gitconfig` file contains common Git settings.
+
+- `home2git` (from `~/.home2.git`) holds location-specific content. It extends
+  from the `homegit` configuration via the below `include` in `~/.gitconfig`:
+
+      [include]
+              path = ~/.gitconfig2
+
+- Similarly, other file pairs (e.g., `~/.bashrc` and `~/.bashrc2`) combine
+  common and location-specific content for shells.
+
+- As of Git 2.35, there is a new feature in Git to detect so-called "dubious"
+  ownership of Git repositories.  When interacting with such a repository, Git
+  throws this error:
+
+      fatal: detected dubious ownership in repository at '/path/to/repo.git'
+
+- To allow `root` to clone the user's `.home.git` and `.home2.git` repositories,
+  they must be marked "safe".  This is done in `~/.gitconfig2` via:
+
+      [safe]
+              directory = /home/mike/.home.git
+              directory = /home/mike/.home2.git
+
+  Note that Git contains a special hack to detect the use of `sudo`.
+  from `man git-config` in the `safe.directory` section:
+
+  > [...] git checks the `SUDO_UID` environment variable that `sudo` creates
+  > and will allow access to the uid recorded as its value in addition to the id
+  > from 'root'.
+
+  Thus operations like `sudo git clone ...` will work even if the cloned
+  repository is not `root`-owned.
+
 - Bring over `.home.git` and `.home2.git`:
 
       cd ~
@@ -2128,13 +2163,16 @@ AUTOMATED in role `user-git-repos`:
 
 - Restart shell to acquire Bash aliases, PATH (including `~/bin`), etc.
 
-- As root:
+- Clone into `root` area:
 
-      cd ~
-      git clone --bare ~mike/.home.git
-      git clone --bare ~mike/.home2.git
+      sudo git clone --bare ~/.home.git /root/.home.git
+      sudo git clone --bare ~/.home2.git /root/.home2.git
 
-      # Continue steps from above.
+  Once cloned, the `safe.directory` configuration settings will permit future
+  `homegit pull` operations to proceed.
+
+- As root, setup aliases and perform `reset --hard` steps as done above for the
+  non-root user.
 
 ## Clone vimfiles, vimfiles-local
 
