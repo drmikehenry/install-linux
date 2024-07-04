@@ -7899,6 +7899,12 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
   - <https://github.com/neovim/neovim/wiki/Installing-Neovim>
 
+#### Neovim from package manager
+
+- Ubuntu 24.04 has Neovim 0.9.5, which is out of date.  Install via:
+
+      agi neovim
+
 #### Neovim from tarball
 
 - Neovim releases are at <https://github.com/neovim/neovim/releases/>.
@@ -7958,6 +7964,10 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
       python3 -m venv /opt/pynvim &&
         /opt/pynvim/bin/python -m pip install pynvim
+
+  Alternatively, the Ubuntu-supplied package may be installed:
+
+      agi python3-pynvim
 
 - Install `neovim-qt` for GUI support.  Invoke as `nvim-qt`; the first `nvim`
   binary in `PATH` will be used `:role:neovim`:
