@@ -9370,7 +9370,7 @@ MANUAL:
     when: docker_sources is changed and ansible_distribution == 'Ubuntu'
   ```
 
-- Update and install Docker components:
+- Install Docker components:
 
       agi \
         docker-ce \
