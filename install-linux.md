@@ -7282,27 +7282,64 @@ Creates self-installing shar-like archives.
 
 ### UBUNTU Google Chrome
 
-MANUAL:
-
 - Instructions: <https://itslinuxfoss.com/install-google-chrome-ubuntu-22-04/>
 
 - Download and install Google's signing key:
 
       curl -fsSL https://dl.google.com/linux/linux_signing_key.pub |
-        sudo gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
+        gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
+
+  Ansible `:role:home-google-chrome`:
+
+  ```yaml
+  - name: Install Google signing key
+    shell: |
+      curl -fsSL https://dl.google.com/linux/linux_signing_key.pub |
+        gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
+    args:
+      creates: /etc/apt/keyrings/google-chrome.gpg
+    when: ansible_distribution == 'Ubuntu'
+  ```
 
 - Chrome sets up the cron job `/opt/google/chrome/cron/google-chrome` to
   periodically update `/etc/apt/sources.list.d/google-chrome.list`. To bootstrap
-  the process, pre-create that file:
+  the process, pre-create that file.
 
-      sudo echod -o /etc/apt/sources.list.d/google-chrome.list '
-        deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main
-      '
+  Install `:role:home-google-chrome`
+  `:creates:/etc/apt/sources.list.d/google-chrome.list`:
 
-- Update and install stable version:
+      printf "%s\n" \
+        "### THIS FILE IS AUTOMATICALLY CONFIGURED ###" \
+        "# You may comment out this entry, but any other modifications may be lost." \
+        "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" \
+      > /etc/apt/sources.list.d/google-chrome.list
 
-      apt-get update
+- Update APT cache:
+
+      apt update
+
+  Ansible `:role:home-google-chrome`:
+
+  ```yaml
+  - name: Update APT cache
+    apt:
+      update_cache: yes
+    when: ansible_distribution == 'Ubuntu'
+  ```
+
+- Install Google Chrome stable version:
+
       agi google-chrome-stable
+
+  Ansible `:role:home-google-chrome`:
+
+  ```yaml
+  - name: Install Google Chrome stable version
+    package:
+      name:
+      - google-chrome-stable
+    when: ansible_distribution == 'Ubuntu'
+  ```
 
 - **Until the defaults change**, always run with `--password-store=detect` to
   ensure stored passwords are encrypted. Facilitated via a wrapper script

@@ -1,0 +1,23 @@
+---
+- name: Install Google signing key
+  shell: |
+    curl -fsSL https://dl.google.com/linux/linux_signing_key.pub |
+      gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
+  args:
+    creates: /etc/apt/keyrings/google-chrome.gpg
+  when: ansible_distribution == 'Ubuntu'
+- name: Create /etc/apt/sources.list.d/google-chrome.list
+  shell: 'printf "%s\n"  "### THIS FILE IS AUTOMATICALLY CONFIGURED ###"  "# You may
+    comment out this entry, but any other modifications may be lost."  "deb [arch=amd64]
+    https://dl.google.com/linux/chrome/deb/ stable main"  > /etc/apt/sources.list.d/google-chrome.list'
+  args:
+    creates: /etc/apt/sources.list.d/google-chrome.list
+- name: Update APT cache
+  apt:
+    update_cache: yes
+  when: ansible_distribution == 'Ubuntu'
+- name: Install Google Chrome stable version
+  package:
+    name:
+    - google-chrome-stable
+  when: ansible_distribution == 'Ubuntu'
