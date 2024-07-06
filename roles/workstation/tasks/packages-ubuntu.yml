@@ -97,9 +97,7 @@
     - pv
     - python3-dev
     - python3-doc
-    - python3-pip
     - python3-tk
-    - python3-venv
     - qgit
     - ripgrep
     - rpm2cpio

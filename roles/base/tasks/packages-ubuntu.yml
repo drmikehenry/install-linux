@@ -12,6 +12,8 @@
     - keychain
     - myrepos
     - nfs-common
+    - python3-pip
+    - python3-venv
     - subversion
     - vim
     - wget

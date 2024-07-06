@@ -60,6 +60,43 @@
     dest: /etc/ssh/sshd_config.d/90-accept-env.conf
     src: sshd_config.d-90-accept-env.conf
     mode: "u=rw,go=r"
+- name: Make python3 symlink
+  file:
+    src: /usr/bin/python3
+    dest: /usr/local/bin/python
+    state: link
+
+- name: Make pip3 symlink
+  file:
+    src: /usr/bin/pip3
+    dest: /usr/local/bin/pip
+    state: link
+- name: Install pipxg script
+  copy:
+    src: pipxg
+    dest: /usr/local/bin/pipxg
+    owner: root
+    group: root
+    mode: 0755
+- name: Create /usr/local/bin/pipx
+  shell: rm -rf /tmp/pipxtmp && python3 -m venv /tmp/pipxtmp && /tmp/pipxtmp/bin/pip
+    install pipx && PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx && rm -rf /tmp/pipxtmp
+  args:
+    creates: /usr/local/bin/pipx
+- name: pipxg Install virtualenvwrapper
+  shell: pipxg install virtualenvwrapper
+  args:
+    creates: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
+- name: Create virtualenv symlinks
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  loop:
+    - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
+      dest: /usr/local/bin/virtualenv
+    - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone
+      dest: /usr/local/bin/virtualenv-clone
 - name: Do not hide Grub
   lineinfile:
     dest: /etc/default/grub

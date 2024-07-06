@@ -1640,7 +1640,7 @@ Supported use cases:
 
 ### Python Base Support
 
-- Install venv + pip `:role:workstation`:
+- Install venv + pip `:role:base`:
 
       agi python3-venv python3-pip
 
@@ -1649,7 +1649,7 @@ Supported use cases:
       ln -s /usr/bin/python3 /usr/local/bin/python
       ln -s /usr/bin/pip3 /usr/local/bin/pip
 
-  Ansible `:role:workstation`:
+  Ansible `:role:base`:
 
   ```yaml
   - name: Make python3 symlink
@@ -1669,7 +1669,7 @@ Supported use cases:
   in `/usr/local/bin`.
 
 - Create `pipxg` wrapper for global use
-  `:extract-echod:roles/workstation/files/pipxg`:
+  `:extract-echod:roles/base/files/pipxg`:
 
       echod -o /usr/local/bin/pipxg '
         #!/bin/sh
@@ -1686,7 +1686,7 @@ Supported use cases:
 
       chmod +x /usr/local/bin/pipxg
 
-  Ansible `:role:workstation`:
+  Ansible `:role:base`:
 
   ```yaml
   - name: Install pipxg script
@@ -1699,7 +1699,7 @@ Supported use cases:
   ```
 
 - Install a temporary `pipx` into a venv, bootstrap `pipx` into the global pipx
-  area, then remove the temporary user area `:role:workstation`
+  area, then remove the temporary user area `:role:base`
   `:creates:/usr/local/bin/pipx`:
 
       rm -rf /tmp/pipxtmp &&
@@ -1719,7 +1719,7 @@ Supported use cases:
          package pipx 0.13.1.1, Python 3.6.7
           - pipx
 
-- Install virtualenvwrapper `:role:workstation`
+- Install virtualenvwrapper `:role:base`
   `:creates:/usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv`:
 
       pipxg install virtualenvwrapper
@@ -1732,7 +1732,7 @@ Supported use cases:
       ln -s /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone \
         /usr/local/bin
 
-  Ansible `:role:workstation`:
+  Ansible `:role:base`:
 
   ```yaml
   - name: Create virtualenv symlinks
