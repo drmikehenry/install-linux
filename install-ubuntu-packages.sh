@@ -57,7 +57,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   gnucash \
   gnucash-common \
   gnucash-docs \
-  golang \
   gparted \
   gperf \
   graphviz \

@@ -22,7 +22,6 @@ dnf install -y \
   gimp \
   git \
   git-gui \
-  golang \
   google-droid-sans-fonts \
   google-droid-sans-mono-fonts \
   graphviz \

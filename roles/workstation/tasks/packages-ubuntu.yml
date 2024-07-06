@@ -45,7 +45,6 @@
     - git-gui
     - git-svn
     - glibc-doc
-    - golang
     - gperf
     - graphviz
     - graphviz-doc

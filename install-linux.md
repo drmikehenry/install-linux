@@ -8712,15 +8712,64 @@ Fake data for testing Python scripts.
 
 For the "Go" programming language.
 
-- UBUNTU For old distro, setup PPA:
+The most up-to-date toolchains are found in `ppa:longsleep/golang-backports`,
+which points to:
+<https://launchpad.net/~longsleep/+archive/ubuntu/golang-backports>
 
-      add-apt-repository -y --update ppa:longsleep/golang-backports
+At this URL, the "Technical details about this PPA" section has a "Signing Key"
+entry which has a "pub" link that downloads
+`52b59b1571a79dbc054901c0f6bc817356a3d45e.asc`.  Use this text for the
+`Signed-By` field below.
 
-- Install `:role:workstation`:
+- Install a `.sources` file for `golang-backports` `:role:home-golang`
+  `:creates:/etc/apt/sources.list.d/golang-backports.sources`:
 
-      agi golang
+      printf "%s\n" \
+        "Types: deb" \
+        "URIs: https://ppa.launchpadcontent.net/longsleep/golang-backports/ubuntu" \
+        "Suites: $(lsb_release -cs)" \
+        "Components: main" \
+        "Architectures: $(dpkg --print-architecture)" \
+        "Signed-By: |-" \
+        "  -----BEGIN PGP PUBLIC KEY BLOCK-----" \
+        "  Comment: Hostname: " \
+        "  Version: Hockeypuck 2.2" \
+        "  " \
+        "  xo0ET551kQEEAME7Iyb7+c79CVWVwe+QaNlAVgauke1Q9Ycw8Rdxj55lKBJ5Ilpp" \
+        "  LwiKreAVin4CCaGEtT9btePbYYKg8I+/dsiDbE9+o8e8FIMEBwy+FS+9bwLZ5WZP" \
+        "  6nEtKPrrk3E+RUUpNbmO6udA62E0q2w7NcoA1jRS2YucsIL39aFXJcmvABEBAAHN" \
+        "  IUxhdW5jaHBhZCBQUEEgZm9yIFNpbW9uIEVpc2VubWFubsK4BBMBAgAiBQJPnnWR" \
+        "  AhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRD2vIFzVqPUXle6BAC3FUrE" \
+        "  7j4ltlgGAT2vRNlqWe8W6v0v20e1M8GsFHNB24zL/iRitUMosaWX94ufExwm+83y" \
+        "  ka4Cq0J4oUCSJtgWDLb6K2hYMKLnofj889+4ZN0akNyMOg0O5usD0oJJuRXL0+e3" \
+        "  sZo8b2aj7MwrHe+rTLLnlyKlRTUpt1gGF5GuiA==" \
+        "  =iKVn" \
+        "  -----END PGP PUBLIC KEY BLOCK-----" \
+        > /etc/apt/sources.list.d/golang-backports.sources
 
-      yi golang
+- Update APT cache:
+
+      apt update
+
+  Ansible `:role:home-golang`:
+
+  ```yaml
+  - name: Update APT cache
+    apt:
+      update_cache: yes
+  ```
+
+- Install Golang:
+
+      agi golang-go
+
+  Ansible `:role:home-golang`:
+
+  ```yaml
+  - name: Install Golang
+    apt:
+      name: golang-go
+  ```
 
 - HOMEGIT: Setup `~/.profile`:
 
