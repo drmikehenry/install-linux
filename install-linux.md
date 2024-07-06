@@ -2061,13 +2061,20 @@ Rationale:
 
 This is the preferred installation method.
 
+- Install `sshpass` for password prompting `:role:workstation`:
+
+      agi sshpass
+
 - Install `:role:workstation`:
 
-      pipxg install --include-deps ansible
+      pipxg install --include-deps ansible &&
+        pipxg inject ansible passlib
 
   Note: the `--include-deps` switch is necessary for `pipx` to install
   `ansible` because it's built from a number of dependent packages that expose
   the various commands.
+
+  The `passlib` module is required for setting passwords via Ansible.
 
 ## Ansible via Package Manager
 

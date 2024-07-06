@@ -150,6 +150,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   sqlite3 \
   sqlite3-doc \
   sqlitebrowser \
+  sshpass \
   stress \
   subversion \
   texi2html \

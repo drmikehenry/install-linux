@@ -15,7 +15,7 @@
       - apt-rdepends
   when: ansible_distribution == 'Ubuntu'
 - name: pipxg Install ansible
-  shell: pipxg install --include-deps ansible
+  shell: pipxg install --include-deps ansible && pipxg inject ansible passlib
   args:
     creates: /usr/local/bin/ansible
 - name: Create Firefox policies directory
