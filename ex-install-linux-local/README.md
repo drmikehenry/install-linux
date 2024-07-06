@@ -75,6 +75,20 @@ See `install-linux/README.md` for overview.
         -l $ANSIBLE_HOST \
         firefox-tarball.yml
 
+- UBUNTU Install Google Chrome:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        google-chrome.yml
+
+- UBUNTU Neovim:
+
+      ansible-playbook \
+        -u root \
+        -l $ANSIBLE_HOST \
+        neovim.yml
+
 - accounts:
 
       ansible-playbook \
