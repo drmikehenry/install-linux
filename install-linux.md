@@ -256,8 +256,8 @@ See `install-linux-local.md` for any machine-specific setup.
   - Alternatively, choose "Manual installation".
 - Create your account:
   - Your name: `Power User`
-  - Your computer's name with FQDN: `ubuntu2204.domain.com` (for example;
-    use no underscores; don't put `.` in hostname)
+  - Your computer's name (not FQDN): `ubuntu2204` (for example; use no
+    underscores; don't put `.` in hostname, don't include domain)
   - Username: `poweruser`
   - Password: `the_actual_password`
   - (Note: this user will have UID=1000.)
@@ -379,7 +379,7 @@ See `install-linux-local.md` for any machine-specific setup.
     - Configure:
       - Check "Automatically connect to this network when it is available".
   - Host name:
-    - Choose FQDN (e.g., `host1.domain.com`).
+    - Choose host name (not FQDN) (e.g., `host1`).
 - Begin installation.
 - ROOT PASSWORD:
   - Set root password.
