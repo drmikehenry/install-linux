@@ -553,7 +553,39 @@ Ansible `:role:base`:
 
 ## Base Network Customization
 
-- OPTIONAL: Use static IP address:
+- OPTIONAL: Use static IP address by configuring NetworkManager via `nmcli`:
+
+  - Example settings:
+
+    - FQDN: somehost.some.domain
+    - IP: 1.2.3.4
+    - Netmask: 255.255.255.0 (/24)
+    - Gateway: 1.2.3.250
+    - DNS:
+      - 1.2.3.1
+      - 1.2.3.2
+
+  - Look at current connection status:
+
+        nmcli con show
+
+    Note details for the default connect (e.g., `netplan-ens33`).
+
+        nmcli con show 'netplan-ens33'
+
+  - Adjust to manual mode (shown using example settings):
+
+        nmcli con mod 'netplan-ens33` \
+          ipv4.medhot manual \
+          ip4 1.2.3.4/24 \
+          gw4 1.2.3.250 \
+          ipv4.dns "1.2.3.1 1.2.3.2"
+
+  - Activate the connection with the new settings:
+
+        nmcli con up 'netplan-ens33'
+
+- OPTIONAL: Use static IP address by disabling NetworkManager:
 
   - Disable NetworkManager:
 
