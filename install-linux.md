@@ -3612,6 +3612,20 @@ The easiest way to create a predictable name is by creating a symlink:
 
 #### Thunderbird Nostalgy++
 
+- Thunderbird 115.14.0 with Nostalgy++ 4.2.15 is broken.  Nostalgy++
+  auto-updated on October 5, 2024.
+
+- Issue "Version 4.2.15 doesn't copy or move messages to target folder #273":
+  <https://github.com/opto/nostalgy-xpi/issues/273>
+
+  - Author marked 4.2.15 as no-auto-upgrade, so can just install older version.
+
+  - Install from
+    <https://addons.thunderbird.net/en-US/thunderbird/addon/nostalgy_ng/versions/>
+    - Install the older 4.1.12 from above link.
+
+  - 4.3.16 seems to have fixed things.
+
 - Install Nostalgy++ add-on:
 
   - Tools | Add-ons | Search for "Nostalgy++" | Install.
@@ -6966,6 +6980,42 @@ Starship is a cross-shell prompt hook.
           sleep .2
           pandoc filename.md -o filename.rst
       done
+
+## Disk usage utilities
+
+### dirstat-rs
+
+- Install:
+
+      cargo install dirstat-rs
+
+- Run:
+
+      ds
+
+Similar to `windirstat`.  Much faster than `dust`.
+
+### du-dust
+
+- Install:
+
+      cargo install du-dust
+
+- Run:
+
+      dust
+
+### qdirstat
+
+- Install:
+
+      agi qdirstat
+
+- Run:
+
+      qdirstat
+
+Graphical display.
 
 ## Hardware/Disk Utilities
 
