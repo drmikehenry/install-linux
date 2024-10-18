@@ -3394,6 +3394,11 @@ Tools | Add-ons | Preferences for uBlock Origin:
         ! To counter EasyPrivacy's `||duckduckgo.com/t/` rule:
         @@||duckduckgo.com/t/
 
+  - Block Youtube "end cards" with this custom filter:
+
+      www.youtube.com##.ytp-ce-element
+      www.youtube.com##.ytp-cards-teaser
+
 #### Old Reddit Redirect
 
 Converts <https://www.reddit.com> to <https://old.reddit.com> (much better
