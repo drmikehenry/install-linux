@@ -8417,8 +8417,7 @@ HOMEGIT Ruff per-user configuration:
 - Install with selection options (do not install ``all`` options, because that
   installs Pylint) `:role:workstation` `:creates:/usr/local/bin/pylsp`:
 
-      pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]' &&
-        pipxg inject python-lsp-server python-lsp-black &&
+      pipxg install python-lsp-server &&
         pipxg inject python-lsp-server pylsp-mypy &&
         pipxg inject python-lsp-server python-lsp-ruff
 

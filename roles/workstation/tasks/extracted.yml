@@ -102,10 +102,9 @@
   shell: pipxg install black
   args:
     creates: /usr/local/bin/black
-- name: pipxg Install python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]
-  shell: pipxg install 'python-lsp-server[mccabe,pycodestyle,pydocstyle,pyflakes,rope]'
-    && pipxg inject python-lsp-server python-lsp-black && pipxg inject python-lsp-server
-    pylsp-mypy && pipxg inject python-lsp-server python-lsp-ruff
+- name: pipxg Install python-lsp-server
+  shell: pipxg install python-lsp-server && pipxg inject python-lsp-server pylsp-mypy
+    && pipxg inject python-lsp-server python-lsp-ruff
   args:
     creates: /usr/local/bin/pylsp
 - name: pipxg Install pyupgrade
