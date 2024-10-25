@@ -5114,6 +5114,12 @@ Ansible `:role:user-plasma`:
     group: "General"
     key: "Parent"
     value: "FALLBACK/"
+- name: Always use Semantic Hints
+  kconfig:
+    file: ../.local/share/konsole/Custom.profile
+    group: "General"
+    key: "SemanticHints"
+    value: "2"
 - name: Use `Custom` Konsole Profile
   kconfig:
     file: konsolerc
@@ -5172,6 +5178,12 @@ Ansible `:role:user-plasma`:
     group: "General"
     key: "Parent"
     value: "Custom/"
+- name: Always use Semantic Hints
+  kconfig:
+    file: ../.local/share/konsole/Custom.profile
+    group: "General"
+    key: "SemanticHints"
+    value: "2"
 - name: Set `Big` Konsole Profile History Size
   kconfig:
     file: ../.local/share/konsole/Big.profile
