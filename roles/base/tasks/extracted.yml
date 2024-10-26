@@ -98,7 +98,7 @@
 - name: uvtoolg Install virtualenvwrapper
   shell: uvtoolg install virtualenvwrapper
   args:
-    creates: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
+    creates: /usr/local/lib/uv-tool/virtualenvwrapper/bin/virtualenv
 - name: Create virtualenv symlinks
   file:
     src: "{{ item.src }}"

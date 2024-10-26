@@ -1787,7 +1787,7 @@ Supported use cases:
           - pipx
 
 - Install virtualenvwrapper `:role:base`
-  `:creates:/usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv`:
+  `:creates:/usr/local/lib/uv-tool/virtualenvwrapper/bin/virtualenv`:
 
       uvtoolg install virtualenvwrapper
 
