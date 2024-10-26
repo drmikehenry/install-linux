@@ -40,12 +40,12 @@
   apt:
     name: landscape-common
     state: absent
-- name: pipxg Install findx
-  shell: pipxg install findx
+- name: uvtoolg Install findx
+  shell: uvtoolg install findx
   args:
     creates: /usr/local/bin/findx
-- name: pipxg Install ptee
-  shell: pipxg install ptee
+- name: uvtoolg Install ptee
+  shell: uvtoolg install ptee
   args:
     creates: /usr/local/bin/ptee
 - name: Make symlinks for `unix2dos`/`dos2unix`
@@ -58,68 +58,67 @@
       dest_name: unix2dos
     - src_name: fromdos
       dest_name: dos2unix
-- name: pipxg Install cookiecutter
-  shell: pipxg install cookiecutter
+- name: uvtoolg Install cookiecutter
+  shell: uvtoolg install cookiecutter
   args:
     creates: /usr/local/bin/cookiecutter
-- name: pipxg Install svnwrap
-  shell: pipxg install svnwrap
+- name: uvtoolg Install svnwrap
+  shell: uvtoolg install svnwrap
   args:
     creates: /usr/local/bin/svnwrap
-- name: pipxg Install compiledb
-  shell: pipxg install compiledb
+- name: uvtoolg Install compiledb
+  shell: uvtoolg install compiledb
   args:
     creates: /usr/local/bin/compiledb
-- name: pipxg Install ipython
-  shell: pipxg install ipython
+- name: uvtoolg Install ipython
+  shell: uvtoolg install ipython
   args:
     creates: /usr/local/bin/ipython
-- name: pipxg Install poetry
-  shell: pipxg install poetry && pipxg inject poetry poetry-plugin-export
+- name: uvtoolg Install poetry
+  shell: uvtoolg install poetry --with poetry-plugin-export
   args:
     creates: /usr/local/bin/poetry
-- name: pipxg Install pytest
-  shell: pipxg install pytest
+- name: uvtoolg Install pytest
+  shell: uvtoolg install pytest
   args:
     creates: /usr/local/bin/pytest
-- name: pipxg Install mypy
-  shell: pipxg install mypy
+- name: uvtoolg Install mypy
+  shell: uvtoolg install mypy
   args:
     creates: /usr/local/bin/mypy
-- name: pipxg Install ruff
-  shell: pipxg install ruff
+- name: uvtoolg Install ruff
+  shell: uvtoolg install ruff
   args:
     creates: /usr/local/bin/ruff
-- name: pipxg Install flake8-to-ruff
-  shell: pipxg install flake8-to-ruff
+- name: uvtoolg Install flake8-to-ruff
+  shell: uvtoolg install flake8-to-ruff
   args:
     creates: /usr/local/bin/flake8-to-ruff
-- name: pipxg Install flake8
-  shell: pipxg install flake8 && pipxg inject flake8 flake8-quotes pep8-naming
+- name: uvtoolg Install flake8
+  shell: uvtoolg install flake8 --with flake8-quotes,pep8-naming
   args:
     creates: /usr/local/bin/flake8
-- name: pipxg Install black
-  shell: pipxg install black
+- name: uvtoolg Install black
+  shell: uvtoolg install black
   args:
     creates: /usr/local/bin/black
-- name: pipxg Install python-lsp-server
-  shell: pipxg install python-lsp-server && pipxg inject python-lsp-server pylsp-mypy
-    && pipxg inject python-lsp-server python-lsp-ruff
+- name: uvtoolg Install python-lsp-server
+  shell: uvtoolg install python-lsp-server --with pylsp-mypy,python-lsp-ruff
   args:
     creates: /usr/local/bin/pylsp
-- name: pipxg Install pyupgrade
-  shell: pipxg install pyupgrade
+- name: uvtoolg Install pyupgrade
+  shell: uvtoolg install pyupgrade
   args:
     creates: /usr/local/bin/pyupgrade
-- name: pipxg Install sphinx
-  shell: pipxg install sphinx
+- name: uvtoolg Install sphinx
+  shell: uvtoolg install sphinx
   args:
     creates: /usr/local/bin/sphinx-quickstart
-- name: pipxg Install docutils
-  shell: pipxg install docutils && pipxg inject docutils pygments
+- name: uvtoolg Install docutils
+  shell: uvtoolg install docutils --with pygments
   args:
     creates: /usr/local/bin/rst2html
-- name: pipxg Install rstcheck
-  shell: pipxg install rstcheck
+- name: uvtoolg Install rstcheck
+  shell: uvtoolg install rstcheck
   args:
     creates: /usr/local/bin/rstcheck

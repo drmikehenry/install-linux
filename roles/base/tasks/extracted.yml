@@ -95,8 +95,8 @@
     install pipx && PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx && rm -rf /tmp/pipxtmp
   args:
     creates: /usr/local/bin/pipx
-- name: pipxg Install virtualenvwrapper
-  shell: pipxg install virtualenvwrapper
+- name: uvtoolg Install virtualenvwrapper
+  shell: uvtoolg install virtualenvwrapper
   args:
     creates: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
 - name: Create virtualenv symlinks

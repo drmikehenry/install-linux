@@ -1789,14 +1789,14 @@ Supported use cases:
 - Install virtualenvwrapper `:role:base`
   `:creates:/usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv`:
 
-      pipxg install virtualenvwrapper
+      uvtoolg install virtualenvwrapper
 
   For some reason, two of the binaries must be manually symlinked:
 
-      ln -s /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv \
+      ln -s /usr/local/lib/uv-tool/virtualenvwrapper/bin/virtualenv \
         /usr/local/bin
 
-      ln -s /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone \
+      ln -s /usr/local/lib/uv-tool/virtualenvwrapper/bin/virtualenv-clone \
         /usr/local/bin
 
   Ansible `:role:base`:
@@ -2050,6 +2050,10 @@ This is the preferred installation method.
 - Install `sshpass` for password prompting `:role:workstation`:
 
       agi sshpass
+
+- Note: `uv tool install` does not have support for `--include-deps` or similar,
+  so using `pipxg` for now:
+  <https://github.com/astral-sh/uv/issues/6314>
 
 - Install `:role:workstation`:
 
@@ -6606,7 +6610,7 @@ Unix `find` command.
 
 - Install `:role:workstation`:
 
-      pipxg install findx
+      uvtoolg install findx
 
 ### Ripgrep
 
@@ -7105,7 +7109,7 @@ This is needed to decompress `vmlinuz` on Ubuntu.
 
 - Install `:role:workstation`:
 
-      pipxg install ptee
+      uvtoolg install ptee
 
 ### pv
 
@@ -7245,7 +7249,7 @@ Progress monitoring for files.
 
 - Install `:role:workstation`:
 
-      pipxg install cookiecutter
+      uvtoolg install cookiecutter
 
 - HOME2GIT Configure:
 
@@ -7634,7 +7638,7 @@ socks proxy, so if DNS isn't working properly, this won't work either.
 
 - Install latest version:
 
-      pipxg install awscli
+      uvtoolg install awscli
 
 - Example invocation to list `rustup` versions:
 
@@ -7684,7 +7688,7 @@ Sparrow-wifi is a Graphical WiFi Analyzer for Linux.
 
 - Install `:role:workstation`:
 
-      pipxg install svnwrap
+      uvtoolg install svnwrap
 
 ### Subversion svnshell
 
@@ -7824,7 +7828,7 @@ Creates `compile_commands.json` (for Clangd):
 
 - Install `:role:workstation`:
 
-      pipxg install compiledb
+      uvtoolg install compiledb
 
 - Usage:
 
@@ -8158,13 +8162,13 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
 ### ipython
 
-Install using `pipxg` for isolation. Any additional packages that are
+Install using `uvtoolg` for isolation. Any additional packages that are
 interesting globally can be installed into the `ipython` virtual environments as
 needed.
 
 - Install `:role:workstation`:
 
-      pipxg install ipython
+      uvtoolg install ipython
 
 - Create default configuration and backup the default configuration:
 
@@ -8208,8 +8212,7 @@ needed.
 
 - Install `:role:workstation`:
 
-      pipxg install poetry &&
-        pipxg inject poetry poetry-plugin-export
+      uvtoolg install poetry --with poetry-plugin-export
 
 - Sadly, even after explicitly installing the `poetry-plugin-export` plugin,
   poetry still warns about it.  Disable the warning as an unprivileged user via:
@@ -8259,13 +8262,13 @@ needed.
 
 - Install:
 
-      pipxg install tox
+      uvtoolg install tox
 
 ### Python pytest
 
 - Install `:role:workstation`:
 
-      pipxg install pytest
+      uvtoolg install pytest
 
 ### Python checkers
 
@@ -8273,7 +8276,7 @@ needed.
 
 - Install `:role:workstation`:
 
-      pipxg install mypy
+      uvtoolg install mypy
 
 #### Python ruff
 
@@ -8284,11 +8287,11 @@ configuration.
 
 - Install `:role:workstation`:
 
-      pipxg install ruff
+      uvtoolg install ruff
 
 - Install `:role:workstation`:
 
-      pipxg install flake8-to-ruff
+      uvtoolg install flake8-to-ruff
 
 - Example usage:
 
@@ -8308,8 +8311,7 @@ HOMEGIT Ruff per-user configuration:
 
 - Install flake8 `:role:workstation`:
 
-      pipxg install flake8 &&
-        pipxg inject flake8 flake8-quotes pep8-naming
+      uvtoolg install flake8 --with flake8-quotes,pep8-naming
 
 - Configure flake8-quotes to match the style enforced by the black formatter.
   Note: this must be done on a per-project basis; the `~/.config/flake8` file is
@@ -8327,40 +8329,38 @@ HOMEGIT Ruff per-user configuration:
 
 - Install `:role:workstation`:
 
-      pipxg install black
+      uvtoolg install black
 
 #### Python isort
 
 - Install:
 
-      pipxg install isort
+      uvtoolg install isort
 
 #### Python Language Server
 
 - Install with selection options (do not install ``all`` options, because that
   installs Pylint) `:role:workstation` `:creates:/usr/local/bin/pylsp`:
 
-      pipxg install python-lsp-server &&
-        pipxg inject python-lsp-server pylsp-mypy &&
-        pipxg inject python-lsp-server python-lsp-ruff
+      uvtoolg install python-lsp-server --with pylsp-mypy,python-lsp-ruff
 
 ### Python Hatch
 
 - Install:
 
-      pipxg install hatch
+      uvtoolg install hatch
 
 ### Python pip-tools
 
 - Install:
 
-      pipxg install pip-tools
+      uvtoolg install pip-tools
 
 ### Python Dependency Tool (pydeps)
 
 - Install:
 
-      pipxg install pydeps
+      uvtoolg install pydeps
 
 ### Python source-code upgrading
 
@@ -8369,7 +8369,7 @@ tool.
 
 - Install `:role:workstation`:
 
-      pipxg install pyupgrade
+      uvtoolg install pyupgrade
 
 - Example invocation:
 
@@ -8884,7 +8884,7 @@ necessary to install `rust-analyzer` separately.  Instead, use:
 
 - Install `:role:workstation` `:creates:/usr/local/bin/sphinx-quickstart`:
 
-      pipxg install sphinx
+      uvtoolg install sphinx
 
 - Use:
 
@@ -8894,8 +8894,7 @@ necessary to install `rust-analyzer` separately.  Instead, use:
 
 - Install `:role:workstation` `:creates:/usr/local/bin/rst2html`:
 
-      pipxg install docutils &&
-        pipxg inject docutils pygments
+      uvtoolg install docutils --with pygments
 
 - Use:
 
@@ -8905,7 +8904,7 @@ necessary to install `rust-analyzer` separately.  Instead, use:
 
 - Install `:role:workstation`:
 
-      pipxg install rstcheck
+      uvtoolg install rstcheck
 
 ## markdown
 
@@ -9051,15 +9050,15 @@ MANUAL:
 
 - Install glom (path-based data access in Python; similar to jq):
 
-      pipxg install glom
+      uvtoolg install glom
 
 - Install gron (for grepping JSON; reduces hierarchy to single-line values):
 
-      pipxg install gron
+      uvtoolg install gron
 
 - Install jc (for parsing CLI output into JSON):
 
-      pipxg install jc
+      uvtoolg install jc
 
   Example:
 
@@ -9081,7 +9080,7 @@ MANUAL:
 
 - Install jtbl (for displaying JSON data in tables):
 
-      pipxg install jtbl
+      uvtoolg install jtbl
 
   Example:
 
@@ -9095,11 +9094,11 @@ MANUAL:
 
 - Install jello (for filtering JSON and JSON Linux data with Python syntax):
 
-      pipxg install jello
+      uvtoolg install jello
 
 - Install mario (for Python pipelines in the shell):
 
-      pipxg install mario
+      uvtoolg install mario
 
   **NOTE** This actually requires Python 3.7+, so not tried yet.
 
