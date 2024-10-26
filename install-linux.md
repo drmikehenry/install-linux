@@ -1637,38 +1637,19 @@ AUTOMATED in `install-linux-local/local-accounts.yml`.
 
 Goals:
 
-- Do not conflict with the system package manager, which implies keeping "sudo
-  pip install" to a bare minimum (ideally, zero such packages should be
-  installed using pip into the system's Python directories).
+- Python 2 is dead; support only Python 3.
+- Do not conflict with the system package manager; avoid `sudo pip install`
+  operations.
+- Avoid `pip install --user` because different programs may have conflicting
+  dependencies.
 - Allow global installation of utilities (e.g., `findx`) that work for all
   users.
-- Allow installation of arbitrary versions of Python, with simultaneous
-  activation of multiple major.minor versions.
-- Allow creation of virtual environments for arbitrary Python versions. Changing
-  global defaults for Python interpreters should not impact the envs.
-- In support of scripts living in `~/bin`, install any dependencies in per-user
-  `~/.local/lib/pythonx.y` via `pipxy. install --user`.
-- Assume python2.7 and python3.5+ are both installed for scripts.
+- Allow simultaneous installation of arbitrary versions of Python.
 
 Supported use cases:
 
-- Installing a Python 3 tool globally: `pipxg install`
-- Installing a Python 2 tool globally: `pipsig2 install`
-- Developing: `mkvirtualenv -p python X.Y`:
-  - Gets latest pip, setuptools, wheel automatically.
-- Installing per-user tooling:
-  - pipx or pipsi; should put into a virtual environment, should get latest pip
-    and such that way.
-  - Python 3-only venv (no virtualenvwrapper support):
-    - Create:
-
-          python3 -m venv envname
-
-    - Activate, upgrade pip/setuptools, install wheel:
-
-          cd envname
-          . bin/activate
-          pip install -U pip setuptools wheel
+- Installing a Python 3 tool globally: `uvtoolg install`.
+- Installing per-user tooling: `uv tool install`.
 
 ### Python Base Support
 
@@ -1697,8 +1678,62 @@ Supported use cases:
       state: link
   ```
 
-- The pipx home directory will be `/usr/local/lib/pipx`, and binaries will live
-  in `/usr/local/bin`.
+- The `uv` tool directory will be `/usr/local/lib/uv-tool`, and binaries will
+  live in `/usr/local/bin`.
+
+- Create `uvtoolg` wrapper for global use
+  `:extract-echod:roles/base/files/uvtoolg`:
+
+        echod -o /usr/local/bin/uvtoolg '
+          #!/bin/sh
+
+          UV_TOOL_DIR=/usr/local/lib/uv-tool
+          UV_TOOL_BIN_DIR=/usr/local/bin
+          export UV_TOOL_DIR UV_TOOL_BIN_DIR
+
+          umask 002
+          exec uv tool "$@"
+        '
+
+  Make `uvtoolg` executable:
+
+      chmod +x /usr/local/bin/uvtoolg
+
+  Ansible `:role:base`:
+
+  ```yaml
+  - name: Install uvtoolg script
+    copy:
+      src: uvtoolg
+      dest: /usr/local/bin/uvtoolg
+      owner: root
+      group: root
+      mode: 0755
+  ```
+
+- Install a temporary `uv` into a venv, bootstrap `uv` into the global uv-tool
+  area, then remove the temporary user area `:role:base`
+  `:creates:/usr/local/bin/uv`:
+
+      rm -rf /tmp/uvtmp &&
+        python3 -m venv /tmp/uvtmp &&
+        /tmp/uvtmp/bin/pip install uv &&
+        PATH=/tmp/uvtmp/bin:$PATH uvtoolg install uv &&
+        rm -rf /tmp/uvtmp
+
+- Verify global installation of `uv` using `uvtoolg`:
+
+      uvtoolg list
+
+  Expected output should be similar to:
+
+      uv v0.4.27
+      - uv
+      - uvx
+
+- `uvtoolg` should be preferred now, but `pipxg` is still available. The global
+  pipx home directory will be `/usr/local/lib/pipx`, and binaries will live in
+  `/usr/local/bin`.
 
 - Create `pipxg` wrapper for global use
   `:extract-echod:roles/base/files/pipxg`:
@@ -1813,87 +1848,6 @@ Supported use cases:
       pip install cowsay
       cowsay it works
       deactivate
-
-### Python 2 Base Support
-
-- Install Python 2 interpreter and pip:
-
-      agi python python-pip
-
-- Create Python 2 pipsi area:
-
-      mkdir -p /usr/local/lib/pipsi2/bin
-
-- Setup paths for pipsi2:
-
-      echod -o /etc/profile.d/pipsi2.sh '
-        new="/usr/local/lib/pipsi2/bin"
-        after="/usr/local/bin"
-        colonized_path=":$PATH:"
-
-        if [ -n "${colonized_path##*:${new}:*}" ]; then
-            pre="${colonized_path%%:$after:*}"
-            if [ "$pre" = "$colonized_path" ]; then
-                # $after was not present, so just prepend the new path.
-                PATH="$new:$PATH"
-            else
-                post="${colonized_path#*:$after:}"
-                path="$pre:$after:$new:$post"
-                path="${path%:}"
-                PATH="${path#:}"
-            fi
-        fi
-      '
-
-  **Logout/login** or use other method to ensure the PATH includes these areas.
-
-- Configure sudo to use these paths by prepending them to the
-  `Defaults secure_path` line, e.g.:
-
-      visudo
-
-      # Create this path line:
-      Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/local/lib/pipsi2/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
-
-- Create and activate the pipsi2 environment:
-
-      cd /usr/local/lib/pipsi2
-      virtualenv -p python2 pipsi
-      . pipsi/bin/activate
-
-- Install pipsi:
-
-      pip install pipsi
-
-- Deactivate the `pipsi2` venv:
-
-      deactivate
-
-- Symlink `pipsi` into the path:
-
-      ln -s /usr/local/lib/pipsi2/pipsi/bin/pipsi /usr/local/lib/pipsi2/bin
-
-- Setup `pipsig2` script:
-
-      echod -o /usr/local/lib/pipsi2/bin/pipsig2 '
-        #!/bin/sh
-
-        umask 002
-        export PIPSI_HOME=/usr/local/lib/pipsi2
-        export PIPSI_BIN_DIR=/usr/local/lib/pipsi2/bin
-        exec "$PIPSI_BIN_DIR/pipsi" "$@"
-      '
-      chmod +x /usr/local/lib/pipsi2/bin/pipsig2
-
-- Verify global installation of `pipsi` and `pipsig2`:
-
-      pipsig2 list
-
-  Expected output should be similar to:
-
-      Packages and scripts installed through pipsi:
-        Package "pipsi":
-          pipsi
 
 # OPTIONAL: UBUNTU Remove Snaps
 
@@ -8204,7 +8158,7 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
 ### ipython
 
-Install using `pipxg`/`pipsig2` for isolation. Any additional packages that are
+Install using `pipxg` for isolation. Any additional packages that are
 interesting globally can be installed into the `ipython` virtual environments as
 needed.
 
@@ -8212,13 +8166,7 @@ needed.
 
       pipxg install ipython
 
-- Install for optional Python 2 support:
-
-      # 5.8.0 is the newest version that works with Python2.
-      pipsig2 install ipython==5.8.0
-
-- Create default configuration (shared for Python 2, Python 3) and backup the
-  default configuration:
+- Create default configuration and backup the default configuration:
 
       ipython profile create
       cp ~/.ipython/profile_default/ipython_config.py{,.dist}
@@ -8256,10 +8204,6 @@ needed.
 
       agi python3-dev python3-doc
 
-- Install Python 2:
-
-      agi python-dev python-doc
-
 ### Python Poetry
 
 - Install `:role:workstation`:
@@ -8288,10 +8232,6 @@ needed.
 - Install `:role:workstation`:
 
       agi python3-tk
-
-- Install for Python 2:
-
-      agi python-tk
 
 #### Python PyQt
 
@@ -8382,23 +8322,6 @@ HOMEGIT Ruff per-user configuration:
         # Match python-language-server default McCabe complexity.
         max-complexity = 15
       '
-
-- Optional Python 2-based flake8:
-
-      pipsig2 install flake8
-
-      # Now install add-ons into Python 2-based flake8 virtualenv:
-      . /usr/local/lib/pipsi2/flake8/bin/activate
-      pip install flake8-quotes pep8-naming
-      deactivate
-
-      # Create flake82 wrapper for Python 2-based flake8::
-      echod -o ~/bin/flake82 '
-        #!/bin/sh
-
-        exec /usr/local/lib/pipsi2/bin/flake8 "$@"
-      '
-      chmod +x ~/bin/flake82
 
 #### Python Black
 
@@ -8581,11 +8504,12 @@ The following work-arounds mentioned in the tickets avoid this issue:
     - For installed-in-place scripts like `~/bin/script` that have no
       dependencies, and can therefore run with any-old-python3.
     - For source files in installable packages, including those installed via
-      `pipx`/`pipsi`.
+      `pipx`.
   - `#!/usr/bin/python3`:
     - Indicates dependencies are needed, so you care about which python
       environment.
-    - But dependencies must be manually managed via `pip install --user`.
+    - But dependencies must be manually managed (typically via system package
+      manager).
 
 ### wxWidgets
 
