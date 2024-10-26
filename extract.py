@@ -212,7 +212,8 @@ def walk(tree: marko.block.Element, indent="") -> None:
             )
 
 
-def extract_install_pipxg(
+def _extract_install_python_tool(
+    installer: str,
     line: str,
     cmd_args: T.List[str],
     roles: T.List[str],
@@ -220,14 +221,14 @@ def extract_install_pipxg(
     creates: str,
 ) -> None:
     words = [a for a in cmd_args if not a.startswith("-")]
-    if len(words) >= 3 and words[:2] == "pipxg install".split():
+    if len(words) >= 3 and words[:2] == f"{installer} install".split():
         name = words[2]
         if creates == "":
             creates = f"/usr/local/bin/{name}"
         yaml_part = yaml_dump(
             [
                 dict(
-                    name=f"pipxg Install {name}",
+                    name=f"{installer} Install {name}",
                     shell=line,
                     args=dict(creates=creates),
                 )
@@ -237,6 +238,40 @@ def extract_install_pipxg(
 
         for role in roles:
             role_yaml_parts[role].append(yaml_part)
+
+
+def extract_install_uvtoolg(
+    line: str,
+    cmd_args: T.List[str],
+    roles: T.List[str],
+    role_yaml_parts: T.DefaultDict[str, T.List[str]],
+    creates: str,
+) -> None:
+    _extract_install_python_tool(
+        "uvtoolg",
+        line,
+        cmd_args,
+        roles,
+        role_yaml_parts,
+        creates,
+    )
+
+
+def extract_install_pipxg(
+    line: str,
+    cmd_args: T.List[str],
+    roles: T.List[str],
+    role_yaml_parts: T.DefaultDict[str, T.List[str]],
+    creates: str,
+) -> None:
+    _extract_install_python_tool(
+        "pipxg",
+        line,
+        cmd_args,
+        roles,
+        role_yaml_parts,
+        creates,
+    )
 
 
 def extract_install(
@@ -256,7 +291,11 @@ def extract_install(
             continue
         cmd_args = shlex.split(line)
         cmd, *args = cmd_args
-        if cmd == "pipxg":
+        if cmd == "uvtoolg":
+            extract_install_uvtoolg(
+                line, cmd_args, roles, role_yaml_parts, creates
+            )
+        elif cmd == "pipxg":
             extract_install_pipxg(
                 line, cmd_args, roles, role_yaml_parts, creates
             )
