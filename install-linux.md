@@ -8311,7 +8311,7 @@ HOMEGIT Ruff per-user configuration:
 
 - Install flake8 `:role:workstation`:
 
-      uvtoolg install flake8 --with flake8-quotes,pep8-naming
+      uvtoolg install flake8 --with flake8-quotes --with pep8-naming
 
 - Configure flake8-quotes to match the style enforced by the black formatter.
   Note: this must be done on a per-project basis; the `~/.config/flake8` file is
@@ -8342,7 +8342,7 @@ HOMEGIT Ruff per-user configuration:
 - Install with selection options (do not install ``all`` options, because that
   installs Pylint) `:role:workstation` `:creates:/usr/local/bin/pylsp`:
 
-      uvtoolg install python-lsp-server --with pylsp-mypy,python-lsp-ruff
+      uvtoolg install python-lsp-server --with pylsp-mypy --with python-lsp-ruff
 
 ### Python Hatch
 

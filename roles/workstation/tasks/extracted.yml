@@ -95,7 +95,7 @@
   args:
     creates: /usr/local/bin/flake8-to-ruff
 - name: uvtoolg Install flake8
-  shell: uvtoolg install flake8 --with flake8-quotes,pep8-naming
+  shell: uvtoolg install flake8 --with flake8-quotes --with pep8-naming
   args:
     creates: /usr/local/bin/flake8
 - name: uvtoolg Install black
@@ -103,7 +103,7 @@
   args:
     creates: /usr/local/bin/black
 - name: uvtoolg Install python-lsp-server
-  shell: uvtoolg install python-lsp-server --with pylsp-mypy,python-lsp-ruff
+  shell: uvtoolg install python-lsp-server --with pylsp-mypy --with python-lsp-ruff
   args:
     creates: /usr/local/bin/pylsp
 - name: uvtoolg Install pyupgrade
