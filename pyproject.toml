@@ -46,6 +46,13 @@ dev = [
     {include-group = "type-check"},
 ]
 
+[tool.uv]
+
+# Require re-builds if any of our program logic changes.  Without this,
+# `uv` will aggressively cache our wheel and `nox` will use out-of-date
+# information for `session.install(".")`.
+cache-keys = [{ file = "src/**/*.py" }]
+
 ##############################################################################
 # Source formatting
 
