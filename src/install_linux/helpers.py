@@ -30,7 +30,7 @@ def extract_packages(name: str) -> list[str]:
             if f != name:
                 continue
             for line in (Path(root) / f).read_text().splitlines():
-                m = re.search(r"^\s+-\s+(\S+)$", line.rstrip())
+                m = re.search(r"^\s+-\s+(.+)$", line.rstrip())
                 if m:
                     packages.add(m.group(1))
     return sorted(packages)
@@ -44,7 +44,7 @@ def make_install_script(
         if packages:
             f.write(install_cmd)
             for p in packages:
-                f.write(f" \\\n    {p}")
+                f.write(f" \\\n  {p}")
             f.write("\n")
     os.chmod(script_name, 0o755)
 

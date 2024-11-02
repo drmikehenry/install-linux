@@ -9,8 +9,8 @@ import tomli
 
 nox.options.default_venv_backend = "uv"
 nox.options.error_on_external_run = True
-# nox.options.reuse_existing_virtualenvs = True
-nox.options.sessions = ["lint", "type_check", "test"]
+nox.options.reuse_existing_virtualenvs = False
+nox.options.sessions = ["run"]
 
 
 # Hack to extend `PATH` to include `uv`-installed interpreters inspired by:
@@ -112,3 +112,12 @@ def check(s: nox.Session) -> None:
     s.run("nox", "-s", "lint")
     s.run("nox", "-s", "type_check")
     s.run("nox", "-s", "test")
+
+
+@nox.session
+def run(s: nox.Session) -> None:
+    s.install(".")
+    s.run("extract", "install-linux.md")
+    s.run("build_pandoc", "README.md", "use-linux.md", "install-linux.md")
+    s.run("extract_ubuntu_packages")
+    s.run("extract_fedora_packages")

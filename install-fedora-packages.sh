@@ -1,11 +1,15 @@
 #!/bin/sh
 dnf install -y \
+  '@C Development Tools and Libraries' \
+  '@Development Libraries' \
+  '@Development Tools' \
+  '@KDE Plasma Workspaces' \
+  Maelstrom \
   ack \
   audacity \
   autofs \
   bitstream-vera-sans-mono-fonts \
   boost-devel \
-  '@C Development Tools and Libraries' \
   cifs-utils \
   cmake \
   cmake-gui \
@@ -13,8 +17,6 @@ dnf install -y \
   ctags \
   curl \
   ddd \
-  '@Development Libraries' \
-  '@Development Tools' \
   dos2unix \
   doxygen \
   gcc-c++ \
@@ -26,7 +28,6 @@ dnf install -y \
   google-droid-sans-mono-fonts \
   graphviz \
   hdparm \
-  '@KDE Plasma Workspaces' \
   kdiff3 \
   keepassxc \
   keychain \
@@ -36,7 +37,6 @@ dnf install -y \
   libreoffice \
   lshw \
   lshw-gui \
-  Maelstrom \
   mailx \
   man-pages \
   meld \
@@ -68,11 +68,9 @@ dnf install -y \
   tmux \
   traceroute \
   vim \
-  vim \
   vim-X11 \
   wget \
   wireshark \
   wmctrl \
   xclip \
-  xsel \
-
+  xsel

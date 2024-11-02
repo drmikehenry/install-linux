@@ -20,13 +20,12 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   cifs-utils \
   clang \
   clang-14-doc \
-  clangd \
   clang-format \
   clang-tidy \
   clang-tools \
+  clangd \
   cmake \
   colordiff \
-  curl \
   curl \
   ddd \
   devede \
@@ -48,7 +47,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   gdisk \
   geeqie \
   gimp \
-  git \
   git \
   git-doc \
   git-gui \
@@ -88,9 +86,9 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   libreadline-dev \
   libreoffice \
   libreoffice-math \
-  libsane1 \
   libsane-common \
   libsane-dev \
+  libsane1 \
   libsqlite3-dev \
   libssl-dev \
   libxml2-dev \
@@ -167,7 +165,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   ttf-mscorefonts-installer \
   universal-ctags \
   vim \
-  vim \
   vim-gtk3 \
   vlc \
   wget \
@@ -179,5 +176,4 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   xterm \
   xz-utils \
   zlib1g-dev \
-  zstd \
-
+  zstd
