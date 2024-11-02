@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+  - import_role:
+      name: force-limit-switch
+
+  - import_role:
+      name: neovim
+    vars:
+      - VERSION: "0.10.0"
+      - DOWNLOAD_DIR: /m/shared/download/programming/neovim

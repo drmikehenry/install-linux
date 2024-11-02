@@ -7,3 +7,11 @@
 
     - import_role:
         name: home
+
+    - import_role:
+        name: docker
+      vars:
+        DOCKER_USER: "mike"
+
+    - import_role:
+        name: home-golang

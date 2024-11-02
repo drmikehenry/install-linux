@@ -83,3 +83,60 @@ See `SSH client setup` in `install-linux.md` for overall instructions.
       src: ssh_config.d-10-dewaltguest.conf
       mode: "u=rw,go=r"
   ```
+
+# Other
+
+## Docker
+
+- Follow instructions from `install-linux.md` for basic Docker setup,
+  with variables:
+
+      DOCKER_USER=mike
+
+  AUTOMATED via `install-linux-local` `home.yml`.
+
+## PyPI uploads
+
+- Install twine `:role:local-base`:
+
+      uvtoolg install twine
+
+- MANUAL Create a configuration file for PyPI and TestPyPI:
+
+      echod -o ~/.pypirc '
+        [distutils]
+        index-servers =
+          pypi
+          testpypi
+
+        [pypi]
+        username = __token__
+        password = <Replace with PyPI token>
+        # Alternatively, use a real user name and password combination:
+        # username = drmikehenry
+        # password = <password>
+
+        [testpypi]
+        repository: https://test.pypi.org/legacy/
+        username = __token__
+        password = <Replace with PyPI token>
+        # Alternatively, use a real user name and password combination:
+        # username = drmikehenry
+        # password = <password>
+      '
+
+  **NOTE** Adjust the above to use the real token as generated from the PyPI web
+  site.  Alternatively, setup user name and password.
+
+- Upload to testpypi::
+
+    twine upload -r testpypi dist/ptee-0.3.0.tar.gz
+
+- Upload to the real PyPI::
+
+    twine upload dist/ptee-0.3.0.tar.gz
+
+- Check validity of an egg before upload::
+
+    twine check dist/*
+

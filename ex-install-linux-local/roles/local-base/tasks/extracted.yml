@@ -9,3 +9,7 @@
     dest: /etc/ssh/ssh_config.d/10-dewaltguest.conf
     src: ssh_config.d-10-dewaltguest.conf
     mode: "u=rw,go=r"
+- name: uvtoolg Install twine
+  shell: uvtoolg install twine
+  args:
+    creates: /usr/local/bin/twine

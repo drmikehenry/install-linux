@@ -1,0 +1,30 @@
+[project]
+name = "install-linux-local"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Michael Henry", email = "drmikehenry@drmikehenry.com" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "install_linux",
+]
+
+[project.scripts]
+extract = "install_linux.extract:main"
+extract_ubuntu_packages = "install_linux.helpers:extract_ubuntu_packages"
+extract_fedora_packages = "install_linux.helpers:extract_fedora_packages"
+build_pandoc = "install_linux.helpers:build_pandoc"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+install_linux = { path = "../install-linux" }
+
+[dependency-groups]
+dev = [
+    "nox>=2024.10.9",
+]
