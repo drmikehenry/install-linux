@@ -3,17 +3,16 @@
 import argparse
 import collections
 import logging
-from pathlib import Path
 import re
 import shlex
 import sys
 import textwrap
 import typing as T
+from pathlib import Path
 
-import marko.parser
 import marko.block
 import marko.inline
-
+import marko.parser
 import yaml
 
 __version__ = "0.1.0"
@@ -26,11 +25,11 @@ logger = logging.getLogger("extract")
 def parse_markdown_doc(markdown_path: Path) -> marko.block.Document:
     parser = marko.parser.Parser()
     md_text = markdown_path.read_text()
-    doc = parser.parse(md_text)
+    doc = T.cast(marko.block.Document, parser.parse(md_text))
     return doc
 
 
-def yaml_dump(data: T.Any, *, explicit_start=True) -> str:
+def yaml_dump(data: T.Any, *, explicit_start: bool = True) -> str:
     return yaml.dump(
         data,
         Dumper=yaml.Dumper,
@@ -66,7 +65,7 @@ MarkoCode = T.Union[marko.block.CodeBlock, marko.block.FencedCode]
 
 
 def code_text(marko_code: MarkoCode) -> str:
-    return marko_code.children[0].children
+    return T.cast(str, marko_code.children[0].children)
 
 
 Tag = str
@@ -104,7 +103,7 @@ def para_tags(para: marko.block.Paragraph) -> TagMap:
     for child in para.children:
         if isinstance(child, marko.inline.CodeSpan):
             code_span = child.children
-            tag, suffix = split_tag(code_span)
+            tag, suffix = split_tag(T.cast(str, code_span))
             if tag:
                 tags.setdefault(tag, []).append(suffix)
     return tags
@@ -131,7 +130,7 @@ def para_keywords(para: marko.block.Paragraph) -> T.List[Keyword]:
 
 
 def extract_tagged_code(
-    node: marko.block.Element,
+    node: marko.block.BlockElement,
 ) -> T.Generator[
     T.Tuple[TagMap, T.List[Keyword], marko.block.Paragraph, MarkoCode],
     None,
@@ -171,7 +170,7 @@ def extract_tagged_code(
         para_pos += 1
 
 
-def extract_into_files(node: marko.block.Element) -> None:
+def extract_into_files(node: marko.block.BlockElement) -> None:
     for tags, keywords, para, code in extract_tagged_code(node):
         for dest in tags.get(":extract:", []):
             write_text(Path(dest), code_text(code))
@@ -187,7 +186,7 @@ def extract_into_files(node: marko.block.Element) -> None:
             write_text(Path(dest), textwrap.dedent(text))
 
 
-def walk(tree: marko.block.Element, indent="") -> None:
+def walk(tree: marko.block.BlockElement, indent: str = "") -> None:
     if isinstance(tree, marko.inline.RawText):
         print(f"{indent}RawText: {tree.children!r}")
     elif isinstance(tree, marko.inline.CodeSpan):
@@ -345,7 +344,7 @@ def extract_ansible(
         role_yaml_parts[role].append(yaml_part)
 
 
-def extract_general(doc: marko.block.Element) -> None:
+def extract_general(doc: marko.block.BlockElement) -> None:
     role_yaml_parts: T.DefaultDict[str, T.List[str]] = collections.defaultdict(
         list
     )
@@ -415,7 +414,7 @@ def make_arg_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main():
+def main() -> None:
     parser = make_arg_parser()
     args = parser.parse_args()
     if args.verbose is None:
