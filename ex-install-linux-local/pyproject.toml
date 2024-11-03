@@ -1,7 +1,7 @@
 [project]
 name = "install-linux-local"
 version = "0.1.0"
-description = "Add your description here"
+description = "Local tools for installing Linux"
 readme = "README.md"
 authors = [
     { name = "Michael Henry", email = "drmikehenry@drmikehenry.com" }
