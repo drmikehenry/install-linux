@@ -10531,3 +10531,15 @@ Installation:
 - Run via yarn:
 
       yarn start
+
+## Certificate checking
+
+A server's certificate expiration date may be checked via:
+
+    < /dev/null openssl s_client -connect some.server.tld:443 |&
+      openssl x509 -inform pem -noout -enddate -dateopt iso_8601
+
+This works for non-HTTPS as well; e.g., for IMAPS (port 993):
+
+    < /dev/null openssl s_client -connect some.server.tld:993 |&
+      openssl x509 -inform pem -noout -enddate -dateopt iso_8601
