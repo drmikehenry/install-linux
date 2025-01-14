@@ -3159,13 +3159,6 @@ MANUAL:
 
 - Check "Always show scrollbars".
 
-###### ... Network Settings
-
-- Choose "Settings" button:
-
-  - Uncheck "Enable DNS over HTTPS".
-    Reference: <https://support.mozilla.org/en-US/kb/firefox-dns-over-https>
-
 ##### Edit | Settings | Home
 
 ###### ... New Windows and Tabs
@@ -3180,20 +3173,21 @@ MANUAL:
 
 - Search Suggestions | uncheck "Show search suggestions in address bar results".
 
+- Address Bar - Firefox Suggest | uncheck "Suggestions from sponsors".
+
 - Search Shortcuts | uncheck all search engines except DuckDuckGo.
 
 ##### Edit | Settings | Privacy & Security
 
 - Enhanced Tracking Protection | leave at "Standard".
 
-- Enhanced Tracking Protection | leave "Send websites a “Do Not Track” signal
-  that you don’t want to be tracked" set to the default of "Only when Firefox is
-  set to block known trackers".
+- Website Privacy Preferences:
+
+  - Leave unchecked "Tell websites not to sell or share my data".
+  - Leave unchecked "Send websites a 'Do Not Track' request".
 
 - Logins & Passwords | check "Use a primary password" (then Change Primary
   Password).
-
-- Address Bar - Firefox Suggest | uncheck "Suggestions from sponsors".
 
 - Permissions | Location | Settings, check "Block new requests asking to access
   your location".
@@ -3204,8 +3198,14 @@ MANUAL:
 - Firefox Data Collection and Use:
 
   - Uncheck "Allow Firefox to send technical and interaction data to Mozilla".
-  - Uncheck "Allow Firefox to install and run studies".
+    - This unchecks "Allow Firefox to make personalized extension
+      recommendations".
+    - This unchecks "Allow Firefox to install and run studies".
   - Uncheck "Allow Firefox to send backlogged crash reports on your behalf.
+
+- "Enable DNS over HTTPS using":
+  - Check "Off".
+  - Reference: <https://support.mozilla.org/en-US/kb/firefox-dns-over-https>
 
 ##### Visit URL `about:config`
 
@@ -3219,6 +3219,8 @@ MANUAL:
 - Search for `webno`, disable both of these to avoid push notifications:
 
       dom.webnotifications.enabled = false
+
+      # Is this obsolete?
       dom.webnotifications.serviceworker.enabled = false
 
 - OPTIONAL: Search for `dom.event.clipboardevents.enabled`, change to
@@ -3309,6 +3311,8 @@ Article for setting up policies to avoid automatic updates:
 
 - Install URL: <https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/>
 
+- Check "Run in Private Windows".
+
 ##### vimium-ff Preferences
 
 - Excluded URLs and keys | Patterns:
@@ -3328,21 +3332,24 @@ Article for setting up policies to avoid automatic updates:
 
 - Install URL: <https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/>
 
+- Check "Run in Private Windows".
+
 #### uBlock Origin Configuration
 
-Tools | Add-ons | Preferences for uBlock Origin:
+Tools | Add-ons and Themes | Extensions | uBlock Origin | ... | Preferences:
 
 - Settings | Check "I am an advanced user".
 - Filter Lists:
-  - EasyList
-  - EasyPrivacy
-  - Annoyances: check all 7:
-    - AdGuard Annoyances
-    - AdGuard Social Media
-    - Anti-Facebook
-    - EasyList Cookie
-    - Fanboy’s Annoyance
-    - Fanboy’s Social
+  - Cookie notices: check the below:
+    - EasyList/uBO - Cookie Notices
+    - AdGuard/uBO - Cookie Notices
+  - Social widgets: check the below:
+    - EasyList - Social widgets
+    - AdGuard - Social widgets
+    - Fanboy - Anti-Facebook
+  - Annoyances: check the below:
+    - EasyList - Annoyances
+    - AdGuard - Annoyances
     - uBlock filters - Annoyances
 - My Filters:
   - Use `@@` in front of a rule to override all blocks.
@@ -3365,11 +3372,15 @@ interface).
 - Install URL:
   <https://addons.mozilla.org/en-US/firefox/addon/old-reddit-redirect/>
 
+- Check "Run in Private Windows".
+
 #### Absolute Enable Right Click
 
 - For sites that disable right-click, copy, paste, select.
 - Install URL:
   <https://addons.mozilla.org/en-US/firefox/addon/absolute-enable-right-click/>
+
+- Check "Run in Private Windows".
 
 #### Privacy Badger
 
@@ -3379,24 +3390,28 @@ interface).
 - Install URL:
   <https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/>
 
-#### No coin
-
-- Install URL: <https://addons.mozilla.org/en-US/firefox/addon/no-coin/>
+- Check "Run in Private Windows".
 
 #### Tampermonkey
 
 - Install URL:
   <https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/>
 
+- Check "Run in Private Windows".
+
 #### Temporary Containers
 
 - Install URL:
   <https://addons.mozilla.org/en-US/firefox/addon/temporary-containers/>
 
+- Check "Run in Private Windows".
+
 #### Make Medium Readable Again
 
 - Install URL:
   <https://addons.mozilla.org/en-US/firefox/addon/make-medium-readable-again/>
+
+- Check "Run in Private Windows".
 
 ### Firefox Bookmark Synchronization
 
