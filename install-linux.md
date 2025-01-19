@@ -3141,6 +3141,9 @@ MANUAL:
 - Enable bookmarks toolbar (right-click next to tab | `Bookmarks Toolbar` |
   `Always Show`).
 
+- Enable standard Window title bar (right-click next to tab | `Customize
+  Toolbar`, go all the way at the bottom to check `Title Bar`).
+
 ##### Edit | Settings | General
 
 ###### ... Startup
