@@ -8077,12 +8077,10 @@ Provides `gcc` for 32-bit MIPS little-Endian.
       state: absent
   ```
 
-- Install `pynvim` for Python support in Neovim (following the Vimfiles default
-  location for `g:python3_host_prog` = `/opt/pynvim/env/bin/python`)
-  `:creates:/opt/pynvim/env/bin/python` `:role:neovim`:
+- Install `pynvim` for Python support in Neovim; Vimfiles will detect this and
+  set `g:python3_host_prog` to `pynvim-python-interpreter` `:role:neovim`:
 
-      python3 -m venv /opt/pynvim &&
-        /opt/pynvim/bin/python -m pip install pynvim
+      uvtoolg install pynvim-python-interpreter
 
   Alternatively, the Ubuntu-supplied package may be installed:
 
