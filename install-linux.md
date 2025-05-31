@@ -6875,6 +6875,28 @@ Starship is a cross-shell prompt hook.
 
 ## Console File Browsers
 
+### Yazi (Console-based File Manager)
+
+- Reference:
+
+  - <https://github.com/sxyazi/yazi>
+  - <https://yazi-rs.github.io/docs/installation/>
+
+- MANUAL Install:
+
+      cargo install --locked yazi-fm yazi-cli
+
+- HOMEGIT Add shell function so can use for `cd`:
+
+      y() {
+          local tmp cwd
+          tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+          yazi "$@" --cwd-file="$tmp"
+          IFS= read -r -d '' cwd < "$tmp"
+          [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+          rm -f -- "$tmp"
+      }
+
 ### ranger (Console-based File Manager)
 
 - Install:
