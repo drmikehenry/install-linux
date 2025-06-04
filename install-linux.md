@@ -6897,6 +6897,16 @@ Starship is a cross-shell prompt hook.
           rm -f -- "$tmp"
       }
 
+- HOMEGIT: Configure `<Enter>` to enter directories instead of editing them:
+
+      mkdir -p ~/.config/yazi
+      echod -o ~/.config/yazi/keymap.toml '
+        [[mgr.prepend_keymap]]
+        on = [ "<Enter>" ]
+        run = "enter"
+        desc = "Enter directory"
+      '
+
 ### ranger (Console-based File Manager)
 
 - Install:
