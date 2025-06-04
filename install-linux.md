@@ -7381,6 +7381,24 @@ Creates self-installing shar-like archives.
 
       agi makeself
 
+### Zoxide (`cd` replacement)
+
+- Reference:
+
+  - <https://github.com/ajeetdsouza/zoxide>
+
+- MANUAL Install:
+
+      cargo install --locked zoxide
+
+- Invocation:
+
+      z path/to/directory     # remembers this path
+      z                       # back to $HOME
+      z directory             # don't need to give entire path
+
+      zi                      # interactively choose remembered path
+
 # Web Browsers
 
 ## Google Chrome
