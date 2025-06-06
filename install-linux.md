@@ -1786,51 +1786,21 @@ Supported use cases:
          package pipx 0.13.1.1, Python 3.6.7
           - pipx
 
-- Install virtualenvwrapper `:role:base`
-  `:creates:/usr/local/lib/uv-tool/virtualenvwrapper/bin/virtualenv`:
+- Install uv-virtualenvwrapper `:role:base`
+  `:creates:/usr/local/lib/uv-tool/uv-virtualenvwrapper/bin/uv-virtualenvwrapper.sh`:
 
-      uvtoolg install virtualenvwrapper
-
-  For some reason, two of the binaries must be manually symlinked:
-
-      ln -s /usr/local/lib/uv-tool/virtualenvwrapper/bin/virtualenv \
-        /usr/local/bin
-
-      ln -s /usr/local/lib/uv-tool/virtualenvwrapper/bin/virtualenv-clone \
-        /usr/local/bin
-
-  Ansible `:role:base`:
-
-  ```yaml
-  - name: Create virtualenv symlinks
-    file:
-      src: "{{ item.src }}"
-      dest: "{{ item.dest }}"
-      state: link
-    loop:
-      - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
-        dest: /usr/local/bin/virtualenv
-      - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone
-        dest: /usr/local/bin/virtualenv-clone
-  ```
+      uvtoolg install uv-virtualenvwrapper
 
 - HOMEGIT Configure per-user python3-based virtualenvwrapper based on
   <https://virtualenvwrapper.readthedocs.org/en/latest/> (all users):
 
       echod -a ~/.profile '
         export WORKON_HOME=$HOME/envs
-        export PROJECT_HOME=$HOME/projects
-        VIRTUALENVWRAPPER_PYTHON=/usr/local/lib/pipx/venvs/virtualenvwrapper/bin/python
-        if [ -x "$VIRTUALENVWRAPPER_PYTHON" ]; then
-            export VIRTUALENVWRAPPER_PYTHON
-        else
-            unset VIRTUALENVWRAPPER_PYTHON
-        fi
       '
 
       echod -a ~/.bashrc '
-        if [ -n "$(command -v virtualenvwrapper.sh)" ]; then
-            . virtualenvwrapper.sh
+        if [ -n "$(command -v uv-virtualenvwrapper.sh)" ]; then
+            . uv-virtualenvwrapper.sh
         fi
       '
 
@@ -1839,15 +1809,15 @@ Supported use cases:
       mkdir -p ~/envs
       echo envs >> ~/.gitignore
 
-- Logout, login again to activate virtualenvwrapper.
+- Logout, login again to activate uv-virtualenvwrapper.
 
 - Make and deactivate a test virtualenv:
 
-      mktmpenv
-
+      mkvirtualenv cowsay
       pip install cowsay
-      cowsay it works
+      cowsay -t 'it works'
       deactivate
+      rmvirtualenv cowsay
 
 # OPTIONAL: UBUNTU Remove Snaps
 

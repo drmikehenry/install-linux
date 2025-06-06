@@ -95,20 +95,10 @@
     install pipx && PATH=/tmp/pipxtmp/bin:$PATH pipxg install pipx && rm -rf /tmp/pipxtmp
   args:
     creates: /usr/local/bin/pipx
-- name: uvtoolg Install virtualenvwrapper
-  shell: uvtoolg install virtualenvwrapper
+- name: uvtoolg Install uv-virtualenvwrapper
+  shell: uvtoolg install uv-virtualenvwrapper
   args:
-    creates: /usr/local/lib/uv-tool/virtualenvwrapper/bin/virtualenv
-- name: Create virtualenv symlinks
-  file:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    state: link
-  loop:
-    - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv
-      dest: /usr/local/bin/virtualenv
-    - src: /usr/local/lib/pipx/venvs/virtualenvwrapper/bin/virtualenv-clone
-      dest: /usr/local/bin/virtualenv-clone
+    creates: /usr/local/lib/uv-tool/uv-virtualenvwrapper/bin/uv-virtualenvwrapper.sh
 - name: Do not hide Grub
   lineinfile:
     dest: /etc/default/grub
