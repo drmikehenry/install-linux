@@ -7375,7 +7375,7 @@ Creates self-installing shar-like archives.
 
   - <https://github.com/junegunn/fzf>
 
-- Install:
+- MANUAL: Install:
 
   - `apt install fzf` is too old.
 
@@ -7386,7 +7386,10 @@ Creates self-installing shar-like archives.
         cd /tmp
         curl -LO https://github.com/junegunn/fzf/releases/download/v0.62.0/fzf-0.62.0-linux_amd64.tar.gz
 
-        sudo cp /tmp/fzf /usr/local/bin/
+  - Extract, then copy to `/usr/local/bin/`:
+
+        tar -xf fzf-*amd64.tar.gz
+        sudo cp fzf /usr/local/bin/
 
 # Web Browsers
 
