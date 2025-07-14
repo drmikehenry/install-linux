@@ -8070,52 +8070,57 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
 - Neovim releases are at <https://github.com/neovim/neovim/releases/>.
 
-- Variables:
+- **NOTE** Neovim 0.11+ required Neovim-qt 0.2.19+ (which means building from
+  source).
+
+- Variables (**NOTE** Keep these in sync with `install-linux-local/neovim.yml`):
 
   - `VERSION`: Version of Neovim to install, e.g.:
 
-        VERSION=0.10.0
+        VERSION=0.11.3
 
   - `DOWNLOAD_DIR`: Directory of downloaded Neovim installers by version, e.g.:
 
         DOWNLOAD_DIR=/m/shared/download/programming/neovim
 
-- The tarball `nvim-linux64.tar.gz` should be downloaded for the desired version
-  into the `DOWNLOAD_DIR` for `VERSION`, e.g.:
+- The tarball `nvim-linux-x86_64.tar.gz` should be downloaded for the desired
+  version into the `DOWNLOAD_DIR` for `VERSION`, e.g.:
 
       mkdir -p $DOWNLOAD_DIR/$VERSION
       cd $DOWNLOAD_DIR/$VERSION
-      curl -LO https://github.com/neovim/neovim/releases/download/v$VERSION/nvim-linux64.tar.gz
+      curl -LO https://github.com/neovim/neovim/releases/download/v$VERSION/nvim-linux-x86_64.tar.gz
 
 - Copy the installer to the host `/tmp/` directory:
 
-      scp $DOWNLOAD_DIR/$VERSION/nvim-linux64.tar.gz $ANSIBLE_HOST:/tmp
+      cp $DOWNLOAD_DIR/$VERSION/nvim-linux-x86_64.tar.gz /tmp
 
   Ansible `:role:neovim`:
 
   ```yaml
   - name: "Copy Neovim tarball"
     copy:
-      src: "{{ DOWNLOAD_DIR }}/{{ VERSION }}/nvim-linux64.tar.gz"
-      dest: /tmp/nvim-linux64.tar.gz
+      src: "{{ DOWNLOAD_DIR }}/{{ VERSION }}/nvim-linux-x86_64.tar.gz"
+      dest: /tmp/nvim-linux-x86_64.tar.gz
   ```
 
 - Install below `/opt` and symlink into `/usr/local/bin`
   `:creates:/usr/local/bin/nvim` `:role:neovim`:
 
-      tar -C /opt -zxf /tmp/nvim-linux64.tar.gz &&
-        ln -s /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
+        tar -C /opt \
+            --transform "s/^nvim-linux-x86_64/&-$VERSION/" \
+            -zxf /tmp/nvim-linux-x86_64.tar.gz &&
+        ln -sf /opt/nvim-linux-x86_64-$VERSION/bin/nvim /usr/local/bin/nvim
 
 - Remove the installer from the host `/tmp/` directory:
 
-      ssh $ANSIBLE_HOST rm -f /tmp/nvim-linux64.tar.gz
+      rm -f /tmp/nvim-linux-x86_64.tar.gz
 
   Ansible `:role:neovim`:
 
   ```yaml
   - name: "Cleanup Neovim tarball"
     file:
-      path: /tmp/nvim-linux64.tar.gz
+      path: /tmp/nvim-linux-x86_64.tar.gz
       state: absent
   ```
 
@@ -8134,6 +8139,47 @@ Provides `gcc` for 32-bit MIPS little-Endian.
       agi neovim-qt
 
       yi neovim-qt
+
+- Install `neovim-qt` from source:
+
+  - References:
+    - <https://github.com/equalsraf/neovim-qt>
+    - <https://github.com/equalsraf/neovim-qt/wiki/Build-Instructions>
+    - <https://github.com/equalsraf/neovim-qt/issues/1112>
+      (For `no notification handler registered for "Dir"` errors).
+
+  - Optional; needed on Ubuntu 24.04 when using Neovim 0.11+ due to errors
+    (required neovim-qt v0.2.19+):
+
+        no notification handler registered for "Dir"
+        no notification handler registered for "Gui"
+
+  - Clone and choose tag:
+
+        mkdir -p ~/build
+        cd ~/build
+        git clone https://github.com/equalsraf/neovim-qt
+        git checkout v0.2.19
+
+  - Install dependencies:
+
+        sudo apt-get build-dep -y neovim-qt
+
+  - Build for `/opt/neovim-qt` destination:
+
+        mkdir build
+        cd build
+
+        cmake -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX:PATH=/opt/neovim-qt \
+          ..
+        make
+
+  - Install:
+
+        sudo make install
+
+        sudo ln -s /opt/neovim-qt/bin/nvim-qt /usr/local/bin/nvim-qt
 
 #### Neovim using PPA
 

@@ -1,16 +1,16 @@
 ---
 - name: "Copy Neovim tarball"
   copy:
-    src: "{{ DOWNLOAD_DIR }}/{{ VERSION }}/nvim-linux64.tar.gz"
-    dest: /tmp/nvim-linux64.tar.gz
+    src: "{{ DOWNLOAD_DIR }}/{{ VERSION }}/nvim-linux-x86_64.tar.gz"
+    dest: /tmp/nvim-linux-x86_64.tar.gz
 - name: Create /usr/local/bin/nvim
-  shell: tar -C /opt -zxf /tmp/nvim-linux64.tar.gz && ln -s /opt/nvim-linux64/bin/nvim
-    /usr/local/bin/nvim
+  shell: tar -C /opt  --transform "s/^nvim-linux-x86_64/&-$VERSION/"  -zxf /tmp/nvim-linux-x86_64.tar.gz
+    && ln -sf /opt/nvim-linux-x86_64-$VERSION/bin/nvim /usr/local/bin/nvim
   args:
     creates: /usr/local/bin/nvim
 - name: "Cleanup Neovim tarball"
   file:
-    path: /tmp/nvim-linux64.tar.gz
+    path: /tmp/nvim-linux-x86_64.tar.gz
     state: absent
 - name: uvtoolg Install pynvim-python-interpreter
   shell: uvtoolg install pynvim-python-interpreter
