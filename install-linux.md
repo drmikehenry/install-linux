@@ -1471,6 +1471,14 @@ AUTOMATED in `install-linux-local/local-accounts.yml`.
     SSH server allows these environment variables to be propagated over the SSH
     connection.
 
+  - In addition, there are some variables that help programs like Vim
+    determine details of which terminal is in use; these are helpful to pass
+    along as well:
+
+        TERM_PROGRAM
+        KONSOLE_DBUS_SESSION
+        KONSOLE_VERSION
+
   - Setup general settings for all hosts:
     `:extract-echod:roles/base/files/ssh_config.d-90-general.conf`:
 
@@ -1481,6 +1489,9 @@ AUTOMATED in `install-linux-local/local-accounts.yml`.
               ServerAliveInterval 300
               SendEnv COLORFGBG
               SendEnv COLORTERM
+              SendEnv TERM_PROGRAM
+              SendEnv KONSOLE_DBUS_SESSION
+              SendEnv KONSOLE_VERSION
         '
 
     Adjust permissions:
@@ -1560,6 +1571,9 @@ AUTOMATED in `install-linux-local/local-accounts.yml`.
         echod -o /etc/ssh/sshd_config.d/90-accept-env.conf '
           AcceptEnv COLORFGBG
           AcceptEnv COLORTERM
+          AcceptEnv TERM_PROGRAM
+          AcceptEnv KONSOLE_DBUS_SESSION
+          AcceptEnv KONSOLE_VERSION
         '
 
     Ansible `:role:base`:
