@@ -8091,7 +8091,7 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
   - `VERSION`: Version of Neovim to install, e.g.:
 
-        VERSION=0.11.3
+        VERSION=0.11.4
 
   - `DOWNLOAD_DIR`: Directory of downloaded Neovim installers by version, e.g.:
 
@@ -8138,14 +8138,20 @@ Provides `gcc` for 32-bit MIPS little-Endian.
       state: absent
   ```
 
-- Install `pynvim` for Python support in Neovim; Vimfiles will detect this and
-  set `g:python3_host_prog` to `pynvim-python-interpreter` `:role:neovim`:
+- Install `pynvim` for Python support in Neovim.  Neovim 0.11.4 and later will
+  detect the installed Python interpreter `pynvim-python` automatically
+  `:role:neovim`:
 
-      uvtoolg install pynvim-python-interpreter
+      uvtoolg install pynvim
 
-  Alternatively, the Ubuntu-supplied package may be installed:
+  Previously, the custom Python package `drmikehenry/pynvim-python-interpreter`
+  provided this feature, exposing the Python interpreter for `pynvim` under the
+  name `pynvim-python-interpreter`; Vimfiles detects this and sets
+  `g:python3_host_prog` to `pynvim-python-interpreter`.  This is no longer
+  necessary now that `pynvim` itself exposes `pynvim-python`.
 
-      agi python3-pynvim
+  Alternatively, the Ubuntu-supplied package may be installed via `agi
+  python3-pynvim`.
 
 - Install `neovim-qt` for GUI support.  Invoke as `nvim-qt`; the first `nvim`
   binary in `PATH` will be used `:role:neovim`:

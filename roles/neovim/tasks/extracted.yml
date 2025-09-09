@@ -12,7 +12,7 @@
   file:
     path: /tmp/nvim-linux-x86_64.tar.gz
     state: absent
-- name: uvtoolg Install pynvim-python-interpreter
-  shell: uvtoolg install pynvim-python-interpreter
+- name: uvtoolg Install pynvim
+  shell: uvtoolg install pynvim
   args:
-    creates: /usr/local/bin/pynvim-python-interpreter
+    creates: /usr/local/bin/pynvim
