@@ -6608,6 +6608,11 @@ Unix `find` command.
 
       agi fd-find
 
+- Install a symlink `:role:workstation`:
+  `:creates:/usr/local/bin/fd`:
+
+      ln -sf /usr/bin/fdfind /usr/local/bin/fd
+
 ### findx/ffg
 
 - Install `:role:workstation`:

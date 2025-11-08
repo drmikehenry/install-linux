@@ -40,6 +40,10 @@
   apt:
     name: landscape-common
     state: absent
+- name: Create /usr/local/bin/fd
+  shell: ln -sf /usr/bin/fdfind /usr/local/bin/fd
+  args:
+    creates: /usr/local/bin/fd
 - name: uvtoolg Install findx
   shell: uvtoolg install findx
   args:
