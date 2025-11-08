@@ -1621,7 +1621,7 @@ AUTOMATED in `install-linux-local/local-accounts.yml`.
 
 - Install `:role:base`:
 
-      agi git
+      agi git git-lfs
 
       yi git
 

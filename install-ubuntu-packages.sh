@@ -50,6 +50,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   git \
   git-doc \
   git-gui \
+  git-lfs \
   git-svn \
   glibc-doc \
   gnucash \

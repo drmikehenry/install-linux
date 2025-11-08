@@ -8,6 +8,7 @@
     - curl
     - gdisk
     - git
+    - git-lfs
     - gparted
     - keychain
     - myrepos
