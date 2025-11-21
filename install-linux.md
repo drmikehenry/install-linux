@@ -8096,7 +8096,7 @@ Provides `gcc` for 32-bit MIPS little-Endian.
 
   - `VERSION`: Version of Neovim to install, e.g.:
 
-        VERSION=0.11.4
+        VERSION=0.11.5
 
   - `DOWNLOAD_DIR`: Directory of downloaded Neovim installers by version, e.g.:
 
