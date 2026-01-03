@@ -8748,35 +8748,87 @@ Fake data for testing Python scripts.
 
       agi perl-doc perl-doc-html
 
-## Zig
+## Zig language
 
-- From <https://ziglang.org/download/>
+### Zig executable
 
-- Install:
+- MANUAL: Install from <https://ziglang.org/download/>:
 
-      mkdir /opt/zig
-      cd /opt/zig
-      tar -xf .../zig-linux-x86_64-0.10.0-dev.1669+c21f046a8.tar.xz
-      chmod +x zig-linux-x86_64-0.10.0-dev.1669+c21f046a8/zig
-      ln -sf $PWD/zig-linux-x86_64-0.10.0-dev.1669+c21f046a8/zig /usr/local/bin
+  - Acquire:
+
+        curl -O https://ziglang.org/download/0.15.1/zig-x86_64-linux-0.15.1.tar.xz
+
+  - Unpack and link:
+
+        tar -C /opt -xf zig-x86_64-linux-0.15.1.tar.xz
+        ln -sf /opt/zig-x86_64-linux-0.15.1/zig /usr/local/bin
+
+- Alternatively, install per-user using `uv` and PyPI:
+
+  - Create `~/bin/zig`:
+
+      ```python
+      #!/usr/bin/env -S uv run --script
+      # /// script
+      # dependencies = [
+      #   "ziglang==v0.15.1",
+      # ]
+      # ///
+
+      import subprocess
+      import sys
+
+
+      def main() -> None:
+          subprocess.run([sys.executable, "-m", "ziglang"] + sys.argv[1:])
+
+
+      if __name__ == "__main__":
+          main()
+
+      # vim: set ft=python:
+      ```
+
+  - Make executable:
+
+        chmod +x ~/bin/zig
 
 - Test:
 
       zig version
 
-- zls:
+### Zig language server, `zls`
 
-  - CI workflows: <https://github.com/zigtools/zls/actions>
+- MANUAL Install from <https://zigtools.org/zls/install/>:
 
-  - Download `builds.zip` from desired CI workflow.
+  - Acquire:
 
-  - Install:
+        curl -O https://builds.zigtools.org/zls-x86_64-linux-0.15.1.tar.xz
 
-        mkdir /opt/zig/zls
-        cd /opt/zig/zls
-        unzip .../builds.zip
-        tar -xf x86_64-linux.tar.xz
-        ln -sf $PWD/bin/zls /usr/local/bin
+  - Unpack and link::
+
+        mkdir /opt/zls-x86_64-linux-0.15.1
+        tar -C /opt/zls-x86_64-linux-0.15.1 -xf zls-x86_64-linux-0.15.1.tar.xz
+        ln -sf /opt/zls-x86_64-linux-0.15.1/zls /usr/local/bin
+
+- Alternatively, build from source (Internet access required):
+
+  - As user, build:
+
+        mkdir -p ~/build
+        cd ~/build
+        git clone https://github.com/zigtools/zls
+        cd zls
+        git checkout 0.15.1
+        zig build -Doptimize=ReleaseSafe
+
+  - Copy into place::
+
+        sudo mkdir /opt/zls-x86_64-linux-0.15.1
+
+        sudo cp zig-out/bin/zls /opt/zls-x86_64-linux-0.15.1/zls
+
+        sudo ln -sf /opt/zls-x86_64-linux-0.15.1/zls /usr/local/bin
 
 ## Ruby
 
