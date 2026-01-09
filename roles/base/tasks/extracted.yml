@@ -60,17 +60,6 @@
     dest: /etc/ssh/sshd_config.d/90-accept-env.conf
     src: sshd_config.d-90-accept-env.conf
     mode: "u=rw,go=r"
-- name: Make python3 symlink
-  file:
-    src: /usr/bin/python3
-    dest: /usr/local/bin/python
-    state: link
-
-- name: Make pip3 symlink
-  file:
-    src: /usr/bin/pip3
-    dest: /usr/local/bin/pip
-    state: link
 - name: Install uvtoolg script
   copy:
     src: uvtoolg

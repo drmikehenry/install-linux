@@ -1671,27 +1671,6 @@ Supported use cases:
 
       agi python3-venv python3-pip
 
-- Make symlinks to prefer Python 3-based tooling without version suffix:
-
-      ln -s /usr/bin/python3 /usr/local/bin/python
-      ln -s /usr/bin/pip3 /usr/local/bin/pip
-
-  Ansible `:role:base`:
-
-  ```yaml
-  - name: Make python3 symlink
-    file:
-      src: /usr/bin/python3
-      dest: /usr/local/bin/python
-      state: link
-
-  - name: Make pip3 symlink
-    file:
-      src: /usr/bin/pip3
-      dest: /usr/local/bin/pip
-      state: link
-  ```
-
 - The `uv` tool directory will be `/usr/local/lib/uv-tool`, and binaries will
   live in `/usr/local/bin`.
 
