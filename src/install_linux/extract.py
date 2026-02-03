@@ -298,7 +298,7 @@ def extract_install(
             extract_install_pipxg(
                 line, cmd_args, roles, role_yaml_parts, creates
             )
-        elif cmd in ("agi", "yi"):
+        elif cmd in ("agi", "yi", "moxi"):
             packages = args
             if not packages:
                 logger.warning(f"Empty '{cmd}' line {line!r} (try --verbose)")
@@ -307,6 +307,8 @@ def extract_install(
                     dist = "ubuntu"
                 elif cmd == "yi":
                     dist = "fedora"
+                elif cmd == "moxi":
+                    dist = "proxmox"
                 else:
                     assert False
                 for role in roles:
@@ -351,6 +353,7 @@ def extract_general(doc: marko.block.BlockElement) -> None:
     dist_role_packages: T.Dict[str, T.DefaultDict[str, T.Set[str]]] = {
         "ubuntu": collections.defaultdict(set),
         "fedora": collections.defaultdict(set),
+        "proxmox": collections.defaultdict(set),
     }
 
     for tag_map, keywords, para, code in extract_tagged_code(doc):
