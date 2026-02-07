@@ -1944,3 +1944,47 @@ using a standard `.desktop` file in the standard directory
 
       parec -d alsa_output.pci-0000_00_1f.3.analog-stereo.monitor |
         lame -r -V0 - out.mp3
+
+# Proxmox
+
+## Proxmox references
+
+- Proxmox admin guide:
+  <https://pve.proxmox.com/pve-docs/pve-admin-guide.html>
+
+- Some helper scripts supported by the community:
+  - <https://github.com/community-scripts/ProxmoxVE>
+
+- Packer with Proxmox:
+  <https://github.com/ajschroeder/proxmox-packer-examples>
+
+- Installing Proxmox with ZFS-on-root:
+
+  - <https://pve.proxmox.com/wiki/ZFS_on_Linux>
+
+  - <https://free-pmx.org/insights/zfs-root/>
+
+- Proxmox package repositories:
+  <https://pve.proxmox.com/wiki/Package_Repositories>
+
+- A fancy homelab setup (complex):
+  - <https://chollinger.com/blog/2025/01/my-2025-homelab-updates-quadrupling-capacity/>
+
+- Booting from ZFS using `ZFSBootMenu` (dedicated ZFS-friendly bootloader):
+  - <https://free-pmx.org/guides/zfs-boot/>
+
+- Taking advantage of ZFS on root:
+  - <https://free-pmx.org/insights/zfs-root/>
+
+- Recovery boot from Proxmox ISO, handling ZFS-on-root:
+  - <https://free-pmx.org/guides/pve-rescue/>
+
+- Making a backup of server from Proxmox ISO boot:
+  - <https://free-pmx.org/guides/host-backup/>
+
+- Other free-pmx guides:
+  - <https://free-pmx.org/guides/>
+
+- Proxmox pve-firewall:
+  - <https://pve.proxmox.com/pve-docs/pve-admin-guide.html#chapter_pve_firewall>
+
