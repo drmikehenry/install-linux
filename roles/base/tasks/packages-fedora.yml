@@ -7,6 +7,7 @@
     - curl
     - git
     - keychain
+    - lm_sensors
     - myrepos
     - nfs-utils
     - subversion

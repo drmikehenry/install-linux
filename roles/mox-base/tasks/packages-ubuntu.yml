@@ -1,0 +1,5 @@
+---
+- name: Install ubuntu `:role:mox-base` packages
+  package:
+    name:
+    - lm-sensors

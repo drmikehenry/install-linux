@@ -1988,3 +1988,111 @@ using a standard `.desktop` file in the standard directory
 - Proxmox pve-firewall:
   - <https://pve.proxmox.com/pve-docs/pve-admin-guide.html#chapter_pve_firewall>
 
+## Proxmox with ZFSBootMenu
+
+- After pressing Escape to enter the boot menu, have many options.
+
+- Can press Ctrl-J to get a chroot shell for recovery.
+
+- Can make snapshots, clones, copies, etc.
+
+## Proxmox VM usage
+
+### Upload ISO
+
+- Via web GUI: Folder View | Datacenter | Storage | local (mox) | Upload button.
+
+- Example storage configuration:
+  <https://forum.proxmox.com/threads/question-path-to-iso-on-local.127697/>
+
+      cat /etc/pve/storage.cfg
+
+  Sample output:
+
+      dir: local
+              path /var/lib/vz
+              content iso,vztmpl,backup
+
+      zfspool: local-zfs
+              pool rpool/data
+              sparse
+              content images,rootdir
+
+- `vz` storage:
+
+      ls -l /var/lib/vz/
+
+  Sample output:
+
+      total 2
+      drwxr-xr-x 2 root root 2 Jan 31 09:44 dump
+      drwxr-xr-x 2 root root 2 Aug  5 06:36 images
+      drwxr-xr-x 4 root root 4 Jan 31 09:43 template
+
+- ISO files:
+
+      ls -l /var/lib/vz/template/iso/
+
+  Sample output:
+
+      total 6168021
+      -rw-r--r-- 1 root root 6345887744 Jan 31 11:03 ubuntu-24.04.3-desktop-amd64.iso
+
+### Create a VM
+
+- Via web GUI: Server View | Datacenter | Create VM
+
+- VM configuration file directory:
+
+      /etc/pve/nodes/mox/qemu-server/
+
+- E.g., for VMID 100:
+
+      /etc/pve/nodes/mox/qemu-server/100.conf
+
+- Configuration example (`/etc/pve/nodes/mox/qemu-server/100.conf`):
+
+      boot: order=scsi0;ide2;net0
+      cores: 2
+      cpu: x86-64-v2-AES
+      ide2: none,media=cdrom
+      memory: 8192
+      meta: creation-qemu=10.1.2,ctime=1769875708
+      name: bolt2
+      net0: virtio=BC:24:11:28:4E:7A,bridge=vmbr0,firewall=1
+      numa: 0
+      ostype: l26
+      scsi0: local-zfs:vm-100-disk-0,iothread=1,size=100G
+      scsihw: virtio-scsi-single
+      smbios1: uuid=bf92de7b-2e50-4e9b-bb64-34f49deeb4dc
+      sockets: 1
+      vmgenid: 164e3ac4-ad9b-4b98-9096-05c099b281c0
+
+- virtual disk image location:
+
+  - `local-zfs` dataset.
+
+### qemu-guest-agent
+
+- Reference: <https://pve.proxmox.com/wiki/Qemu-guest-agent>
+
+- When setting up a VM, use qemu-guest-agent:
+
+  - Per-VM options | QEMU Guest Agent:
+    - Choose "Use QEMU Guest Agent".
+    - Choose "Run guest-trim after a disk move or VM migration".
+
+- Install into VM:
+
+  Ubuntu VM:
+
+      apt install -y qemu-guest-agent
+      systemctl start qemu-guest-agent
+      systemctl enable qemu-guest-agent
+
+- Reboot the VM.
+
+- Verify comms with agent:
+
+      # Replace `100` with actual VMID:
+      qm agent 100 ping

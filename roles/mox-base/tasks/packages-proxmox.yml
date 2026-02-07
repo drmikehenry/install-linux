@@ -1,0 +1,6 @@
+---
+- name: Install proxmox `:role:mox-base` packages
+  package:
+    name:
+    - lm-sensors
+    - nfs-kernel-server

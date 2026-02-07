@@ -96,6 +96,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   libxmlsec1-dev \
   linux-headers-generic \
   linux-tools-generic \
+  lm-sensors \
   lshw \
   lshw-gtk \
   maelstrom \

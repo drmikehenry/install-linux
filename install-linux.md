@@ -26,7 +26,10 @@ See `install-linux-local.md` for any machine-specific setup.
 
 ## Boot Media Creation
 
-- Can `dd` a .iso file directly to a USB flash drive and boot from that.
+- Can `dd` a .iso file directly to a USB flash drive and boot from that, e.g.:
+
+      dd if=/m/torrent/distro.iso bs=1024k of=/dev/sda status=progress
+
 - UBUNTU Download *both* desktop and server iso files.
   - Need desktop iso for "Try Ubuntu" mode, installing supporting utilities,
     etc.
@@ -42,6 +45,9 @@ See `install-linux-local.md` for any machine-specific setup.
 - CENTOS Download the DVD iso file from a mirror at:
   <http://isoredirect.centos.org/centos/7/isos/x86_64/>
   - CentOS 7.4: `CentOS-7-x86_64-DVD-1708.iso`
+- PROXMOX Download the ISO from:
+  <https://www.proxmox.com/en/downloads>
+  - Proxmox VE 9.1: `proxmox-ve_9.0-1.iso`
 
 ## Disk Configuration
 
@@ -445,7 +451,8 @@ Create simple `echod` utility:
 
     vi /usr/local/bin/echod
 
-With contents `:extract:roles/base/files/echod`:
+With contents `:extract:roles/base/files/echod`
+`:extract:roles/mox-base/files/echod`:
 
 ```python
 #!/usr/bin/env python3
@@ -469,7 +476,7 @@ Make script executable:
 
     chmod +x /usr/local/bin/echod
 
-Ansible `:role:base`:
+Ansible `:role:base` `:role:mox-base`:
 
 ```yaml
 - name: Install echod
@@ -735,6 +742,351 @@ Ansible `:role:base`:
   - name: Set timezone
     command: timedatectl set-timezone America/New_York
   ```
+
+## Proxmox Repositories
+
+### Switch to non-subscription Proxmox repositories.
+
+- Automated via Ansible.
+
+- Switch `ceph` to no-subscription
+  `:extract-echod:roles/mox-repos/files/ceph.sources`:
+
+      echod -o /etc/apt/sources.list.d/ceph.sources '
+        Types: deb
+        URIs: https://enterprise.proxmox.com/debian/ceph-squid
+        Suites: trixie
+        Components: enterprise
+        Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg
+        Enabled: false
+
+        Types: deb
+        URIs: http://download.proxmox.com/debian/ceph-squid
+        Suites: trixie
+        Components: no-subscription
+        Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg
+      '
+
+  Ansible `:role:mox-repos`:
+
+  ```yaml
+  - name: Switch `ceph` to no-subscription
+    copy:
+      dest: /etc/apt/sources.list.d/ceph.sources
+      src: ceph.sources
+  ```
+
+- Disable `pve-enterprise`:
+  `:extract-echod:roles/mox-repos/files/pve-enterprise.sources`:
+
+      echod -o /etc/apt/sources.list.d/pve-enterprise.sources '
+        Types: deb
+        URIs: https://enterprise.proxmox.com/debian/pve
+        Suites: trixie
+        Components: pve-enterprise
+        Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg
+        Enabled: false
+      '
+
+  Ansible `:role:mox-repos`:
+
+  ```yaml
+  - name: Disable `pve-enterprise`
+    copy:
+      dest: /etc/apt/sources.list.d/pve-enterprise.sources
+      src: pve-enterprise.sources
+  ```
+
+- Use proxmox no-subscription:
+  `:extract-echod:roles/mox-repos/files/proxmox.sources`:
+
+      echod -o /etc/apt/sources.list.d/proxmox.sources '
+      Types: deb
+      URIs: http://download.proxmox.com/debian/pve
+      Suites: trixie
+      Components: pve-no-subscription
+      Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg
+      '
+
+  Ansible `:role:mox-repos`:
+
+  ```yaml
+  - name: Use proxmox no-subscription
+    copy:
+      dest: /etc/apt/sources.list.d/proxmox.sources
+      src: proxmox.sources
+  ```
+
+- (alternative) Via web GUI: Server View | Datacenter | `mox`, choose Updates |
+  Repositories.
+  - Reference: <https://pve.proxmox.com/wiki/Package_Repositories>
+  - Note: URLs change from "enterprise" to "download" below.
+  - Change "Ceph Squid" from "Enterprise" to "No Subscription":
+    - "Disable" on Enterprise "Ceph Squid":
+      <https://enterprise.proxmox.com/debian/ceph-squid>.
+    - "Add" | "Ceph Squid No-Subscription":
+      <https://download.proxmox.com/debian/ceph-squid>
+  - Change "PVE" from "Enterprise" to "No Subscription":
+    - "Disable" on Enterprise "PVE": <https://enterprise.proxmox.com/debian/pve>
+    - "Add" | "No-Subscription": <https://download.proxmox.com/debian/pve>
+
+### Apply Proxmox updates
+
+- Automated via Ansible.
+
+- Avoid GUI; can end up with closed shell window and no way to reconnect.
+
+- Connect via SSH.
+
+- Update APT cache and perform full upgrade:
+
+      apt update && apt full-upgrade -y
+
+  Ansible `:role:mox-repos`:
+
+  ```yaml
+  - name: Update APT cache and perform full upgrade
+    apt:
+      update_cache: yes
+      upgrade: full
+  ```
+
+## Proxmox Firewall Setup
+
+- Automated via Ansible.
+
+- Configure firewall:
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Ensure Firewall configuration file exists
+    file:
+      path: /etc/pve/firewall/cluster.fw
+      state: touch
+      owner: root
+      group: www-data
+      mode: 'u=rw,g=r'
+  ```
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Ensure `OPTIONS` section in firewall configuration file
+    lineinfile:
+      path: /etc/pve/firewall/cluster.fw
+      line: '[OPTIONS]'
+  ```
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Ensure firewall is enabled
+    lineinfile:
+      path: /etc/pve/firewall/cluster.fw
+      insertafter: '^\[OPTIONS\]'
+      regexp: '^\s*enable\s*:'
+      line: 'enable: 1'
+  ```
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Ensure `RULES` section in firewall configuration
+    lineinfile:
+      path: /etc/pve/firewall/cluster.fw
+      line: '[RULES]'
+  ```
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Add firewall rules
+    lineinfile:
+      path: /etc/pve/firewall/cluster.fw
+      insertafter: '^\[RULES\]'
+      line: "{{ item }}"
+    loop:
+      - IN ACCEPT -p udp -dport 2049 -log nolog # nfs
+      - IN ACCEPT -p tcp -dport 2049 -log nolog # nfs
+      - IN ACCEPT -p udp -dport 2048 -log nolog # mountd
+      - IN ACCEPT -p tcp -dport 2048 -log nolog # mountd
+      - IN ACCEPT -p udp -dport 2046 -log nolog # statd
+      - IN ACCEPT -p tcp -dport 2046 -log nolog # statd
+      - IN ACCEPT -p udp -dport 2045 -log nolog # nlockmgr
+      - IN ACCEPT -p tcp -dport 2045 -log nolog # nlockmgr
+      - IN ACCEPT -p udp -dport 111 -log nolog # sunrpc
+      - IN ACCEPT -p tcp -dport 111 -log nolog # sunrpc
+  ```
+
+- Restart firewall:
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Restart firewall
+    shell: |
+      pve-firewall restart
+  ```
+
+## Proxmox NFS Server Setup
+
+- Automated via Ansible.
+
+- References:
+  - <https://debian-handbook.info/browse/wheezy/sect.nfs-file-server.html>
+
+- Install NFS server `:role:mox-base`:
+
+      moxi nfs-kernel-server
+
+- Unfortunately, we need to lock down the ports so the firewall rules will work.
+  To examine the currently chosen ports:
+
+      rpcinfo -p
+
+  With output:
+
+      program vers proto   port  service
+       100000    4   tcp    111  portmapper
+       100000    3   tcp    111  portmapper
+       100000    2   tcp    111  portmapper
+       100000    4   udp    111  portmapper
+       100000    3   udp    111  portmapper
+       100000    2   udp    111  portmapper
+       100024    1   udp  43399  status
+       100024    1   tcp  49033  status
+       100005    1   udp  57536  mountd
+       100005    1   tcp  37391  mountd
+       100005    2   udp  46219  mountd
+       100005    2   tcp  46363  mountd
+       100005    3   udp  34604  mountd
+       100005    3   tcp  44591  mountd
+       100003    3   tcp   2049  nfs
+       100003    4   tcp   2049  nfs
+       100227    3   tcp   2049  nfs_acl
+       100021    1   udp  57270  nlockmgr
+       100021    3   udp  57270  nlockmgr
+       100021    4   udp  57270  nlockmgr
+       100021    1   tcp  35097  nlockmgr
+       100021    3   tcp  35097  nlockmgr
+       100021    4   tcp  35097  nlockmgr
+
+- The sunrpc(111) and nfs(2049) ports are fixed already, but mountd, statd, and
+  nlockmgr are random and need to be locked down. We choose the following port
+  numbers for these purposes:
+
+  - 2045 nlockmgr
+  - 2046 statd inbound
+  - 2047 statd outbound
+  - 2048 mountd
+
+- Lock down the lockd ports:
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Lock down lockd port
+    ini_file:
+      path: /etc/nfs.conf
+      section: lockd
+      option: port
+      value: 2045
+  - name: Lock down lockd udp-port
+    ini_file:
+      path: /etc/nfs.conf
+      section: lockd
+      option: udp-port
+      value: 2045
+  ```
+
+- Lock down the statd ports:
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Lock down statd port
+    ini_file:
+      path: /etc/nfs.conf
+      section: statd
+      option: port
+      value: 2046
+  - name: Lock down statd udp-port
+    ini_file:
+      path: /etc/nfs.conf
+      section: statd
+      option: outgoing-port
+      value: 2047
+  ```
+
+- Lock down the mountd port:
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Lock down mountd port
+    ini_file:
+      path: /etc/nfs.conf
+      section: mountd
+      option: port
+      value: 2048
+  ```
+
+- Setup exports:
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Setup exports
+    lineinfile:
+      dest: /etc/exports
+      line: '/m      192.168.254.0/24(rw,insecure,async,no_root_squash,no_subtree_check)'
+  ```
+
+- Restart the services:
+
+  Ansible `:role:mox-base`:
+
+  ```yaml
+  - name: Restart NFS server
+    shell: |
+      systemctl restart nfs-kernel-server rpc-statd.service
+  ```
+
+- Verify the port numbers are now fixed:
+
+      rpcinfo -p
+
+  With output:
+
+      program vers proto   port  service
+       100000    4   tcp    111  portmapper
+       100000    3   tcp    111  portmapper
+       100000    2   tcp    111  portmapper
+       100000    4   udp    111  portmapper
+       100000    3   udp    111  portmapper
+       100000    2   udp    111  portmapper
+       100005    1   udp   2048  mountd
+       100005    1   tcp   2048  mountd
+       100005    2   udp   2048  mountd
+       100024    1   udp   2046  status
+       100005    2   tcp   2048  mountd
+       100024    1   tcp   2046  status
+       100005    3   udp   2048  mountd
+       100005    3   tcp   2048  mountd
+       100003    3   tcp   2049  nfs
+       100003    4   tcp   2049  nfs
+       100227    3   tcp   2049  nfs_acl
+       100021    1   udp   2045  nlockmgr
+       100021    3   udp   2045  nlockmgr
+       100021    4   udp   2045  nlockmgr
+       100021    1   tcp   2045  nlockmgr
+       100021    3   tcp   2045  nlockmgr
+       100021    4   tcp   2045  nlockmgr
+
+- Verify:
+
+      showmount -e mox.drmikehenry.com
 
 ## Base Firewall Setup
 
@@ -7050,11 +7402,13 @@ Display computer block diagram graphically.
 
 ### Temperature Sensors
 
-- Install:
+- Install `:role:base` `:role:mox-base`:
 
       agi lm-sensors
 
       yi lm_sensors
+
+      moxi lm-sensors
 
 - Install GUIs for sensors:
 

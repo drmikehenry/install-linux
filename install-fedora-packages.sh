@@ -35,6 +35,7 @@ dnf install -y \
   konversation \
   levien-inconsolata-fonts \
   libreoffice \
+  lm_sensors \
   lshw \
   lshw-gui \
   mailx \

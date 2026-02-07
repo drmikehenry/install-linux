@@ -1,0 +1,5 @@
+---
+- name: Install proxmox `:role:base` packages
+  package:
+    name:
+    - lm-sensors

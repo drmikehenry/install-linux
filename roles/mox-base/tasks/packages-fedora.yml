@@ -1,0 +1,5 @@
+---
+- name: Install fedora `:role:mox-base` packages
+  package:
+    name:
+    - lm_sensors

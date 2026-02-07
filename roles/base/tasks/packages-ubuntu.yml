@@ -11,6 +11,7 @@
     - git-lfs
     - gparted
     - keychain
+    - lm-sensors
     - myrepos
     - nfs-common
     - python3-pip
