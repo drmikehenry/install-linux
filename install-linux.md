@@ -1704,9 +1704,12 @@ AUTOMATED in `install-linux-local/local-accounts.yml`.
 
   - UBUNTU (Note: This entails more groups than `poweruser` has):
 
-        for i in adm cdrom sudo plugdev lxd lpadmin video; do
+        for i in adm cdrom sudo plugdev lxd video; do
             usermod -aG $i someuser
         done
+
+    Note: leaving out `lpadmin`; do printer admin steps as root.  This prevents
+    failure when installing on systems without CUPS.
 
   - FEDORA CENTOS:
 
