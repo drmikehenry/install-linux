@@ -1,0 +1,8 @@
+---
+- name: Install echod
+  copy:
+    src: echod
+    dest: /usr/local/bin/echod
+    owner: root
+    group: root
+    mode: 0755

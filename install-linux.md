@@ -451,8 +451,7 @@ Create simple `echod` utility:
 
     vi /usr/local/bin/echod
 
-With contents `:extract:roles/base/files/echod`
-`:extract:roles/mox-base/files/echod`:
+With contents `:extract:roles/echod/files/echod`:
 
 ```python
 #!/usr/bin/env python3
@@ -476,7 +475,7 @@ Make script executable:
 
     chmod +x /usr/local/bin/echod
 
-Ansible `:role:base` `:role:mox-base`:
+Ansible `:role:echod`:
 
 ```yaml
 - name: Install echod
