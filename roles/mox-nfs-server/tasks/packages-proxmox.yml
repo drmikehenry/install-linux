@@ -1,0 +1,5 @@
+---
+- name: Install proxmox `:role:mox-nfs-server` packages
+  package:
+    name:
+    - nfs-kernel-server

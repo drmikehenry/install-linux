@@ -1,0 +1,5 @@
+---
+- name: Base Proxmox packages
+  import_tasks: tasks/packages-proxmox.yml
+
+- import_tasks: tasks/extracted.yml

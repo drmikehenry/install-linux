@@ -927,27 +927,6 @@ Ansible `:role:echod`:
       line: '[RULES]'
   ```
 
-  Ansible `:role:mox-base`:
-
-  ```yaml
-  - name: Add firewall rules
-    lineinfile:
-      path: /etc/pve/firewall/cluster.fw
-      insertafter: '^\[RULES\]'
-      line: "{{ item }}"
-    loop:
-      - IN ACCEPT -p udp -dport 2049 -log nolog # nfs
-      - IN ACCEPT -p tcp -dport 2049 -log nolog # nfs
-      - IN ACCEPT -p udp -dport 2048 -log nolog # mountd
-      - IN ACCEPT -p tcp -dport 2048 -log nolog # mountd
-      - IN ACCEPT -p udp -dport 2046 -log nolog # statd
-      - IN ACCEPT -p tcp -dport 2046 -log nolog # statd
-      - IN ACCEPT -p udp -dport 2045 -log nolog # nlockmgr
-      - IN ACCEPT -p tcp -dport 2045 -log nolog # nlockmgr
-      - IN ACCEPT -p udp -dport 111 -log nolog # sunrpc
-      - IN ACCEPT -p tcp -dport 111 -log nolog # sunrpc
-  ```
-
 - Restart firewall:
 
   Ansible `:role:mox-base`:
@@ -965,7 +944,7 @@ Ansible `:role:echod`:
 - References:
   - <https://debian-handbook.info/browse/wheezy/sect.nfs-file-server.html>
 
-- Install NFS server `:role:mox-base`:
+- Install NFS server `:role:mox-nfs-server`:
 
       moxi nfs-kernel-server
 
@@ -1012,7 +991,7 @@ Ansible `:role:echod`:
 
 - Lock down the lockd ports:
 
-  Ansible `:role:mox-base`:
+  Ansible `:role:mox-nfs-server`:
 
   ```yaml
   - name: Lock down lockd port
@@ -1031,7 +1010,7 @@ Ansible `:role:echod`:
 
 - Lock down the statd ports:
 
-  Ansible `:role:mox-base`:
+  Ansible `:role:mox-nfs-server`:
 
   ```yaml
   - name: Lock down statd port
@@ -1050,7 +1029,7 @@ Ansible `:role:echod`:
 
 - Lock down the mountd port:
 
-  Ansible `:role:mox-base`:
+  Ansible `:role:mox-nfs-server`:
 
   ```yaml
   - name: Lock down mountd port
@@ -1063,7 +1042,7 @@ Ansible `:role:echod`:
 
 - Setup exports:
 
-  Ansible `:role:mox-base`:
+  Ansible `:role:mox-nfs-server`:
 
   ```yaml
   - name: Setup exports
@@ -1074,12 +1053,45 @@ Ansible `:role:echod`:
 
 - Restart the services:
 
-  Ansible `:role:mox-base`:
+  Ansible `:role:mox-nfs-server`:
 
   ```yaml
   - name: Restart NFS server
     shell: |
       systemctl restart nfs-kernel-server rpc-statd.service
+  ```
+
+- Configure firewall for NFS server:
+
+  Ansible `:role:mox-nfs-server`:
+
+  ```yaml
+  - name: Add firewall rules
+    lineinfile:
+      path: /etc/pve/firewall/cluster.fw
+      insertafter: '^\[RULES\]'
+      line: "{{ item }}"
+    loop:
+      - IN ACCEPT -p udp -dport 2049 -log nolog # nfs
+      - IN ACCEPT -p tcp -dport 2049 -log nolog # nfs
+      - IN ACCEPT -p udp -dport 2048 -log nolog # mountd
+      - IN ACCEPT -p tcp -dport 2048 -log nolog # mountd
+      - IN ACCEPT -p udp -dport 2046 -log nolog # statd
+      - IN ACCEPT -p tcp -dport 2046 -log nolog # statd
+      - IN ACCEPT -p udp -dport 2045 -log nolog # nlockmgr
+      - IN ACCEPT -p tcp -dport 2045 -log nolog # nlockmgr
+      - IN ACCEPT -p udp -dport 111 -log nolog # sunrpc
+      - IN ACCEPT -p tcp -dport 111 -log nolog # sunrpc
+  ```
+
+- Restart firewall:
+
+  Ansible `:role:mox-nfs-server`:
+
+  ```yaml
+  - name: Restart firewall
+    shell: |
+      pve-firewall restart
   ```
 
 - Verify the port numbers are now fixed:
