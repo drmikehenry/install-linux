@@ -7,17 +7,4 @@
   import_tasks: tasks/packages-fedora.yml
   when: ansible_distribution == 'Fedora'
 
-- name: Setup persistent journal storage
-  lineinfile:
-    dest: /etc/systemd/journald.conf
-    regexp: '^#?\s*Storage=.*'
-    line: 'Storage=persistent'
-  register: journald_conf
-
-- name: Restart journal daemon
-  service:
-    name: systemd-journald
-    state: restarted
-  when: journald_conf is changed
-
 - import_tasks: tasks/extracted.yml

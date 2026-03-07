@@ -487,7 +487,7 @@ Ansible `:role:echod`:
     mode: 0755
 ```
 
-## Base Aliases
+## Base aliases
 
 - HOMEGIT Setup root aliases used during installation:
 
@@ -505,6 +505,36 @@ Ansible `:role:echod`:
   Now, source these new definitions:
 
       . ~/.bashrc
+
+## Journal configuration
+
+- Make journal storage persistent:
+
+  Ansible `:role:base` `:role:serverbase`:
+
+  ```yaml
+  - name: Setup persistent journal storage
+    lineinfile:
+      dest: /etc/systemd/journald.conf
+      regexp: '^#?\s*Storage=.*'
+      line: 'Storage=persistent'
+    register: journald_conf
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Restart journal daemon
+    service:
+      name: systemd-journald
+      state: restarted
+    when: journald_conf is changed
+  ```
+
+- MANUAL Set limits for systemd journal size:
+
+      vim /etc/systemd/journald.conf
+
+      [Journal]
+      SystemMaxUse=200M
+      SystemMaxFileSize=32M
 
 ## UBUNTU Server networkd timeout
 
@@ -5999,17 +6029,6 @@ MANUAL:
 - Optionally configure (but defaults are good):
 
       vim /usr/share/logwatch/default.conf/logwatch.conf
-
-## Journal Limits
-
-- Set limits for systemd journal size and make the storage persistent:
-
-      vim /etc/systemd/journald.conf
-
-      [Journal]
-      Storage=persistent
-      SystemMaxUse=200M
-      SystemMaxFileSize=32M
 
 # Snapshot
 

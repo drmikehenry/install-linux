@@ -1,4 +1,17 @@
 ---
+- name: Setup persistent journal storage
+  lineinfile:
+    dest: /etc/systemd/journald.conf
+    regexp: '^#?\s*Storage=.*'
+    line: 'Storage=persistent'
+  register: journald_conf
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Restart journal daemon
+  service:
+    name: systemd-journald
+    state: restarted
+  when: journald_conf is changed
 - name: Disable systemd-networkd-wait-online
   service:
     name: systemd-networkd-wait-online
