@@ -1,0 +1,8 @@
+#!/bin/sh
+
+UV_TOOL_DIR=/usr/local/lib/uv-tool
+UV_TOOL_BIN_DIR=/usr/local/bin
+export UV_TOOL_DIR UV_TOOL_BIN_DIR
+
+umask 002
+exec uv tool "$@"

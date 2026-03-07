@@ -1,0 +1,10 @@
+---
+- name: Install fedora `:role:serverbase` packages
+  package:
+    name:
+    - autofs
+    - curl
+    - git
+    - nfs-utils
+    - vim
+    - wget

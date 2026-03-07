@@ -1,0 +1,14 @@
+---
+- name: Install ubuntu `:role:serverbase` packages
+  package:
+    name:
+    - autofs
+    - curl
+    - gdisk
+    - git
+    - git-lfs
+    - nfs-common
+    - python3-pip
+    - python3-venv
+    - vim
+    - wget

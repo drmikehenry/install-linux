@@ -546,7 +546,7 @@ Ansible `:role:echod`:
 
       systemctl disable systemd-networkd-wait-online
 
-  Ansible `:role:base`:
+  Ansible `:role:base` `:role:serverbase`:
 
   ```yaml
   - name: Disable systemd-networkd-wait-online
@@ -735,7 +735,7 @@ Ansible `:role:echod`:
 
       timedatectl set-timezone America/New_York
 
-  Ansible `:role:base`:
+  Ansible `:role:base` `:role:serverbase`:
 
   ```yaml
   - name: Set timezone
@@ -1112,7 +1112,7 @@ noise in the logs.  To fix this, block the port explicitly:
 
     ufw deny 5355/udp
 
-  Ansible `:role:base`:
+  Ansible `:role:base` `:role:serverbase`:
 
   ```yaml
   - name: ufw deny 5355/udp (multicast DNS for Windows)
@@ -1278,7 +1278,7 @@ AUTOMATED in role `localhome`.
 
 ### wget
 
-- Install `:role:base`:
+- Install `:role:base` `:role:serverbase`:
 
       agi wget
 
@@ -1286,7 +1286,7 @@ AUTOMATED in role `localhome`.
 
 ### curl
 
-- Install `:role:base`:
+- Install `:role:base` `:role:serverbase`:
 
       agi curl
 
@@ -1294,7 +1294,7 @@ AUTOMATED in role `localhome`.
 
 ### Initial Vim
 
-- Install `:role:base`:
+- Install `:role:base` `:role:serverbase`:
 
       agi vim
 
@@ -1449,7 +1449,7 @@ AUTOMATED in role `localhome`.
       sed -i 's/^Types: deb$/Types: deb deb-src/' \
         /etc/apt/sources.list.d/ubuntu.sources
 
-  Ansible `:role:base`:
+  Ansible `:role:base` `:role:serverbase`:
 
   ```yaml
   - name: Enable Ubuntu 24+ source repositories
@@ -1608,7 +1608,7 @@ Normal repositories:
 
 #### gdisk Partitioning Tool
 
-- Install `:role:base`:
+- Install `:role:base` `:role:serverbase`:
 
       agi gdisk
 
@@ -1622,7 +1622,7 @@ Normal repositories:
 
 #### Setup NFS Client Support
 
-- Install NFS utilities `:role:base`:
+- Install NFS utilities `:role:base` `:role:serverbase`:
 
       agi nfs-common
 
@@ -1640,7 +1640,7 @@ Needed for Windows network shares.
 
 #### Setup autofs
 
-- Install `:role:base`:
+- Install `:role:base` `:role:serverbase`:
 
       agi autofs
 
@@ -1652,7 +1652,7 @@ Needed for Windows network shares.
 
       /net -hosts
 
-  Ansible `:role:base`:
+  Ansible `:role:base` `:role:serverbase`:
 
   ```yaml
   - name: Setup autofs /net
@@ -1669,7 +1669,7 @@ Needed for Windows network shares.
       systemctl enable autofs
       systemctl restart autofs
 
-  Ansible `:role:base`:
+  Ansible `:role:base` `:role:serverbase`:
 
   ```yaml
   - name: Enable and restart autofs
@@ -1973,7 +1973,7 @@ AUTOMATED in `install-linux-local/local-accounts.yml`.
 
         add-apt-repository -y --update ppa:git-core/ppa
 
-- Install `:role:base`:
+- Install `:role:base` `:role:serverbase`:
 
       agi git git-lfs
 
@@ -2021,7 +2021,7 @@ Supported use cases:
 
 ### Python Base Support
 
-- Install venv + pip `:role:base`:
+- Install venv + pip `:role:base` `:role:serverbase`:
 
       agi python3-venv python3-pip
 
@@ -2029,7 +2029,8 @@ Supported use cases:
   live in `/usr/local/bin`.
 
 - Create `uvtoolg` wrapper for global use
-  `:extract-echod:roles/base/files/uvtoolg`:
+  `:extract-echod:roles/base/files/uvtoolg`
+  `:extract-echod:roles/serverbase/files/uvtoolg`:
 
         echod -o /usr/local/bin/uvtoolg '
           #!/bin/sh
@@ -2046,7 +2047,7 @@ Supported use cases:
 
       chmod +x /usr/local/bin/uvtoolg
 
-  Ansible `:role:base`:
+  Ansible `:role:base` `:role:serverbase`:
 
   ```yaml
   - name: Install uvtoolg script
@@ -2059,7 +2060,7 @@ Supported use cases:
   ```
 
 - Install a temporary `uv` into a venv, bootstrap `uv` into the global uv-tool
-  area, then remove the temporary user area `:role:base`
+  area, then remove the temporary user area `:role:base` `:role:serverbase`
   `:creates:/usr/local/bin/uv`:
 
       rm -rf /tmp/uvtmp &&
@@ -3022,7 +3023,7 @@ agent thereafter will maintain the keys in memory for passwordless usage of ssh.
       SHELL=/bin/bash
       MAILTO=root
 
-  Ansible `:role:base`:
+  Ansible `:role:base` `:role:serverbase`:
 
   ```yaml
   - name: Setup SHELL in /etc/crontab
