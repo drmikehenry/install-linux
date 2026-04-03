@@ -8715,13 +8715,6 @@ needed.
 
       poetry config warnings.export false
 
-  Ansible `:role:user-workstation`:
-
-  ```yaml
-  - name: Disable poetry warning for poetry-plugin-export
-    command: poetry config warnings.export false
-  ```
-
 ### Python GUIs
 
 #### Python TK
