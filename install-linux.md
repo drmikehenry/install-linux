@@ -1941,12 +1941,10 @@ AUTOMATED in `install-linux-local/local-accounts.yml`.
         Include config.d/*.conf
       '
 
-  Note: the `config` file is not in homegit (yet) because of the need for proper
-  permissions on `~/.ssh`.
-
 - HOMEGIT Store ssh key in ssh-agent on first use:
 
     echod -o ~/.ssh/config.d/10-add-keys-to-agent.conf '
+      # **NOTE** Ensure that `~/.ssh` has correct permissions (0700).
       AddKeysToAgent yes
     '
 
@@ -2530,6 +2528,12 @@ AUTOMATED in role `user-git-repos`:
 
 - As root, setup aliases and perform `reset --hard` steps as done above for the
   non-root user.
+
+- MANUAL **NOTE** It's important to manually fixup permissions on `~/.ssh` if
+  this directory got created by Git.  Git doesn't support fine-grained
+  permissions, and ssh isn't happy with too-open permissions on `~/.ssh`.
+
+      chmod 0700 ~/.ssh
 
 ## Clone vimfiles, vimfiles-local
 
