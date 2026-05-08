@@ -16,7 +16,7 @@
     - build-essential
     - cdecl
     - clang
-    - clang-14-doc
+    - clang-20-doc
     - clang-format
     - clang-tidy
     - clang-tools
@@ -31,7 +31,7 @@
     - exiftool
     - fd-find
     - fonts-dejavu
-    - fonts-hack-ttf
+    - fonts-hack
     - fonts-inconsolata
     - g++-11-multilib
     - gcc-11-aarch64-linux-gnu
@@ -62,7 +62,6 @@
     - libboost-all-dev
     - libbz2-dev
     - libffi-dev
-    - liblz4-tool
     - liblzma-dev
     - libncursesw5-dev
     - libreadline-dev
@@ -76,6 +75,7 @@
     - linux-tools-generic
     - lshw
     - lshw-gtk
+    - lz4
     - mailutils
     - make-doc
     - manpages-dev
@@ -91,7 +91,6 @@
     - okular
     - pandoc
     - perl-doc
-    - perl-doc-html
     - pigz
     - pv
     - python3-dev

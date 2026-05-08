@@ -256,10 +256,17 @@ See `install-linux-local.md` for any machine-specific setup.
 - Uncheck "Download and install support for additional media formats".
 - Installation type:
   - Choose "Erase disk and install Ubuntu":
-    - Advanced Features; choose one of:
+    - (Ubuntu 24.04) Advanced Features; choose one of:
       - Erase disk and use ZFS
       - Use LVM
   - Alternatively, choose "Manual installation".
+- (Ubuntu 26.04) Encryption and file system:
+  - Choose "No encryption".
+  - (optional) Choose "Advanced options":
+    - Choose one of:
+      - Use LVM without encryption.
+      - Use ZFS without encryption.
+      - Encrypt with a passphrase using ZFS.
 - Create your account:
   - Your name: `Power User`
   - Your computer's name (not FQDN): `ubuntu2204` (for example; use no
@@ -268,6 +275,7 @@ See `install-linux-local.md` for any machine-specific setup.
   - Password: `the_actual_password`
   - (Note: this user will have UID=1000.)
 - Location: New York City (timezone America/New York)
+- Choose Install button.
 - Wait for installation to complete.
 - Reboot into new system.
 
@@ -444,6 +452,37 @@ login as root.
 
       ssh poweruser@fedorahost
       sudo -i
+
+## Coreutils regression
+
+MANUAL:
+
+- (ubuntu 26.04) New Rust-based `uutils` is not ready.
+
+  - <https://blobfolio.com/2025/revert-to-gnu-coreutils/>
+
+  - `chown user:` doesn't work:
+    - <https://github.com/uutils/coreutils/issues/8034>
+
+- Revert; not using `-y` so can verify that *both* `coreutils-from-uutils` will
+  be removed and `coreutils-from-gnu` will be added:
+
+      apt remove coreutils-from-uutils --allow-remove-essential
+
+## (ubuntu 26.04) `sudo.rs` work-around
+
+- Ansible `sudo` fails with new Rust-based `sudo` on Ubuntu 26.04:
+  <https://github.com/ansible/ansible/issues/85837>
+
+  Work-around is to switch to old `sudo` on managed node (`owl`):
+
+  - Verify using new `sudo.rs`:
+
+        update-alternatives --list sudo
+
+  - Switch to old `sudo.ws`:
+
+        update-alternatives --set sudo /usr/bin/sudo.ws
 
 ## echod
 

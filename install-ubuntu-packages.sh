@@ -19,7 +19,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   cdecl \
   cifs-utils \
   clang \
-  clang-14-doc \
+  clang-20-doc \
   clang-format \
   clang-tidy \
   clang-tools \
@@ -36,7 +36,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   fd-find \
   ffmpeg \
   fonts-dejavu \
-  fonts-hack-ttf \
+  fonts-hack \
   fonts-inconsolata \
   g++-11-multilib \
   gcc-11-aarch64-linux-gnu \
@@ -81,7 +81,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   libboost-all-dev \
   libbz2-dev \
   libffi-dev \
-  liblz4-tool \
   liblzma-dev \
   libncursesw5-dev \
   libreadline-dev \
@@ -99,6 +98,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   lm-sensors \
   lshw \
   lshw-gtk \
+  lz4 \
   maelstrom \
   mailutils \
   make-doc \
@@ -121,7 +121,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   okular \
   pandoc \
   perl-doc \
-  perl-doc-html \
   pigz \
   pithos \
   pv \
