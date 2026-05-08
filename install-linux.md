@@ -558,7 +558,7 @@ Ansible `:role:echod`:
       regexp: '^#?\s*Storage=.*'
       line: 'Storage=persistent'
     register: journald_conf
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
 
   - name: Restart journal daemon
     service:
@@ -623,7 +623,7 @@ Ansible `:role:echod`:
       name: systemd-networkd-wait-online
       state: stopped
       enabled: no
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 ## Base Network Customization
@@ -1202,7 +1202,7 @@ noise in the logs.  To fix this, block the port explicitly:
       proto: udp
       port: '5355'
       comment: Block Windows multicast DNS
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 ## Static Hosts
@@ -1459,11 +1459,11 @@ AUTOMATED in role `localhome`.
       name:
         - apt-file
     register: apt_file
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
 
   - name: Update apt-file
     command: apt-file update
-    when: ansible_distribution == 'Ubuntu' and apt_file is changed
+    when: ansible_facts['distribution'] == 'Ubuntu' and apt_file is changed
   ```
 
   Example usage:
@@ -1482,7 +1482,7 @@ AUTOMATED in role `localhome`.
     package:
       name:
         - apt-rdepends
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 - `wajig` is a wrapper around a pile of tools:
@@ -1539,7 +1539,7 @@ AUTOMATED in role `localhome`.
       regexp: '^Types: deb$'
       line: 'Types: deb deb-src'
     register: ubuntu_sources
-    when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 24
+    when: ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version'] | int >= 24
 
   - name: Update APT cache for deb-src
     apt:
@@ -2669,7 +2669,7 @@ MANUAL:
       regexp: '^GRUB_TIMEOUT_STYLE'
       line: '#GRUB_TIMEOUT_STYLE'
     register: ubuntu_grub_configuration1
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
 
   - name: Adjust Grub timeout
     lineinfile:
@@ -2677,7 +2677,7 @@ MANUAL:
       regexp: '^GRUB_TIMEOUT=.*'
       line: 'GRUB_TIMEOUT=2'
     register: ubuntu_grub_configuration2
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
 
   - name: Update grub for new configuration
     command:
@@ -5408,7 +5408,7 @@ For more information:
 
 - Install fixed-width fonts `:role:workstation`:
 
-      agi fonts-inconsolata ttf-bitstream-vera fonts-dejavu fonts-hack-ttf
+      agi fonts-inconsolata ttf-bitstream-vera fonts-dejavu fonts-hack
 
       yi google-droid-sans-fonts google-droid-sans-mono-fonts \
         levien-inconsolata-fonts bitstream-vera-sans-mono-fonts
@@ -6030,7 +6030,7 @@ MANUAL:
       - "/etc/update-motd.d/10-help-text"
       - "/etc/update-motd.d/50-motd-news"
       - "/etc/update-motd.d/90-updates-available"
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 ## UBUNTU Server: Remove `landscape-common`
@@ -7530,7 +7530,7 @@ Display computer block diagram graphically.
 
 - Install `:role:workstation`:
 
-      agi liblz4-tool
+      agi lz4
 
 - Compress:
 
@@ -7844,7 +7844,7 @@ Creates self-installing shar-like archives.
         gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
     args:
       creates: /etc/apt/keyrings/google-chrome.gpg
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 - Chrome sets up the cron job `/opt/google/chrome/cron/google-chrome` to
@@ -7870,7 +7870,7 @@ Creates self-installing shar-like archives.
   - name: Update APT cache
     apt:
       update_cache: yes
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 - Install Google Chrome stable version:
@@ -7884,7 +7884,7 @@ Creates self-installing shar-like archives.
     package:
       name:
       - google-chrome-stable
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 - **Until the defaults change**, always run with `--password-store=detect` to
@@ -8261,9 +8261,9 @@ Sparrow-wifi is a Graphical WiFi Analyzer for Linux.
 
 - Install clang docs (requires explicit version) `:role:workstation`:
 
-      agi clang-14-doc
+      agi clang-20-doc
 
-- Update alternatives if necessary:
+- (optional) Update alternatives if necessary:
 
     for i in clang clang++ clangd clang-format clang-tidy; do
       update-alternatives \
@@ -9149,7 +9149,7 @@ Fake data for testing Python scripts.
 
 - Install `:role:workstation`:
 
-      agi perl-doc perl-doc-html
+      agi perl-doc
 
 ## Zig language
 
@@ -10021,7 +10021,7 @@ MANUAL:
         gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     args:
       creates: /etc/apt/keyrings/docker.gpg
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 - Install a `docker.sources` and update the APT cache:
@@ -10053,12 +10053,12 @@ MANUAL:
     args:
       creates: /etc/apt/sources.list.d/docker.sources
     register: docker_sources
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
 
   - name: Update APT cache
     apt:
       update_cache: yes
-    when: docker_sources is changed and ansible_distribution == 'Ubuntu'
+    when: docker_sources is changed and ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 - Install Docker components:
@@ -10081,7 +10081,7 @@ MANUAL:
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
 - Add user to `docker` group:

@@ -5,7 +5,7 @@
     regexp: '^#?\s*Storage=.*'
     line: 'Storage=persistent'
   register: journald_conf
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Restart journal daemon
   service:
@@ -17,7 +17,7 @@
     name: systemd-networkd-wait-online
     state: stopped
     enabled: no
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 - name: Set timezone
   command: timedatectl set-timezone America/New_York
 - name: ufw deny 5355/udp (multicast DNS for Windows)
@@ -26,14 +26,14 @@
     proto: udp
     port: '5355'
     comment: Block Windows multicast DNS
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 - name: Enable Ubuntu 24+ source repositories
   lineinfile:
     dest: /etc/apt/sources.list.d/ubuntu.sources
     regexp: '^Types: deb$'
     line: 'Types: deb deb-src'
   register: ubuntu_sources
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 24
+  when: ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version'] | int >= 24
 
 - name: Update APT cache for deb-src
   apt:
@@ -100,7 +100,7 @@
     regexp: '^GRUB_TIMEOUT_STYLE'
     line: '#GRUB_TIMEOUT_STYLE'
   register: ubuntu_grub_configuration1
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Adjust Grub timeout
   lineinfile:
@@ -108,7 +108,7 @@
     regexp: '^GRUB_TIMEOUT=.*'
     line: 'GRUB_TIMEOUT=2'
   register: ubuntu_grub_configuration2
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Update grub for new configuration
   command:

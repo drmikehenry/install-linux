@@ -5,7 +5,7 @@
       gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
   args:
     creates: /etc/apt/keyrings/google-chrome.gpg
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 - name: Create /etc/apt/sources.list.d/google-chrome.list
   shell: 'printf "%s\n"  "### THIS FILE IS AUTOMATICALLY CONFIGURED ###"  "# You may
     comment out this entry, but any other modifications may be lost."  "deb [arch=amd64]
@@ -15,9 +15,9 @@
 - name: Update APT cache
   apt:
     update_cache: yes
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 - name: Install Google Chrome stable version
   package:
     name:
     - google-chrome-stable
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'

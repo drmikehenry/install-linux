@@ -5,7 +5,7 @@
       gpg --dearmor -o /etc/apt/keyrings/docker.gpg
   args:
     creates: /etc/apt/keyrings/docker.gpg
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 - name: Install `docker.sources`
   shell: |
     printf "%s\n" \
@@ -19,12 +19,12 @@
   args:
     creates: /etc/apt/sources.list.d/docker.sources
   register: docker_sources
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Update APT cache
   apt:
     update_cache: yes
-  when: docker_sources is changed and ansible_distribution == 'Ubuntu'
+  when: docker_sources is changed and ansible_facts['distribution'] == 'Ubuntu'
 - name: Install Docker packages
   package:
     name:
@@ -33,7 +33,7 @@
     - containerd.io
     - docker-buildx-plugin
     - docker-compose-plugin
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 - name: Add "{{ DOCKER_USER }}" to `docker` group
   user:
     name: "{{ DOCKER_USER }}"

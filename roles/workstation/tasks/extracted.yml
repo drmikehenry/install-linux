@@ -4,16 +4,16 @@
     name:
       - apt-file
   register: apt_file
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Update apt-file
   command: apt-file update
-  when: ansible_distribution == 'Ubuntu' and apt_file is changed
+  when: ansible_facts['distribution'] == 'Ubuntu' and apt_file is changed
 - name: Install apt-rdepends
   package:
     name:
       - apt-rdepends
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 - name: pipxg Install ansible
   shell: pipxg install --include-deps ansible && pipxg inject ansible passlib
   args:
@@ -35,7 +35,7 @@
     - "/etc/update-motd.d/10-help-text"
     - "/etc/update-motd.d/50-motd-news"
     - "/etc/update-motd.d/90-updates-available"
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 - name: Uninstall landscape-common
   apt:
     name: landscape-common

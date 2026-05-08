@@ -7,16 +7,16 @@
 
     - import_role:
         name: disable-apt-daily
-      when: ansible_distribution == 'Ubuntu'
+      when: ansible_facts['distribution'] == 'Ubuntu'
 
     - name: ufw enable SSH
       ufw:
         rule: allow
         name: OpenSSH
-      when: ansible_distribution == 'Ubuntu'
+      when: ansible_facts['distribution'] == 'Ubuntu'
 
     - name: ufw enable with default-deny
       ufw:
         default: deny
         state: enabled
-      when: ansible_distribution == 'Ubuntu'
+      when: ansible_facts['distribution'] == 'Ubuntu'
