@@ -9400,9 +9400,11 @@ which points to:
 <https://launchpad.net/~longsleep/+archive/ubuntu/golang-backports>
 
 At this URL, the "Technical details about this PPA" section has a "Signing Key"
-entry which has a "pub" link that downloads
-`52b59b1571a79dbc054901c0f6bc817356a3d45e.asc`.  Use this text for the
-`Signed-By` field below.
+entry (`4096R/876B22BA887CA91614B5323FC631127F87FA12D1`) which has a "pub" link
+that downloads the ASCII-armored key.  Use the `curl` command below to acquire
+the `PGP PUBLIC KEY` for the `Signed-By` field below:
+
+    curl 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x876b22ba887ca91614b5323fc631127f87fa12d1'
 
 - Install a `.sources` file for `golang-backports` `:role:home-golang`
   `:creates:/etc/apt/sources.list.d/golang-backports.sources`:
@@ -9415,18 +9417,35 @@ entry which has a "pub" link that downloads
         "Architectures: $(dpkg --print-architecture)" \
         "Signed-By: |-" \
         "  -----BEGIN PGP PUBLIC KEY BLOCK-----" \
-        "  Comment: Hostname: " \
+        "  Comment: Hostname:" \
         "  Version: Hockeypuck 2.2" \
         "  " \
-        "  xo0ET551kQEEAME7Iyb7+c79CVWVwe+QaNlAVgauke1Q9Ycw8Rdxj55lKBJ5Ilpp" \
-        "  LwiKreAVin4CCaGEtT9btePbYYKg8I+/dsiDbE9+o8e8FIMEBwy+FS+9bwLZ5WZP" \
-        "  6nEtKPrrk3E+RUUpNbmO6udA62E0q2w7NcoA1jRS2YucsIL39aFXJcmvABEBAAHN" \
-        "  IUxhdW5jaHBhZCBQUEEgZm9yIFNpbW9uIEVpc2VubWFubsK4BBMBAgAiBQJPnnWR" \
-        "  AhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRD2vIFzVqPUXle6BAC3FUrE" \
-        "  7j4ltlgGAT2vRNlqWe8W6v0v20e1M8GsFHNB24zL/iRitUMosaWX94ufExwm+83y" \
-        "  ka4Cq0J4oUCSJtgWDLb6K2hYMKLnofj889+4ZN0akNyMOg0O5usD0oJJuRXL0+e3" \
-        "  sZo8b2aj7MwrHe+rTLLnlyKlRTUpt1gGF5GuiA==" \
-        "  =iKVn" \
+        "  xsFNBGYoyVgBEADTZ2En4yloCToeW9fkWCdvtf9lr4coJ8mMLmMh/a3WEnbVzL6O" \
+        "  RjQ65Um5U9xqVsMX1W/88xyDhRxXYury935oUugONc0L+zK6dhFEepCjZ1LM6Yvq" \
+        "  ZVE1iDTZ1e8PPA7g5eG5w/dk3oJ2fOgJpJZQMTF4Ivy596jGrHY51i3oIM/OJGAT" \
+        "  kR6VBMXE0ck9NEBVd1EvhxwG7nZrPc4N7vC5UgQA3w31615rOq4mnYb8kvHa1h03" \
+        "  oDLeQIFMiOC9Is5ibbt/SLEnpRDFWKVGrH4M2nfaOCuRHgZmKfQe5VGLre1xLa//" \
+        "  0khu3eX/uxDpSGCNqtMMwVxMKWRKD9itK3mySMCQMyB9W9ETPZUa7aOc7o6eG1Wc" \
+        "  FN5kLeoxtvvWlPosFXI1Do3DPfKX7ErsjCx0QSgsSyVQja2IqTigwnXSCBhsg+MJ" \
+        "  cAqWH4G7VIO+RrWBNWXTQRXPTribSI0qb+GTJIW6qcITY3WnURer4/PFjBp6QtuG" \
+        "  3fvbJVkeCRqGBaBjJWGf0ju+AifYtw/1l/fXPCJl75lwZ/yS20xpgOtvnsLP1kGr" \
+        "  LC2DY7BEJq8fxPXMODwlBF0IRrDLfKvtyF/2Hh60eXDXcXcPx+dK8oFw381kopuW" \
+        "  owyQRrAQOxh47XhMzpfBVRMV4LINQKS2QWjmU6g+zuYuBxh5Su6ehoNSLwARAQAB" \
+        "  zSFMYXVuY2hwYWQgUFBBIGZvciBTaW1vbiBFaXNlbm1hbm7CwY4EEwEKADgWIQSH" \
+        "  ayK6iHypFhS1Mj/GMRJ/h/oS0QUCZijJWAIbAwULCQgHAgYVCgkICwIEFgIDAQIe" \
+        "  AQIXgAAKCRDGMRJ/h/oS0cLREADNl82PNfNQZlfofr6Sj2eP1Nq58M6O2cRpnAmG" \
+        "  eWTEgQOLzDmvhBu5H2+aktcANZyZHXepFZFPWwj0dxPDPk3MoB0UbZqIqgrFLn6S" \
+        "  HJxhnxwUTRXhcEsHObFfW8bC5qh3feakmSucH0quxr9VxaTAVyCQXZIyUoXssrI1" \
+        "  8ofJBS31o1YFF7ttfnc1nES6G2WRlgkY+3M3ggfIvQhQOiGNHeQ4SUrOH4Xp9vdH" \
+        "  FJudK+0nflTlujP3gEEiUV2xhrD5pwdPwPDD/co0vIRgD2v/ee7/r2D8/axUIEtz" \
+        "  ZURp4rfzEbO89WCOjghkasWDU5BfMmwo6Uiv5vhfJHLgu/1Ay3KVS87X6/jKxcUB" \
+        "  m8wbgZNeI1+VzHNLpWfQpuefZeYQAMVb1Nm/YomcG+bot6+aQqXPLORKvSWgfs4q" \
+        "  g9PuuU7F5yGq7kkf4H8yNBAjMO84mLdztQg+rIsT447nW2y8D04Jqnj8x+EqRXAr" \
+        "  CsiKY1IRfyC13f78Nt85DGK4VgVXmSp6PjZOCutsS+PzRb2bI9xNyUB/jf8Hj0L9" \
+        "  04Yenu5hoN6jtQCvzOBDIL5G4fVYwpRObF5CK3WvdVonbHqnbPrD9u7tzUXsF5uo" \
+        "  Tly+NjepaR69gz4IrtZKQ56rBpdiwqLO0IUjSMmT3PbjzU6lsKwuyHzB/RVpub+6" \
+        "  RVLwFw==" \
+        "  =KMMP" \
         "  -----END PGP PUBLIC KEY BLOCK-----" \
         > /etc/apt/sources.list.d/golang-backports.sources
 
