@@ -6,12 +6,14 @@
   args:
     creates: /etc/apt/keyrings/google-chrome.gpg
   when: ansible_facts['distribution'] == 'Ubuntu'
-- name: Create /etc/apt/sources.list.d/google-chrome.list
-  shell: 'printf "%s\n"  "### THIS FILE IS AUTOMATICALLY CONFIGURED ###"  "# You may
-    comment out this entry, but any other modifications may be lost."  "deb [arch=amd64]
-    https://dl.google.com/linux/chrome/deb/ stable main"  > /etc/apt/sources.list.d/google-chrome.list'
+- name: Create /etc/apt/sources.list.d/google-chrome.sources
+  shell: 'printf "%s\n"  "### THIS FILE IS AUTOMATICALLY CONFIGURED ###"  "# Changes
+    to this file will not be preserved."  "# This file will not be recreated if removed."  "X-Repolib-Name:
+    Google Chrome"  "Types: deb"  "URIs: https://dl.google.com/linux/chrome-stable/deb/"  "Suites:
+    stable"  "Components: main"  "Signed-By: /usr/share/keyrings/google-chrome.gpg"  >
+    /etc/apt/sources.list.d/google-chrome.sources'
   args:
-    creates: /etc/apt/sources.list.d/google-chrome.list
+    creates: /etc/apt/sources.list.d/google-chrome.sources
 - name: Update APT cache
   apt:
     update_cache: yes

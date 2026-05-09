@@ -7919,17 +7919,23 @@ Creates self-installing shar-like archives.
   ```
 
 - Chrome sets up the cron job `/opt/google/chrome/cron/google-chrome` to
-  periodically update `/etc/apt/sources.list.d/google-chrome.list`. To bootstrap
-  the process, pre-create that file.
+  periodically update `/etc/apt/sources.list.d/google-chrome.sources`, but it
+  will leave the below file alone.
 
   Install `:role:home-google-chrome`
-  `:creates:/etc/apt/sources.list.d/google-chrome.list`:
+  `:creates:/etc/apt/sources.list.d/google-chrome.sources`:
 
       printf "%s\n" \
         "### THIS FILE IS AUTOMATICALLY CONFIGURED ###" \
-        "# You may comment out this entry, but any other modifications may be lost." \
-        "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" \
-      > /etc/apt/sources.list.d/google-chrome.list
+        "# Changes to this file will not be preserved." \
+        "# This file will not be recreated if removed." \
+        "X-Repolib-Name: Google Chrome" \
+        "Types: deb" \
+        "URIs: https://dl.google.com/linux/chrome-stable/deb/" \
+        "Suites: stable" \
+        "Components: main" \
+        "Signed-By: /usr/share/keyrings/google-chrome.gpg" \
+        > /etc/apt/sources.list.d/google-chrome.sources
 
 - Update APT cache:
 
