@@ -6732,10 +6732,15 @@ for remote access to that machine via a VNC viewer.
 
       agi tigervnc-standalone-server
 
+- Install support for X11 sessions `:role:work`:
+
+      agi plasma-session-x11
+
 - Choose default desktop environment for X session:
 
   MANUAL:
 
+      # As normal user:
       echo startplasma-x11 > ~/.xsession
       chmod +x ~/.xsession
 
@@ -6743,6 +6748,7 @@ for remote access to that machine via a VNC viewer.
 
   MANUAL:
 
+      # As normal user:
       vncpasswd
 
 - E.g., to launch server on localhost only, using display `:1`:
