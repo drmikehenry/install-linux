@@ -6046,9 +6046,9 @@ More configuration via `systemsettings5` | Printers:
 
 ### Crashing printer filter issues
 
-MANUAL:
+- Work-around is not required for Ubuntu 26.04.
 
-- Work-around still required for Ubuntu 24.04.
+- Work-around was still required for Ubuntu 24.04.
 
 - Symptoms include being unable to print via command line, e.g.:
 
