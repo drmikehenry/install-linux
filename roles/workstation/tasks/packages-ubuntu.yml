@@ -124,6 +124,7 @@
     - tree
     - ttf-bitstream-vera
     - ttf-mscorefonts-installer
+    - unison
     - universal-ctags
     - vim
     - vim-gtk3

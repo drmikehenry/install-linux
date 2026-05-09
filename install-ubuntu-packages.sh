@@ -163,6 +163,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   tree \
   ttf-bitstream-vera \
   ttf-mscorefonts-installer \
+  unison \
   universal-ctags \
   vim \
   vim-gtk3 \

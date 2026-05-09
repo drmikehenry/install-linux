@@ -3210,7 +3210,7 @@ MANUAL:
 
 ## Unison
 
-MANUAL:
+### Install unison
 
 - As of Unison v2.52, there is replica format support across Unison versions
   back to v2.48:
@@ -3219,8 +3219,17 @@ MANUAL:
 
   In addition, the OCaml version no longer matters.
 
-- The easiest solution for now is to download binaries from Github, as distros
-  haven't yet gotten v2.52:
+  Ubuntu 24.04 and 26.04 use Unison v2.53, so installation via `apt` is
+  recommended.
+
+- Install unison `:role:workstation`:
+
+      agi unison
+
+### (optional) Install unison manually
+
+- It's also possible to download binaries from Github, though this is no longer
+  needed:
 
   - <https://github.com/bcpierce00/unison/releases/download/v2.52.1/unison-v2.52.1+ocaml-4.14.0+x86_64.linux.tar.gz>
 
@@ -3249,6 +3258,8 @@ MANUAL:
 
 ### Configure unison
 
+MANUAL:
+
 - (non-server) As root, create `/home/m` directory:
 
       sudo mkdir /home/m
@@ -3256,6 +3267,8 @@ MANUAL:
       sudo chmod 775 /home/m
 
 #### After Distro Upgrade
+
+MANUAL:
 
 - After distro upgrade, can restore unison files from original directories,
   e.g.:
@@ -3270,6 +3283,8 @@ MANUAL:
       ln -s /home/m/sys/unison/f16-root ~/.unison
 
 ### Unison From Scratch
+
+MANUAL:
 
 - Create location for configuration:
 
