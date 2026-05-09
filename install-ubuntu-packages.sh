@@ -122,6 +122,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   perl-doc \
   pigz \
   pithos \
+  plasma-session-x11 \
   pv \
   python3-dev \
   python3-doc \

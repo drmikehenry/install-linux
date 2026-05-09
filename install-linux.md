@@ -9819,11 +9819,23 @@ MANUAL:
 
 ## VirtualBox
 
-- Oracle instructions from: <http://www.virtualbox.org/wiki/Linux_Downloads>
+### UBUNTU VirtualBox from APT
+
+MANUAL:
+
+- With Ubuntu 26.04, Oracle doesn't yet have virtualbox-7.2 support.  Support is
+  newer in Ubuntu repository, so that's the recommended approach.
+
+- Install:
+
+      agi virtualbox virtualbox-qt virtualbox-ext-pack
 
 ### UBUNTU VirtualBox
 
 MANUAL:
+
+**NOTE** Oracle hasn't yet released support for Ubuntu 26.04, so the below steps
+aren't yet ported to that OS.
 
 - Instructions:
 
@@ -9911,13 +9923,9 @@ MANUAL:
 
       apt update
 
-- Install gcc-12 as a prerequisite for VirtualBox 7.0:
-
-      agi gcc-12
-
 - Install virtualbox:
 
-      agi virtualbox-7.0
+      agi virtualbox-7.1
 
   **NOTE** Do not install `virtualbox-ext-pack`; this is apparently an
   Ubuntu-provided package that should not be mixed with virtualbox installed
