@@ -2342,21 +2342,74 @@ Rationale:
       deb https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu jammy main
       deb-src https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu jammy main
 
-  and this signing key fingerprint:
+  and signing key:
 
-      0AB215679C571D1C8325275B9BDB3D89CE49EC21
+      4096R/738BEB9321D1AAEC13EA9391AEBDF4819BE21867
 
-- Install the key based on the fingerprint and store in `/etc/apt/keyrings`
-  (adjusting the `--keyring` and fingerprint at the end of the command)
-  `:role:mozilla-ppa` `:creates:/etc/apt/keyrings/mozillateam.gpg`:
+  and fingerprint:
 
-      gpg \
-        --homedir /tmp \
-        --no-default-keyring \
+      738BEB9321D1AAEC13EA9391AEBDF4819BE21867
+
+- Install mozillateam.asc signing key
+  `:extract-echod:roles/mozilla-ppa/files/mozillateam.asc`:
+
+      echod -o /etc/apt/keyrings/mozillateam.asc '
+        -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+        mQINBGYov84BEADSrLhiWvqL3JJ3fTxjCGD4+viIUBS4eLSc7+Q7SyHm/wWfYNwT
+        EqEvMMM9brWQyC7xyE2JBlVk5/yYHkAQz3f8rbkv6ge3J8Z7G4ZwHziI45xJKJ0M
+        9SgJH24WlGxmbbFfK4SGFNlg9x1Z0m5liU3dUSfhvTQdmBNqwRCAjJLZSiS03IA0
+        56V9r3ACejwpNiXzOnTsALZC2viszGiI854kqhUhFIJ/cnWKSbAcg6cy3ZAsne6K
+        vxJVPsdEl12gxU6zENZ/4a4DV1HkxIHtpbh1qub1lhpGR41ZBXv+SQhwuMLFSNeu
+        UjAAClC/g1pJ0gzI0ko1vcQFv+Q486jYY/kv+k4szzcB++nLILmYmgzOH0NEqT57
+        XtdiBWhlb6oNfF/nYZAaToBU/QjtWXq3YImG2NiCUrCj9zAKHdGUsBU0FxN7HkVB
+        B8aF0VYwB0I2LRO4Af6Ry1cqMyCQnw3FVh0xw7Vz4gQ57acUYeAJpT68q8E2XcUx
+        riEP65/MBPoFlANLVMSrnsePEXmVzdysmXKnFVefeQ4E3dIDufXUIhrfmL1pMdTG
+        anhmDEjY7I3pQQQIaLpnNhhSDZKDSk9C/Ax/8gEUgnnmd6BwZxh8Q7oDXcm2tyeu
+        n2m9wCZI/eJI9P9G8ON8AkKvG4xFR+eqhowwzu7TLDr3feliG+UN+mJ8jwARAQAB
+        tB5MYXVuY2hwYWQgUFBBIGZvciBNb3ppbGxhIFRlYW2JAk4EEwEKADgWIQRzi+uT
+        IdGq7BPqk5GuvfSBm+IYZwUCZii/zgIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIX
+        gAAKCRCuvfSBm+IYZ38/D/46eEIyG7Gb65sxt3QnlIN0+90kUjz83QpCnIyALZDc
+        H2wPYBCMbyJFMG+rqVE8Yoh6WF0Rqy76LG+Y/xzO9eKIJGxVcSU75ifoq/M7pI1p
+        aiqA9T8QcFBmo83FFoPvnid67aqg/tFsHl+YF9rUxMZndGRE9Hk96lkH1Y2wHMEs
+        mAa582RELVEDDD2ellOPmQr69fRPa5IdJHkXjqGtoNQy5hAp49ofMLmeQ82d2OA+
+        kpzgiuSw8Nh1VrMZludcUArSQDCHoXuiPG/7Wn9Vy6fvKkTQK3mCW8i5HgCa0qxe
+        vOKlDMz4virEEADMBs79iIyM6w1xm8JOD4734sgii2MPcQgmAlbu5LyBM5FfuO0u
+        rTMvZM0btSWQX3nIsxQ3far9MJvUT4nebhTo59cED+1EjkD14mReTHwtWt1aye/b
+        I8Rvor15RFiB8Ku6c41YmNKarSCzJDs4VEfsos4oMieEqA98J4ZOX67IT++ortcB
+        uXmDJgvzGWEeyVOMoc/4oDJHNQjJg9XRGy8b/J3AVhk2BE/CD4lKhX3hWGbufrQz
+        E8ENWuT4m3igQnBmOsrGlBPYIOKZvczQxri01vcKY95dKXb1jtnR9yR+JKgEP388
+        1B/8dEohynhMnzEqR9TIMEEy9Y8RKZ+Jiy+/Lg2XGrChiLsouUetfMQww6BTK+++
+        pw==
+        =tIux
+        -----END PGP PUBLIC KEY BLOCK-----
+      '
+
+  Ansible `:role:mozilla-ppa`:
+
+  ```yaml
+  - name: Install mozillateam.asc signing key
+    copy:
+      dest: /etc/apt/keyrings/mozillateam.asc
+      src: mozillateam.asc
+  ```
+
+  Note: above `PGP PUBLIC KEY` was created via:
+
+      # DO NOT run during normal installation!
+      gpg --no-default-keyring \
+        --keyring /tmp/mozillateam-temp.gpg \
         --keyserver keyserver.ubuntu.com \
-        --recv-keys \
-        --keyring /etc/apt/keyrings/mozillateam.gpg \
-        0AB215679C571D1C8325275B9BDB3D89CE49EC21
+        --recv-keys 738BEB9321D1AAEC13EA9391AEBDF4819BE21867
+
+      # DO NOT run during normal installation!
+      gpg --no-default-keyring \
+        --keyring /tmp/mozillateam-temp.gpg \
+        --armor \
+        --export 738BEB9321D1AAEC13EA9391AEBDF4819BE21867 \
+        > /tmp/mozillateam-temp.asc
+
+  Now `/tmp/mozillateam-temp.asc` contains the above ASCII-armored key.
 
 - Install a `.sources` file for `mozillateam` `:role:mozilla-ppa`
   `:creates:/etc/apt/sources.list.d/mozillateam.sources`:
@@ -2367,7 +2420,7 @@ Rationale:
         "Suites: $(lsb_release -cs)" \
         "Components: main" \
         "Architectures: $(dpkg --print-architecture)" \
-        "Signed-By: /etc/apt/keyrings/mozillateam.gpg" \
+        "Signed-By: /etc/apt/keyrings/mozillateam.asc" \
         > /etc/apt/sources.list.d/mozillateam.sources
 
 - Update APT cache:
