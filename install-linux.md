@@ -11373,7 +11373,7 @@ MANUAL:
   Copy `claude-code.asc` contents (beginning with `-----BEGIN PGP PUBLIC
   KEY BLOCK-----`) into below command.
 
-- Dearmor Oracle 2016 key into `/etc/apt/keyrings/claude-code.gpg`:
+- Dearmor key into `/etc/apt/keyrings/claude-code.gpg`:
 
     echod '
       -----BEGIN PGP PUBLIC KEY BLOCK-----
