@@ -108,7 +108,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   moreutils \
   mpg321 \
   mplayer \
-  mplayer-gui \
   mscgen \
   musl-dev \
   musl-tools \

@@ -10802,7 +10802,7 @@ Custom build for ffmpeg.
 
 - Install `:role:home`:
 
-      agi mplayer mplayer-gui
+      agi mplayer
 
 - UBUNTU Configure gnome-mplayer:
 
