@@ -7378,7 +7378,7 @@ Starship is a cross-shell prompt hook.
 
 - MANUAL Install:
 
-      cargo install --locked yazi-fm yazi-cli
+      cargo install --force yazi-build
 
 - HOMEGIT Add shell function so can use for `cd`:
 
