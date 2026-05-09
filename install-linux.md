@@ -6751,6 +6751,11 @@ for remote access to that machine via a VNC viewer.
       # As normal user:
       vncpasswd
 
+  Note: newer `vncpasswd` demands 6-8 character passwords.  Only the first 8
+  characters are checked when `vncviewer` tries to connect, so if you have a
+  longer password, you can enter just the first 8 characters to `vncpasswd` and
+  then type your longer password into `vncviewer`.
+
 - E.g., to launch server on localhost only, using display `:1`:
 
       # Typically do this over an ssh connection from thin client with
