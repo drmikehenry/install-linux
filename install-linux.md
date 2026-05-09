@@ -2440,19 +2440,39 @@ Rationale:
 
 # Ansible Control Node
 
-## Ansible via pipxg
-
-This is the preferred installation method.
-
-- Install `sshpass` for password prompting `:role:workstation`:
+- Install `sshpass` for password prompting `:role:workstation`; this is needed
+  for all ansible installation methods:
 
       agi sshpass
 
-- Note: `uv tool install` does not have support for `--include-deps` or similar,
-  so using `pipxg` for now:
-  <https://github.com/astral-sh/uv/issues/6314>
+## Ansible via uvtoolg
+
+This is the preferred installation method as it provides up-to-date executables
+from PyPI, given that <https://github.com/astral-sh/uv/issues/6314> is complete
+and uv now supports `--with-executables-from`.
+
+When setting the password for an account, `ansible` requires `passlib`.  Using
+uv's `--with-executables-from` switch allows publication of executables from
+the named dependencies of `ansible`.  As shown by uv output, most of the
+executables are actually from `ansible-core`:
+
+    Installed 10 executables from `ansible-core`: ansible, ansible-config, \
+      ansible-console, ansible-doc, ansible-galaxy, ansible-inventory, \
+      ansible-playbook, ansible-pull, ansible-test, ansible-vault
+    Installed 1 executable from `ansible-lint`: ansible-lint
 
 - Install `:role:workstation`:
+
+      uvtoolg install \
+        ansible \
+        --with passlib \
+        --with-executables-from ansible-core,ansible-lint
+
+## (optional) Ansible via pipxg
+
+Alternatively, up-to-date executables from PyPI may be installed via `pipxg`.
+
+- Install:
 
       pipxg install --include-deps ansible &&
         pipxg inject ansible passlib
@@ -2461,9 +2481,7 @@ This is the preferred installation method.
   `ansible` because it's built from a number of dependent packages that expose
   the various commands.
 
-  The `passlib` module is required for setting passwords via Ansible.
-
-## Ansible via Package Manager
+## (optional) Ansible via Package Manager
 
 Alternatively, Ansible may be installed from the package manager using a PPA to
 get the latest version:

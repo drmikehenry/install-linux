@@ -113,17 +113,23 @@ on a *managed node*.
 - The Ansible control node can be the same machine as the managed node, but more
   commonly it will be a separate machine.
 
-- Install ansible on the control node (unneeded on the managed node):
+- Ansible itself need not be installed on the managed node.
 
-      apt update
-      apt install -y software-properties-common
-      apt-add-repository --yes --update ppa:ansible/ansible
-      apt install -y ansible
+- The preferred method of installation is to use `uvtoolg` (as shown below); for
+  full instructions (including alternative installation methods), see the
+  "Ansible Control Node" section of `install-linux.md`.
 
-- Install `sshpass` (necessary for Ansible to use the 'ssh' connection type with
-  passwords):
+  - Install `sshpass` (necessary for Ansible to use the 'ssh' connection type with
+    passwords):
 
-      apt install -y sshpass
+        apt install -y sshpass
+
+  - Install ansible using `uvtoolg`:
+
+        uvtoolg install \
+          ansible \
+          --with passlib \
+          --with-executables-from ansible-core,ansible-lint
 
 - Acquire `ansible/` directory to `~/projects/ansible`.
 
