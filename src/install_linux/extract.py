@@ -181,6 +181,12 @@ def extract_into_files(node: marko.block.BlockElement) -> None:
             #     This is the first line
             #     This is the last line
             #   '
+            # Also works with leading `echod` and trailing `EOF`:
+            # E.g.:
+            #   echod -o output_file - <<'EOF'
+            #     This is the first line
+            #     This is the last line
+            #   EOF
             lines = code_text(code).splitlines()[1:-1]
             text = "\n".join(lines) + "\n"
             write_text(Path(dest), textwrap.dedent(text))
