@@ -38,7 +38,7 @@
         - video
         - some_group
       append: yes
-    when: ansible_facts['os_family'] == 'Debian'
+    when: ansible_facts['distribution'] == 'Ubuntu'
 
   - name: Add some_user's groups (RedHat family)
     user:
@@ -51,4 +51,5 @@
   - import_role:
       name: ssh-authorized_key
     vars:
-      username: some_user
+      username: mike
+    when: ansible_facts['distribution'] == 'Ubuntu' or ansible_facts['os_family'] == 'RedHat'

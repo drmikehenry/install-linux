@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Michael Henry", email = "drmikehenry@drmikehenry.com" }
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "install_linux",
 ]
@@ -18,8 +18,8 @@ extract_fedora_packages = "install_linux.helpers:extract_fedora_packages"
 build_pandoc = "install_linux.helpers:build_pandoc"
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.7.19,<0.8.0"]
+build-backend = "uv_build"
 
 [tool.uv.sources]
 install_linux = { path = "../install-linux" }

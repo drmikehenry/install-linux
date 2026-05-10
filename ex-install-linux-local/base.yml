@@ -19,6 +19,9 @@
       when: systemd_resolved_conf is changed
 
     - import_role:
+        name: echod
+
+    - import_role:
         name: base
 
     - import_role:

@@ -128,15 +128,15 @@ See `SSH client setup` in `install-linux.md` for overall instructions.
   **NOTE** Adjust the above to use the real token as generated from the PyPI web
   site.  Alternatively, setup user name and password.
 
-- Upload to testpypi::
+- Upload to testpypi:
 
-    twine upload -r testpypi dist/ptee-0.3.0.tar.gz
+      twine upload -r testpypi dist/ptee-0.3.0.tar.gz
 
-- Upload to the real PyPI::
+- Upload to the real PyPI:
 
-    twine upload dist/ptee-0.3.0.tar.gz
+      twine upload dist/ptee-0.3.0.tar.gz
 
-- Check validity of an egg before upload::
+- Check validity of an egg before upload:
 
-    twine check dist/*
+      twine check dist/*
 
