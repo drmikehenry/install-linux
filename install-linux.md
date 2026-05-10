@@ -506,6 +506,8 @@ while args:
         out = open(args.pop(0), "w")
     elif arg == "-a":
         out = open(args.pop(0), "a")
+    elif arg == "-":
+        out.write(textwrap.dedent(sys.stdin.read()).strip() + "\n")
     else:
         out.write(textwrap.dedent(arg).strip() + "\n")
 ```
