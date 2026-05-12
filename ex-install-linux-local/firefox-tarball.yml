@@ -8,5 +8,5 @@
     - import_role:
         name: firefox-tarball
       vars:
-        - FIREFOX_VERSION: 104.0.2
-        - FIREFOX_LOCAL_DIR: "{{ lookup('env', 'HOME') }}/path/to/firefox"
+        FIREFOX_VERSION: 104.0.2
+        FIREFOX_LOCAL_DIR: "{{ lookup('env', 'HOME') }}/path/to/firefox"
