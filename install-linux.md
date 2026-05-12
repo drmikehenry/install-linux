@@ -3373,17 +3373,17 @@ MANUAL:
 
 #### Firefox Installation from Tarball
 
-- Download official tarball (e.g., version `101.0.1`):
+- Download official tarball (e.g., version `150.0`):
 
       cd /tmp
-      wget -c https://ftp.mozilla.org/pub/firefox/releases/101.0.1/linux-x86_64/en-US/firefox-101.0.1.tar.bz2
+      wget -c https://ftp.mozilla.org/pub/firefox/releases/150.0/linux-x86_64/en-US/firefox-150.0.tar.xz
 
 - Expand tarball into `/opt/firefox`, then rename and symlink executable:
 
       cd /opt
-      tar -xf /tmp/firefox-101.0.1.tar.bz2
-      mv firefox firefox-101.0.1
-      ln -sf $PWD/firefox-101.0.1/firefox /usr/local/bin/firefox
+      tar -xf /tmp/firefox-150.0.tar.xz
+      mv firefox firefox-150.0
+      ln -sf $PWD/firefox-150.0/firefox /usr/local/bin/firefox
 
 ### Firefox Notes
 
