@@ -4,12 +4,18 @@
 #   - "FIREFOX_LOCAL_DIR": directory holding Firefox tarballs on control node
 #                          (e.g., $HOME/x/shared/software/packages/firefox)
 # Require tarball to be named as:
-#   firefox-{{ FIREFOX_VERSION }}-linux-x86_64.tar.bz2
+#   firefox-{{ FIREFOX_VERSION }}.tar.xz
+- name: Copy Firefox tarball
+  copy:
+    src: "{{ FIREFOX_LOCAL_DIR }}/firefox-{{ FIREFOX_VERSION }}.tar.xz"
+    dest: "/tmp/firefox-{{ FIREFOX_VERSION }}.tar.xz"
+
 - name: Extract firefox tarball
   unarchive:
-    src: "{{ FIREFOX_LOCAL_DIR }}/firefox-{{ FIREFOX_VERSION }}-linux-x86_64.tar.bz2"
+    src: "/tmp/firefox-{{ FIREFOX_VERSION }}.tar.xz"
     dest: "/opt"
     creates: "/opt/firefox-{{ FIREFOX_VERSION }}/firefox"
+    remote_src: "yes"
     extra_opts:
       - "--transform"
       - "s/^firefox/firefox-{{ FIREFOX_VERSION }}/"
