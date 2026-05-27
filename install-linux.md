@@ -464,9 +464,46 @@ MANUAL:
   - `chown user:` doesn't work:
     - <https://github.com/uutils/coreutils/issues/8034>
 
-- Revert; not using `-y` so can verify that *both* `coreutils-from-uutils` will
-  be removed and `coreutils-from-gnu` will be added:
+- Pin `coreutils-from-uutils` so it can't return:
 
+      echod -o /etc/apt/preferences.d/uutils '
+        Package: coreutils-from-uutils
+        Pin: release a=*
+        Pin-Priority: -10
+      '
+
+- Install `equivs` to allow creation of a fake `coreutils-from-uutils` package:
+
+      agi equivs
+
+- Create description of fake `coreutils-from-uutils` package:
+
+      echod -o /tmp/cfu-stub.ctl '
+        Section: misc
+        Priority: optional
+        Standards-Version: 4.6.2
+        Package: coreutils-from-uutils-stub
+        Version: 1.0
+        Provides: coreutils-from-uutils
+        Architecture: all
+        Description: Empty stub providing fake `coreutils-from-uutils`
+      '
+
+- Build and install the fake package:
+
+      cd /tmp && equivs-build cfu-stub.ctl
+      dpkg -i /tmp/coreutils-from-uutils-stub_1.0_all.deb
+      rm /tmp/cfu-stub.ctl
+
+- Install GNU `coreutils` as the real `coreutils`:
+
+      apt install -y coreutils-from-gnu
+
+  Note: previously had been removing `coreutils-from-uutils` as below, which was
+  automatically also installing `coreutils-from-gnu`; but with the above fake
+  package, it seems like the direct installation method is required:
+
+      # *NOTE* Not recommended anymore:
       apt remove coreutils-from-uutils --allow-remove-essential
 
 ## (ubuntu 26.04) `sudo.rs` work-around
