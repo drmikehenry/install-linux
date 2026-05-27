@@ -6978,8 +6978,11 @@ MANUAL:
       wget http://noedler.de/projekte/wdfs/wdfs-1.4.2.tar.gz
       tar -zxf wdfs-1.4.2.tar.gz
       cd wdfs-1.4.2
-      ./configure
+      ./configure CC='gcc -std=gnu11'
       make
+
+  Note: `-std=gnu11` is required because C23 makes `true` into a keyword,
+  colliding with the `enum` value `true` defined in `wdfs-main.h`.
 
 - Option 1: Use `checkinstall` to create a `.deb`, then install it:
 
