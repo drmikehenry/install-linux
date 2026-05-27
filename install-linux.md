@@ -1442,6 +1442,20 @@ AUTOMATED in role `localhome`.
 
 - CENTOS Already defaults to vim.
 
+### Default `gvim` executable
+
+MANUAL:
+
+- If `nvim-qt` is installed before `vim-gtk3`, it takes over the executable name
+  `gvim`.  This is because both executables have the same priority.  To force
+  Gvim as the desired alternative:
+
+      update-alternatives --config gvim
+
+  Then choose the path:
+
+      /usr/bin/vim.gtk3
+
 ### sudo
 
 - MANUAL CENTOS Adjust `secure_path` to include important directories like
