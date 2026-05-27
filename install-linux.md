@@ -1894,7 +1894,7 @@ AUTOMATED in `install-linux-local/local-accounts.yml`.
 
   - **ENSURE FILES ARE NOT GROUP WRITABLE** via::
 
-        chmod go-w /etc/ssh_config.d/*
+        chmod go-w /etc/ssh/ssh_config.d/*
 
   - The variable `COLORFGBG` is set by KDE Konsole to indicate console
     foreground and background colors.  Tools such as Vim use this variable to
