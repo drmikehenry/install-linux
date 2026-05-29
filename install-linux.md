@@ -503,8 +503,6 @@ MANUAL:
 
 - (ubuntu 26.04) New Rust-based `uutils` is not ready.
 
-  - <https://blobfolio.com/2025/revert-to-gnu-coreutils/>
-
   - `chown user:` doesn't work:
     - <https://github.com/uutils/coreutils/issues/8034>
 
@@ -533,37 +531,48 @@ MANUAL:
         Description: Empty stub providing fake `coreutils-from-uutils`
       '
 
-- Build and install the fake package:
+- Build the fake package:
 
       cd /tmp && equivs-build cfu-stub.ctl
-      dpkg -i /tmp/coreutils-from-uutils-stub_1.0_all.deb
-      rm /tmp/cfu-stub.ctl
 
-- Install GNU `coreutils` as the real `coreutils`:
+- Atomically install the fake package, install `coreutils-from-gnu`, and
+  *uninstall* `coreutils-from-uutils`:
 
-      apt install -y coreutils-from-gnu
+      apt install \
+        -y \
+        --allow-remove-essential \
+        /tmp/coreutils-from-uutils-stub_1.0_all.deb \
+        coreutils-from-gnu \
+        coreutils-from-uutils-
 
-  Note: previously had been removing `coreutils-from-uutils` as below, which was
-  automatically also installing `coreutils-from-gnu`; but with the above fake
-  package, it seems like the direct installation method is required:
+- Cleanup the fake package:
 
-      # *NOTE* Not recommended anymore:
-      apt remove coreutils-from-uutils --allow-remove-essential
+      rm /tmp/cfu-stub.ctl /tmp/coreutils-from-uutils-stub_1.0_all.deb
 
 ## (ubuntu 26.04) `sudo.rs` work-around
 
 - Ansible `sudo` fails with new Rust-based `sudo` on Ubuntu 26.04:
   <https://github.com/ansible/ansible/issues/85837>
 
-  Work-around is to switch to old `sudo` on managed node (`owl`):
+  Work-around is to switch to old `sudo`.
 
-  - Verify using new `sudo.rs`:
+- Switch to old `sudo.ws`:
 
-        update-alternatives --list sudo
+      update-alternatives --set sudo /usr/bin/sudo.ws
 
-  - Switch to old `sudo.ws`:
+- (optional) Check version:
 
-        update-alternatives --set sudo /usr/bin/sudo.ws
+      sudo --version | head -n 1
+
+  Get one of these:
+
+  - Original version:
+
+        Sudo version 1.9.17p2
+
+  - Rust-based version:
+
+        sudo-rs 0.2.13-0ubuntu1
 
 ## Base aliases
 
