@@ -7995,7 +7995,7 @@ Creates self-installing shar-like archives.
 - Download and install Google's signing key:
 
       curl -fsSL https://dl.google.com/linux/linux_signing_key.pub |
-        gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
+        gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg
 
   Ansible `:role:home-google-chrome`:
 
@@ -8003,9 +8003,9 @@ Creates self-installing shar-like archives.
   - name: Install Google signing key
     shell: |
       curl -fsSL https://dl.google.com/linux/linux_signing_key.pub |
-        gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
+        gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg
     args:
-      creates: /etc/apt/keyrings/google-chrome.gpg
+      creates: /usr/share/keyrings/google-chrome.gpg
     when: ansible_facts['distribution'] == 'Ubuntu'
   ```
 
