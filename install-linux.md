@@ -453,6 +453,50 @@ login as root.
       ssh poweruser@fedorahost
       sudo -i
 
+## echod
+
+Create simple `echod` utility:
+
+    vi /usr/local/bin/echod
+
+With contents `:extract:roles/echod/files/echod`:
+
+```python
+#!/usr/bin/env python3
+
+import sys
+import textwrap
+
+args = sys.argv[1:]
+out = sys.stdout
+while args:
+    arg = args.pop(0)
+    if arg == "-o":
+        out = open(args.pop(0), "w")
+    elif arg == "-a":
+        out = open(args.pop(0), "a")
+    elif arg == "-":
+        out.write(textwrap.dedent(sys.stdin.read()).strip() + "\n")
+    else:
+        out.write(textwrap.dedent(arg).strip() + "\n")
+```
+
+Make script executable:
+
+    chmod +x /usr/local/bin/echod
+
+Ansible `:role:echod`:
+
+```yaml
+- name: Install echod
+  copy:
+    src: echod
+    dest: /usr/local/bin/echod
+    owner: root
+    group: root
+    mode: 0755
+```
+
 ## Coreutils regression
 
 MANUAL:
@@ -520,50 +564,6 @@ MANUAL:
   - Switch to old `sudo.ws`:
 
         update-alternatives --set sudo /usr/bin/sudo.ws
-
-## echod
-
-Create simple `echod` utility:
-
-    vi /usr/local/bin/echod
-
-With contents `:extract:roles/echod/files/echod`:
-
-```python
-#!/usr/bin/env python3
-
-import sys
-import textwrap
-
-args = sys.argv[1:]
-out = sys.stdout
-while args:
-    arg = args.pop(0)
-    if arg == "-o":
-        out = open(args.pop(0), "w")
-    elif arg == "-a":
-        out = open(args.pop(0), "a")
-    elif arg == "-":
-        out.write(textwrap.dedent(sys.stdin.read()).strip() + "\n")
-    else:
-        out.write(textwrap.dedent(arg).strip() + "\n")
-```
-
-Make script executable:
-
-    chmod +x /usr/local/bin/echod
-
-Ansible `:role:echod`:
-
-```yaml
-- name: Install echod
-  copy:
-    src: echod
-    dest: /usr/local/bin/echod
-    owner: root
-    group: root
-    mode: 0755
-```
 
 ## Base aliases
 
