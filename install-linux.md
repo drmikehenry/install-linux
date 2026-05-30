@@ -7067,6 +7067,26 @@ MANUAL:
 
       sudo tar -C / -zxf wdfs_1.4.2-1_amd64.tar.gz
 
+#### UBUNTU wdfs apparmor rules
+
+MANUAL:
+
+- Can run into permission issues in Ubuntu 26.04 because of new apparmor rules
+  for `fusermount3` in:
+
+      /etc/apparmor.d/fusermount3
+
+- Make local override:
+
+      echod -o /etc/apparmor.d/local/fusermount3 '
+        mount fstype=@{fuse_types} options=(nosuid,nodev) options in (ro,rw,noatime,dirsync,nodiratime,noexec,sync) -> /webdav/**/,
+        umount /webdav/**/,
+      '
+
+- Reload:
+
+    apparmor_parser -r /etc/apparmor.d/fusermount3
+
 ### FEDORA wdfs
 
 MANUAL:
