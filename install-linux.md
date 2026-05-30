@@ -3045,6 +3045,41 @@ MANUAL:
   startup files.  (This is important for X11-based Plasma, which uses both
   `~/.xsessionrc` and `~/.config/plasma-workspace/env/`.
 
+## DrKonqi spamming journal entries
+
+MANUAL:
+
+- Ubuntu 26.04 has a bug where the below line is spammed in the journal:
+
+      Socket to launch DrKonqi for a systemd-coredump
+
+- Fix DrKonqi journal spamming:
+
+      mkdir -p /etc/systemd/user/drkonqi-coredump-launcher.socket.d
+      echod -o /etc/systemd/user/drkonqi-coredump-launcher.socket.d/override.conf '
+        [Unit]
+        ConditionUser=
+        ConditionUser=|!@system
+        ConditionUser=|root
+      '
+
+- Reload the daemon:
+
+      sudo systemctl --user daemon-reload
+      sudo systemctl --user enable --now drkonqi-coredump-launcher.socket
+
+- Bug report: https://bugs.kde.org/show_bug.cgi?id=502960
+
+  - Claims work-around is to edit file
+    `/usr/lib/systemd/user/drkonqi-coredump-launcher.socket` and change
+    `ConditionUser=!@system` to the below pair of lines:
+
+        ConditionUser=|!@system
+        ConditionUser=|root
+
+  - But above `override.conf` is better since won't be overwritten by an
+    upgrade.
+
 # Mission-Critical Apps
 
 ## Login as `mike`
