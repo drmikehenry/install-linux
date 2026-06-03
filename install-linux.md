@@ -4572,34 +4572,6 @@ or via `systemsettings5`.
       value: "/usr/share/wallpapers/DarkestHour/"
   ```
 
-#### ... Virtual Desktops
-
-- Add five more Desktops; name them "Desktop 2" through "Desktop 6".
-
-  Ansible `:role:user-plasma`:
-
-  ```yaml
-  - name: Configure additional Virtual Desktops
-    kconfig:
-      file: kwinrc
-      group: "Desktops"
-      key: "Number"
-      value: "6"
-  ```
-
-- Set to "2 Rows".
-
-  Ansible `:role:user-plasma`:
-
-  ```yaml
-  - name: Set number of Virtual Desktop rows
-    kconfig:
-      file: kwinrc
-      group: "Desktops"
-      key: "Rows"
-      value: "2"
-  ```
-
 ### System Settings | Workspace | Window Management | Window Behavior
 
 #### ... Focus
