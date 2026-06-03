@@ -2176,9 +2176,10 @@ Supported use cases:
         echod -o /usr/local/bin/uvtoolg '
           #!/bin/sh
 
+          UV_CACHE_DIR=/usr/local/cache/uv-tool
           UV_TOOL_DIR=/usr/local/lib/uv-tool
           UV_TOOL_BIN_DIR=/usr/local/bin
-          export UV_TOOL_DIR UV_TOOL_BIN_DIR
+          export UV_CACHE_DIR UV_TOOL_DIR UV_TOOL_BIN_DIR
 
           umask 002
           exec uv tool "$@"
