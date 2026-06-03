@@ -5346,6 +5346,8 @@ To bind a shortcut key to an arbitrary command:
 
 #### ... Default Applications
 
+MANUAL:
+
 - Web Browser: Firefox Web Browser
 - Email client: Thunderbird Mail
 
