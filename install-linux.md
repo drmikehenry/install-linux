@@ -5410,12 +5410,14 @@ MANUAL:
 
 MANUAL:
 
-- Right-click on the task bar, choose `Show Alternatives`, change to `Task
-  Manager` (instead of the now-default "icons only" variant).
+- Right-click on the task bar, choose `Show Alternatives`, change to
+  `Icons-and-Text Task Manager` (instead of the now-default "icons only"
+  variant).
 
-- Right-click on the task bar, choose `Configure Task Manager`:
+- Right-click on the task bar, choose `Configure Icons-and-Tex Task Manager`:
   - Appearance:
-    - General | Maximum rows: 2
+    - Use multi-row view: Always when panel is thick enough
+    - Maximum rows: 2
   - Behavior:
     - Set `Group` to `Do Not Group`.
     - Set `Sort` to `Manually`.
