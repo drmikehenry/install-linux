@@ -3054,20 +3054,33 @@ MANUAL:
 
       Socket to launch DrKonqi for a systemd-coredump
 
+  This happens for "system" users like root (and `sddm`, if `sddm` is being
+  used), because the required socket is launched only for non-system users (see
+  below).
+
 - Fix DrKonqi journal spamming:
 
       mkdir -p /etc/systemd/user/drkonqi-coredump-launcher.socket.d
       echod -o /etc/systemd/user/drkonqi-coredump-launcher.socket.d/override.conf '
         [Unit]
         ConditionUser=
-        ConditionUser=|!@system
-        ConditionUser=|root
       '
 
-- Reload the daemon:
+  This removes the user condition, so it works for all users.
 
-      sudo systemctl --user daemon-reload
-      sudo systemctl --user enable --now drkonqi-coredump-launcher.socket
+- Reload the daemon for any affected users:
+
+      systemctl --machine=root@.host --user daemon-reload
+
+      systemctl --machine=root@.host --user \
+        enable --now drkonqi-coredump-launcher.socket
+
+  Also for `sddm` if `sddm` is installed:
+
+      systemctl --machine=sddm@.host --user daemon-reload
+
+      systemctl --machine=sddm@.host --user \
+        enable --now drkonqi-coredump-launcher.socket
 
 - Bug report: https://bugs.kde.org/show_bug.cgi?id=502960
 
@@ -3079,7 +3092,7 @@ MANUAL:
         ConditionUser=|root
 
   - But above `override.conf` is better since won't be overwritten by an
-    upgrade.
+    upgrade, and it's better to let the work for any user that might get loaded.
 
 # Mission-Critical Apps
 
