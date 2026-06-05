@@ -3004,6 +3004,20 @@ MANUAL:
 
       systemctl restart gdm
 
+## UBUNTU sddm
+
+MANUAL:
+
+- Using `gdm3` with a `plasma-x11` session causes shortcut keys (such as
+  `Alt+F2`) to fail.  They work with a Wayland session or when using `vnc` with
+  `plasma-x11`.
+
+- As a work-around, `sddm` may be used instead of `gdm3` via:
+
+      dpkg-reconfigure sddm
+
+  Choose `sddm` instead of `gdm3`.
+
 ## UBUNTU Kubuntu Extras
 
 - Install extras `:role:workstation`:
