@@ -733,11 +733,11 @@ MANUAL:
         # iface eno1 inet dhcp
         iface eno1 inet static
         # TODO: Use actual address here:
-        address 192.168.254.252
-        gateway 192.168.254.250
+        address 10.240.0.123
+        gateway 10.240.0.1
         netmask 255.255.255.0
         dns-search drmikehenry.com
-        dns-nameservers 192.168.254.250
+        dns-nameservers 10.240.0.1
 
 - DESKTOP MOBILE: Configure wired and wireless settings via NetworkManager.
 
@@ -1135,7 +1135,7 @@ MANUAL:
   - name: Setup exports
     lineinfile:
       dest: /etc/exports
-      line: '/m      192.168.254.0/24(rw,insecure,async,no_root_squash,no_subtree_check)'
+      line: '/m      10.240.0.0/24(rw,insecure,async,no_root_squash,no_subtree_check)'
   ```
 
 - Restart the services:
@@ -1259,7 +1259,7 @@ AUTOMATED in install-linux-local role `workstation-mounts`.
 
 - Setup `/etc/hosts` as necessary for static hosts, e.g.:
 
-      192.168.1.2 host1.domain.com host1
+      10.240.0.123 host1.domain.com host1
 
 ## VM: Guest Additions
 
@@ -6068,7 +6068,7 @@ printer-specific driver support will be done via separate applications.
       for p in {crayon,pencil}; do
         lpadmin -p $p \
           -E \
-          -v ipp://192.168.1.128 \
+          -v ipp://10.240.1.164 \
           -m everywhere \
           -L 'Computer room'
       done
@@ -6101,7 +6101,7 @@ printer-specific driver support will be done via separate applications.
       for p in {crayon,pencil}; do
         lpadmin -p $p \
           -E \
-          -v ipp://192.168.254.128 \
+          -v ipp://10.240.1.164 \
           -m everywhere \
           -L 'Computer room'
       done
@@ -6127,7 +6127,7 @@ Run `hp-setup`, answer questions:
 - Network/Ethernet/Wireless network
 - Show Advanced Options
 - Choose Manual discovery
-- Enter IP address: 192.168.254.128
+- Enter IP address: 10.240.1.164
 - Choose Next
 - Choose Next again
 - Printer name: crayon
