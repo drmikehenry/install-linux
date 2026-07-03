@@ -6591,8 +6591,8 @@ References:
 
 - (one-time) Create `data` and `config` areas:
 
-      mkdir -p /m/data/money/gnucash-config/data
-      mkdir -p /m/data/money/gnucash-config/config
+      mkdir -p /m/beth/Documents/home/finance/gnucash/data
+      mkdir -p /m/beth/Documents/home/finance/gnucash/config
       sudo chown -R beth:data /m/data/money/gnucash-config
 
 - HOME2GIT Create Plasma environment variable script:
@@ -6602,8 +6602,8 @@ References:
 
   with contents:
 
-      export GNC_DATA_HOME=/m/data/money/gnucash-config/data
-      export GNC_CONFIG_HOME=/m/data/money/gnucash-config/config
+      export GNC_DATA_HOME=/m/beth/Documents/home/finance/gnucash/data
+      export GNC_CONFIG_HOME=/m/beth/Documents/home/finance/gnucash/config
 
   LOVELACE: Create manually.
 
