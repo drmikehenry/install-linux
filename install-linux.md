@@ -6068,7 +6068,7 @@ printer-specific driver support will be done via separate applications.
       for p in {crayon,pencil}; do
         lpadmin -p $p \
           -E \
-          -v ipp://10.240.1.164 \
+          -v ipp://10.240.100.164 \
           -m everywhere \
           -L 'Computer room'
       done
@@ -6101,7 +6101,7 @@ printer-specific driver support will be done via separate applications.
       for p in {crayon,pencil}; do
         lpadmin -p $p \
           -E \
-          -v ipp://10.240.1.164 \
+          -v ipp://10.240.100.164 \
           -m everywhere \
           -L 'Computer room'
       done
@@ -6127,7 +6127,7 @@ Run `hp-setup`, answer questions:
 - Network/Ethernet/Wireless network
 - Show Advanced Options
 - Choose Manual discovery
-- Enter IP address: 10.240.1.164
+- Enter IP address: 10.240.100.164
 - Choose Next
 - Choose Next again
 - Printer name: crayon
