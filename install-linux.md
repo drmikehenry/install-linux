@@ -6349,6 +6349,7 @@ More configuration via `systemsettings5` | Printers:
       exclude             /m/torrent/
       exclude             /m/tmp/
       exclude             /m/srv/nfs/
+      exclude             /m/srv/rust/
       exclude             /m/**/iTunes/**/*[cC]ache*
       exclude             /m/**/thunderbird/**/*[cC]ache*
 
