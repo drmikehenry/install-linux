@@ -1135,7 +1135,7 @@ MANUAL:
   - name: Setup exports
     lineinfile:
       dest: /etc/exports
-      line: '/m      10.240.0.0/24(rw,insecure,async,no_root_squash,no_subtree_check)'
+      line: '/m      10.240.0.0/24(rw,insecure,sync,no_root_squash,no_subtree_check)'
   ```
 
 - Restart the services:
