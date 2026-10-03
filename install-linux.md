@@ -501,6 +501,8 @@ Ansible `:role:echod`:
 
 MANUAL:
 
+- Ensure `echod` is installed (probably manual for now).
+
 - (ubuntu 26.04) New Rust-based `uutils` is not ready.
 
   - `chown user:` doesn't work:
