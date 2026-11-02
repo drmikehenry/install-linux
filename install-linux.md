@@ -6921,7 +6921,7 @@ for remote access to that machine via a VNC viewer.
 
 - In a second GNOME terminal tab, launch viewer to localhost:
 
-      vncviewer localhost:1 -MenuKey Scroll_Lock -FullScreen
+      vncviewer localhost:1 -MenuKey Scroll_Lock -FullScreen -FullScreenMode=All
 
   Better, create a script `vncviewer-localhost:1` that ensures
   `xlock` happens after session ends:
