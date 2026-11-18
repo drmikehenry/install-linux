@@ -1218,6 +1218,12 @@ MANUAL:
 
       showmount -e mox.drmikehenry.com
 
+## Proxmox Backup Client
+
+- Install `:role:mox-base`:
+
+      moxi proxmox-backup-client
+
 ## Base Firewall Setup
 
 ### Ubuntu
