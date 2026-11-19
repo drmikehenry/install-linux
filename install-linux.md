@@ -1129,17 +1129,6 @@ MANUAL:
       value: 2048
   ```
 
-- Setup exports:
-
-  Ansible `:role:mox-nfs-server`:
-
-  ```yaml
-  - name: Setup exports
-    lineinfile:
-      dest: /etc/exports
-      line: '/m      10.240.0.0/24(rw,insecure,sync,no_root_squash,no_subtree_check)'
-  ```
-
 - Restart the services:
 
   Ansible `:role:mox-nfs-server`:
